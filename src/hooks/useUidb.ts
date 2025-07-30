@@ -6,7 +6,6 @@ import {
   useConnectionStatus,
   type ConnectionInfo,
 } from "./useConnectionStatus";
-import cachedData from "../data/public.json";
 
 export interface UseUidbResult {
   devices: NormalizedDevice[];
@@ -36,26 +35,30 @@ export function useUidb(): UseUidbResult {
         // Fetch from configured URL or default
         const response = await fetch(uidbUrl);
         if (!response.ok) {
-          throw new Error(
-            `Failed to fetch UIDB data: ${response.status} ${response.statusText}`
-          );
+          // If fetching from the primary source fails, try fetching the local public.json
+          const fallbackResponse = await fetch("/public.json");
+          if (!fallbackResponse.ok) {
+            throw new Error(
+              `Failed to fetch UIDB data: ${response.status} ${response.statusText}`
+            );
+          }
+          data = await fallbackResponse.json();
+          updateConnectionStatus("fallback");
+        } else {
+          data = await response.json();
+          const lastModified =
+            response.headers.get("last-modified") ||
+            response.headers.get("date") ||
+            new Date().toISOString();
+          updateConnectionStatus("api", lastModified);
         }
-        data = await response.json();
-
-        // Extract freshness information from response headers
-        const lastModified =
-          response.headers.get("last-modified") ||
-          response.headers.get("date") ||
-          new Date().toISOString();
-
-        updateConnectionStatus("api", lastModified);
       } catch (fetchError) {
         // Fallback to cached data if fetch fails
         console.warn(
           "Failed to fetch UIDB data, using cached data:",
           fetchError
         );
-        data = cachedData;
+        data = (await import("../data/public.json")).default;
         updateConnectionStatus("fallback");
       }
 
@@ -78,8 +81,9 @@ export function useUidb(): UseUidbResult {
       setError(errorMessage);
       console.error("UIDB fetch error:", err);
 
-      // Fallback to sample data on error
+      // Fallback to cached data on error
       try {
+        const cachedData = (await import("../data/public.json")).default;
         const { normalized, warnings: fallbackWarnings } = normalizeDevices(
           cachedData.devices
         );
@@ -87,7 +91,7 @@ export function useUidb(): UseUidbResult {
         setWarnings(fallbackWarnings);
         updateConnectionStatus("fallback");
       } catch (fallbackErr) {
-        console.error("Sample data parse error:", fallbackErr);
+        console.error("Cached data parse error:", fallbackErr);
         updateConnectionStatus("fallback");
       }
     } finally {
