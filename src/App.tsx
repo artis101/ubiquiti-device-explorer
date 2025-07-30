@@ -11,7 +11,7 @@ import { ErrorScreen } from "./components/ErrorScreen";
 import { AppHeader } from "./components/AppHeader";
 import { DeviceList } from "./components/DeviceList";
 import { DeviceDetails } from "./components/DeviceDetails";
-import type { NormalizedDevice } from "./types/uidb";
+import type { NormalizedDevice, SearchHit } from "./types/uidb";
 function App() {
   const { devices, warnings, loading, error, connectionInfo, refetch } =
     useUidb();
@@ -35,17 +35,30 @@ function App() {
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   // Filter and search devices
-  const filteredDevices = useMemo(() => {
+  const { filteredDevices, searchHits } = useMemo(() => {
     const filtered = filterByLine(devices, selectedLineId);
 
     if (debouncedSearchQuery) {
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
-      return searchResults.map(
+      const resultDevices = searchResults.map(
         (hit) => filtered.find((device) => device.id === hit.id)!
       );
+      
+      // Create a map of device ID to search hit for easy lookup
+      const searchHitMap = new Map<string, SearchHit>(
+        searchResults.map(hit => [hit.id, hit])
+      );
+      
+      return { 
+        filteredDevices: resultDevices, 
+        searchHits: searchHitMap 
+      };
     }
 
-    return filtered;
+    return { 
+      filteredDevices: filtered, 
+      searchHits: new Map<string, SearchHit>() 
+    };
   }, [devices, selectedLineId, debouncedSearchQuery]);
 
   // Handle device selection from URL
@@ -116,6 +129,7 @@ function App() {
             selectedDeviceId={selectedDeviceId}
             onDeviceSelect={handleDeviceSelect}
             height={windowHeight - headerHeight}
+            searchHits={searchHits}
           />
         </main>
 

@@ -1,10 +1,12 @@
-import type { NormalizedDevice } from "../types/uidb";
+import type { NormalizedDevice, SearchHit } from "../types/uidb";
+import { Highlight } from "./Highlight";
 
 interface DeviceCardProps {
   device: NormalizedDevice;
   imageSize: number;
   onSelect: (device: NormalizedDevice) => void;
   isSelected: boolean;
+  searchHit?: SearchHit;
 }
 
 export function DeviceCard({
@@ -12,6 +14,7 @@ export function DeviceCard({
   imageSize,
   onSelect,
   isSelected,
+  searchHit,
 }: DeviceCardProps) {
   return (
     <div
@@ -62,7 +65,10 @@ export function DeviceCard({
 
         <div className="flex-1 min-w-0">
           <h3 className="text-lg font-bold text-gray-900 truncate mb-3">
-            {device.displayName}
+            <Highlight 
+              text={device.displayName} 
+              indices={searchHit?.matches?.find(m => m.key === 'displayName')?.indices}
+            />
           </h3>
 
           <div className="space-y-2">
@@ -72,7 +78,10 @@ export function DeviceCard({
                   SKU:
                 </span>
                 <span className="text-sm font-medium text-gray-900">
-                  {device.sku}
+                  <Highlight 
+                    text={device.sku} 
+                    indices={searchHit?.matches?.find(m => m.key === 'sku')?.indices}
+                  />
                 </span>
               </div>
             )}
@@ -99,7 +108,10 @@ export function DeviceCard({
                       key={index}
                       className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700"
                     >
-                      {alias}
+                      <Highlight 
+                        text={alias} 
+                        indices={searchHit?.matches?.find(m => m.key === 'shortnames' && m.value === alias)?.indices}
+                      />
                     </span>
                   ))}
                   {device.shortnames.length > 3 && (

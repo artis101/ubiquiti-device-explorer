@@ -16,6 +16,7 @@ const fuseOptions = {
     "triplets.k3",
   ],
   includeScore: true,
+  includeMatches: true,
   threshold: 0.4, // Adjust for more/less fuzzy matching
   minMatchCharLength: 2,
 };
@@ -38,12 +39,17 @@ export function searchDevices(
   const fuse = new Fuse(devices, fuseOptions);
   const results = fuse.search(query);
 
-  return results.map(({ item, score }) => ({
+  return results.map(({ item, score, matches }) => ({
     id: item.id,
     displayName: item.displayName,
     lineId: item.lineId,
     imageUrl: item.imageUrl,
     score: 1 - (score || 0), // Fuse.js score is 0-1, 0 is perfect match
+    matches: matches?.map(match => ({
+      indices: match.indices,
+      key: match.key,
+      value: match.value,
+    })),
   }));
 }
 

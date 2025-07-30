@@ -59,6 +59,13 @@ export interface NormalizedDevice extends Device {
   imageUrl?: string;
 }
 
+// Fuse.js match type
+export interface FuseMatch {
+  indices: readonly [number, number][];
+  key?: string;
+  value?: string;
+}
+
 // Search result type
 export interface SearchHit {
   id: string;
@@ -66,6 +73,7 @@ export interface SearchHit {
   lineId?: string;
   imageUrl?: string;
   score: number;
+  matches?: FuseMatch[];
 }
 
 // Warning system types

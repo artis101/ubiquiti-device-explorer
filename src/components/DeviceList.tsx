@@ -1,5 +1,5 @@
 import { FixedSizeList as List } from "react-window";
-import type { NormalizedDevice } from "../types/uidb";
+import type { NormalizedDevice, SearchHit } from "../types/uidb";
 import { DeviceCard } from "./DeviceCard";
 
 interface DeviceListProps {
@@ -8,6 +8,7 @@ interface DeviceListProps {
   selectedDeviceId?: string;
   onDeviceSelect: (device: NormalizedDevice) => void;
   height: number;
+  searchHits: Map<string, SearchHit>;
 }
 
 interface ListItemProps {
@@ -18,14 +19,17 @@ interface ListItemProps {
     imageSize: number;
     selectedDeviceId?: string;
     onDeviceSelect: (device: NormalizedDevice) => void;
+    searchHits: Map<string, SearchHit>;
   };
 }
 
 function ListItem({ index, style, data }: ListItemProps) {
-  const { devices, imageSize, selectedDeviceId, onDeviceSelect } = data;
+  const { devices, imageSize, selectedDeviceId, onDeviceSelect, searchHits } = data;
   const device = devices[index];
 
   if (!device) return null;
+
+  const searchHit = searchHits.get(device.id);
 
   return (
     <div style={style} className="py-4">
@@ -34,6 +38,7 @@ function ListItem({ index, style, data }: ListItemProps) {
         imageSize={imageSize}
         onSelect={onDeviceSelect}
         isSelected={device.id === selectedDeviceId}
+        searchHit={searchHit}
       />
     </div>
   );
@@ -45,6 +50,7 @@ export function DeviceList({
   selectedDeviceId,
   onDeviceSelect,
   height,
+  searchHits,
 }: DeviceListProps) {
   if (devices.length === 0) {
     return (
@@ -94,6 +100,7 @@ export function DeviceList({
             imageSize,
             selectedDeviceId,
             onDeviceSelect,
+            searchHits,
           }}
           className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 w-100"
         >

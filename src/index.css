@@ -63,3 +63,12 @@ img {
 img[data-loading="true"] {
   opacity: 0.5;
 }
+
+/* Search highlighting styles */
+mark {
+  background-color: #fef08a; /* A pleasant yellow from Tailwind's yellow-200 */
+  color: #1f2937; /* text-gray-900 for good contrast */
+  border-radius: 3px;
+  padding: 0 2px;
+  font-weight: 500;
+}
