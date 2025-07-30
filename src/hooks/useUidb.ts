@@ -2,13 +2,18 @@ import { useState, useEffect } from "react";
 import type { NormalizedDevice, SchemaWarning } from "../types/uidb";
 import { normalizeDevices, parseUidbResponse } from "../utils/uidb";
 import { getUidbUrl } from "../config/constants";
-import sampleData from "../data/sample.json";
+import {
+  useConnectionStatus,
+  type ConnectionInfo,
+} from "./useConnectionStatus";
+import cachedData from "../data/public.json";
 
 export interface UseUidbResult {
   devices: NormalizedDevice[];
   warnings: SchemaWarning[];
   loading: boolean;
   error?: string;
+  connectionInfo: ConnectionInfo;
   refetch: () => void;
 }
 
@@ -17,6 +22,7 @@ export function useUidb(): UseUidbResult {
   const [warnings, setWarnings] = useState<SchemaWarning[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>();
+  const { connectionInfo, updateConnectionStatus } = useConnectionStatus();
 
   const fetchData = async () => {
     try {
@@ -35,13 +41,22 @@ export function useUidb(): UseUidbResult {
           );
         }
         data = await response.json();
+
+        // Extract freshness information from response headers
+        const lastModified =
+          response.headers.get("last-modified") ||
+          response.headers.get("date") ||
+          new Date().toISOString();
+
+        updateConnectionStatus("api", lastModified);
       } catch (fetchError) {
-        // Fallback to sample data if fetch fails
+        // Fallback to cached data if fetch fails
         console.warn(
-          "Failed to fetch UIDB data, using sample data:",
+          "Failed to fetch UIDB data, using cached data:",
           fetchError,
         );
-        data = sampleData;
+        data = cachedData;
+        updateConnectionStatus("fallback");
       }
 
       // Parse and validate the response
@@ -66,12 +81,14 @@ export function useUidb(): UseUidbResult {
       // Fallback to sample data on error
       try {
         const { normalized, warnings: fallbackWarnings } = normalizeDevices(
-          sampleData.devices,
+          cachedData.devices,
         );
         setDevices(normalized);
         setWarnings(fallbackWarnings);
+        updateConnectionStatus("fallback");
       } catch (fallbackErr) {
         console.error("Sample data parse error:", fallbackErr);
+        updateConnectionStatus("fallback");
       }
     } finally {
       setLoading(false);
@@ -80,6 +97,7 @@ export function useUidb(): UseUidbResult {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
@@ -87,6 +105,7 @@ export function useUidb(): UseUidbResult {
     warnings,
     loading,
     error,
+    connectionInfo,
     refetch: fetchData,
   };
 }

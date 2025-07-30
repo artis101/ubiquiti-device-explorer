@@ -18,6 +18,13 @@ const lightningTargets = browserslistToTargets(browserslist(resolvedQuery));
 export default defineConfig({
   plugins: [react(), tailwind()],
 
+  define: {
+    // Inject build timestamp at build time
+    "import.meta.env.VITE_BUILD_TIMESTAMP": JSON.stringify(
+      new Date().toISOString(),
+    ),
+  },
+
   css: {
     transformer: "lightningcss",
     lightningcss: {

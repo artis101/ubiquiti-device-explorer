@@ -33,7 +33,7 @@ flowchart LR
         Router --> Search[Search Engine]
         UI -->|img src| CDN["images.svc.ui.com"]
     end
-    Search -->|GET JSON| UIDB[UIDB Endpoint or /sample.json]
+    Search -->|GET JSON| UIDB[UIDB Endpoint or /public.json]
     UIDB -->|JSON| ZodParser["Zod Runtime Parser"]
     ZodParser --> Normalizer["Device Normalizer + Warning Collector"]
     Normalizer --> UI
@@ -59,7 +59,7 @@ flowchart LR
 - **Schema Parsing:** Zod-based with `.passthrough()` for unknown fields
 - **Device Normalization:** Handles missing fields, duplicate IDs, empty objects
 - **Warning Collection:** Aggregates schema issues with console debugging
-- **Sample Data:** Ships with 5-device demo dataset for offline use
+- **Cached Data:** Ships with 5-device demo dataset for offline use
 
 ### ✅ Search & Filtering
 
@@ -99,7 +99,7 @@ flowchart LR
 ### ✅ Error Handling & Resilience
 
 - **Error Boundaries:** Catch and display runtime errors gracefully
-- **Network Failures:** Fallback to sample data with user notification
+- **Network Failures:** Fallback to cached data with user notification
 - **Schema Warnings:** Non-blocking banner with expandable details
 - **Image Fallbacks:** SVG placeholders for missing images
 - **Invalid URLs:** Silently ignore malformed query parameters
@@ -135,7 +135,7 @@ src/
 │   ├── uidb.ts         # Data normalization and image URLs
 │   └── search.ts       # Search algorithm implementation
 └── data/
-    └── sample.json     # Demo data for offline mode
+    └── public.json     # Demo data for offline mode
 ```
 
 ---

@@ -8,10 +8,11 @@ import { WarningBanner } from "./components/WarningBanner";
 import { SearchAndFilters } from "./components/SearchAndFilters";
 import { DeviceList } from "./components/DeviceList";
 import { DeviceDetails } from "./components/DeviceDetails";
+import { ConnectionStatusIndicator } from "./components/ConnectionStatusIndicator";
 import type { NormalizedDevice } from "./types/uidb";
-import { isUsingLiveData } from "./config/constants";
 function App() {
-  const { devices, warnings, loading, error, refetch } = useUidb();
+  const { devices, warnings, loading, error, connectionInfo, refetch } =
+    useUidb();
   const {
     searchQuery,
     selectedLineId,
@@ -29,7 +30,7 @@ function App() {
 
   // Filter and search devices
   const filteredDevices = useMemo(() => {
-    let filtered = filterByLine(devices, selectedLineId);
+    const filtered = filterByLine(devices, selectedLineId);
 
     if (debouncedSearchQuery) {
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
@@ -151,14 +152,7 @@ function App() {
               </div>
 
               <div className="flex items-center gap-6">
-                {isUsingLiveData() && (
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-gray-700 font-medium">
-                      Live Data
-                    </span>
-                  </div>
-                )}
+                <ConnectionStatusIndicator connectionInfo={connectionInfo} />
               </div>
             </div>
           </div>
