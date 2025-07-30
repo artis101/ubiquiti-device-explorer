@@ -66,14 +66,11 @@ export function DeviceGrid({
   searchHits,
 }: DeviceGridProps) {
   const columnWidth = imageSize + 64;
-  const rowHeight = imageSize + 128;
+  const rowHeight = imageSize + 180;
   const maxColumns = 6;
 
   // Calculate column count
-  const columnCount = Math.min(
-    Math.floor(width / columnWidth),
-    maxColumns
-  );
+  const columnCount = Math.min(Math.floor(width / columnWidth), maxColumns);
 
   const rowCount = Math.ceil(devices.length / columnCount);
 

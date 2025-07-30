@@ -8,14 +8,24 @@ interface DeviceInfoProps {
   layout?: "list" | "grid";
 }
 
-export function DeviceInfo({ device, searchHit, layout = "list" }: DeviceInfoProps) {
+export function DeviceInfo({
+  device,
+  searchHit,
+  layout = "list",
+}: DeviceInfoProps) {
   const isListLayout = layout === "list";
 
   return (
     <div
-      className={`w-full ${isListLayout ? "flex-1 min-w-0" : "text-center"}`}>
+      className={`w-full ${isListLayout ? "flex-1 min-w-0" : "text-center"}`}
+    >
       <h3
-        className={`font-bold text-gray-900 ${isListLayout ? "text-lg mb-3 truncate" : "text-base mb-1 whitespace-normal break-words"}`}>
+        className={`font-bold text-gray-900 ${
+          isListLayout
+            ? "text-lg mb-3 truncate"
+            : "text-base mb-1 h-12 line-clamp-2"
+        }`}
+      >
         <Highlight
           text={device.displayName}
           indices={
@@ -27,7 +37,10 @@ export function DeviceInfo({ device, searchHit, layout = "list" }: DeviceInfoPro
       <div className={isListLayout ? "space-y-2" : "space-y-1"}>
         {device.sku && (
           <div
-            className={`flex items-center gap-2 ${!isListLayout && "justify-center"}`}>
+            className={`flex items-center gap-2 ${
+              !isListLayout && "justify-center"
+            }`}
+          >
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
               SKU:
             </span>
@@ -44,7 +57,10 @@ export function DeviceInfo({ device, searchHit, layout = "list" }: DeviceInfoPro
 
         {device.line && (
           <div
-            className={`flex items-center gap-2 ${!isListLayout && "justify-center"}`}>
+            className={`flex items-center gap-2 ${
+              !isListLayout && "justify-center"
+            }`}
+          >
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
               Line:
             </span>
