@@ -17,7 +17,9 @@ export function DeviceInfo({
 
   return (
     <div
-      className={`w-full ${isListLayout ? "flex-1 min-w-0" : "text-center"}`}
+      className={`w-full ${
+        isListLayout ? "flex-1 min-w-0" : "text-center min-w-0"
+      }`}
     >
       <h3
         className={`font-bold text-gray-900 ${
@@ -38,14 +40,16 @@ export function DeviceInfo({
         {device.sku && (
           <div
             className={`flex items-center gap-2 min-w-0 ${
-              !isListLayout && "justify-center"
+              !isListLayout ? "justify-center w-full" : ""
             }`}
           >
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide shrink-0">
               SKU:
             </span>
             <span
-              className="text-sm font-medium text-gray-900 truncate"
+              className={`text-sm font-medium text-gray-900 truncate ${
+                !isListLayout ? "max-w-26" : ""
+              }`}
               title={device.sku}
             >
               <Highlight

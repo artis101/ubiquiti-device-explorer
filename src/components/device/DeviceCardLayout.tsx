@@ -24,7 +24,10 @@ const DeviceCardLayoutComponent = ({
 
   const isListLayout = layout === "list";
 
-  const containerStyle = !isListLayout ? { width: `${imageSize + 48}px` } : {};
+  const containerStyle = !isListLayout ? { 
+    width: `${imageSize + 48}px`,
+    maxWidth: `${imageSize + 48}px`
+  } : {};
 
   return (
     <div

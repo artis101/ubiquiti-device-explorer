@@ -1,3 +1,4 @@
+import React, { forwardRef } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
 import { DeviceCard } from "@components/device/DeviceCard";
@@ -56,48 +57,56 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   );
 }
 
-export function DeviceGrid({
-  devices,
-  imageSize,
-  selectedDeviceId,
-  onDeviceSelect,
-  height,
-  width,
-  searchHits,
-}: DeviceGridProps) {
-  const columnWidth = imageSize + 64;
-  const rowHeight = imageSize + 180;
-  const maxColumns = 6;
+export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
+  (
+    {
+      devices,
+      imageSize,
+      selectedDeviceId,
+      onDeviceSelect,
+      height,
+      width,
+      searchHits,
+    },
+    ref
+  ) => {
+    const columnWidth = imageSize + 64;
+    const rowHeight = imageSize + 180;
+    const maxColumns = 6;
 
-  // Calculate column count
-  const columnCount = Math.min(Math.floor(width / columnWidth), maxColumns);
+    // Calculate column count
+    const columnCount = Math.min(Math.floor(width / columnWidth), maxColumns);
 
-  const rowCount = Math.ceil(devices.length / columnCount);
+    const rowCount = Math.ceil(devices.length / columnCount);
 
-  // Calculate grid width to center it
-  const gridWidth = columnCount * columnWidth;
+    // Calculate grid width to center it
+    const gridWidth = columnCount * columnWidth;
 
-  return (
-    <div className="h-full flex justify-center">
-      <Grid
-        height={height}
-        width={gridWidth}
-        columnCount={columnCount}
-        columnWidth={columnWidth}
-        rowCount={rowCount}
-        rowHeight={rowHeight}
-        itemData={{
-          devices,
-          imageSize,
-          selectedDeviceId,
-          onDeviceSelect,
-          searchHits,
-          columnCount,
-        }}
-        className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
-      >
-        {GridItem}
-      </Grid>
-    </div>
-  );
-}
+    return (
+      <div className="h-full flex justify-center">
+        <Grid
+          ref={ref}
+          height={height}
+          width={gridWidth}
+          columnCount={columnCount}
+          columnWidth={columnWidth}
+          rowCount={rowCount}
+          rowHeight={rowHeight}
+          itemData={{
+            devices,
+            imageSize,
+            selectedDeviceId,
+            onDeviceSelect,
+            searchHits,
+            columnCount,
+          }}
+          className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+        >
+          {GridItem}
+        </Grid>
+      </div>
+    );
+  }
+);
+
+DeviceGrid.displayName = "DeviceGrid";

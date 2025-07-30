@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
@@ -33,6 +33,9 @@ function App({
     null,
   );
 
+  // Refs
+  const deviceListRef = useRef<{ scrollToTop: () => void }>(null);
+
   // Custom hooks
   const { headerHeight, headerRef } = useHeaderHeight([warnings]);
   const { windowHeight, windowWidth } = useWindowDimensions();
@@ -46,6 +49,13 @@ function App({
       }
     }
   }, [selectedDeviceId, devices]);
+
+  // Scroll to top when search query changes
+  useEffect(() => {
+    if (deviceListRef.current) {
+      deviceListRef.current.scrollToTop();
+    }
+  }, [searchQuery, selectedLineId]); // Also scroll to top when line filter changes
 
   const handleDeviceSelect = useCallback(
     (device: NormalizedDevice) => {
@@ -111,6 +121,7 @@ function App({
           style={{ height: `calc(100vh - ${headerHeight}px)` }}
         >
           <DeviceList
+            ref={deviceListRef}
             devices={filteredDevices}
             imageSize={imageSize}
             selectedDeviceId={selectedDeviceId}
