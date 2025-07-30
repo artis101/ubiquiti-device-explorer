@@ -4,14 +4,14 @@ export const DeviceSchema = z.looseObject({
   id: z.string(),
   sku: z.string().optional(),
   line: z
-    .object({
+    .looseObject({
       id: z.string(),
       name: z.string().optional(),
       abbrev: z.string().optional(),
     })
     .optional(),
   product: z
-    .object({
+    .looseObject({
       name: z.string().optional(),
       abbrev: z.string().optional(),
     })
@@ -19,7 +19,7 @@ export const DeviceSchema = z.looseObject({
   shortnames: z.array(z.string()).optional(),
   sysid: z.union([z.string(), z.array(z.string())]).optional(),
   images: z
-    .object({
+    .looseObject({
       default: z.string().optional(),
       nopadding: z.string().optional(),
       topology: z.string().optional(),

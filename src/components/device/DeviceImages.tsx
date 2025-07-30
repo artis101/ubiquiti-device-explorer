@@ -64,7 +64,7 @@ export function DeviceImages({ device }: DeviceImagesProps) {
                 <span className="font-medium">{type}:</span>
                 <div className="flex items-center gap-2">
                   <code className="bg-gray-100 px-1 py-0.5 rounded truncate max-w-32">
-                    {hash}
+                    {hash as string}
                   </code>
                   <CopyButton
                     textToCopy={getImageUrl() || ""}

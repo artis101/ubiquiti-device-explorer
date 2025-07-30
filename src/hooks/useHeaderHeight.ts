@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, type DependencyList, useRef } from 'react';
 
-export function useHeaderHeight(dependencies: any[] = []) {
+export function useHeaderHeight(dependencies: DependencyList = []) {
   const [headerHeight, setHeaderHeight] = useState(256);
   const headerRef = useRef<HTMLDivElement>(null);
 
@@ -21,6 +21,7 @@ export function useHeaderHeight(dependencies: any[] = []) {
     return () => {
       resizeObserver.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 
   return { headerHeight, headerRef };

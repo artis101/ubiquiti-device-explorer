@@ -3,10 +3,11 @@ import { WarningBanner } from "@components/ui/WarningBanner";
 import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { ConnectionStatusIndicator } from "@components/ui/ConnectionStatusIndicator";
 import type { NormalizedDevice, SchemaWarning } from "types/uidb";
+import type { ConnectionInfo } from "@hooks/useConnectionStatus";
 
 interface AppHeaderProps {
   warnings: SchemaWarning[];
-  connectionInfo: any;
+  connectionInfo: ConnectionInfo;
   devices: NormalizedDevice[];
   filteredDevices: NormalizedDevice[];
   searchQuery: string;

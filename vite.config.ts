@@ -22,7 +22,7 @@ export default defineConfig({
   define: {
     // Inject build timestamp at build time
     "import.meta.env.VITE_BUILD_TIMESTAMP": JSON.stringify(
-      new Date().toISOString(),
+      new Date().toISOString()
     ),
   },
 
@@ -42,8 +42,8 @@ export default defineConfig({
       "@config": path.resolve(__dirname, "./src/config"),
       "@data": path.resolve(__dirname, "./src/data"),
       "@hooks": path.resolve(__dirname, "./src/hooks"),
-      "types": path.resolve(__dirname, "./src/types"),
       "@utils": path.resolve(__dirname, "./src/utils"),
+      types: path.resolve(__dirname, "./src/types"),
     },
   },
 });

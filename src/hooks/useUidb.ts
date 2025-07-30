@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { NormalizedDevice, SchemaWarning } from "../types/uidb";
-import { normalizeDevices, parseUidbResponse } from "../utils/uidb";
+import type { NormalizedDevice, SchemaWarning } from "types/uidb";
+import { normalizeDevices, parseUidbResponse } from "@utils/uidb";
 import { getUidbUrl } from "../config/constants";
 import {
   useConnectionStatus,
@@ -37,7 +37,7 @@ export function useUidb(): UseUidbResult {
         const response = await fetch(uidbUrl);
         if (!response.ok) {
           throw new Error(
-            `Failed to fetch UIDB data: ${response.status} ${response.statusText}`,
+            `Failed to fetch UIDB data: ${response.status} ${response.statusText}`
           );
         }
         data = await response.json();
@@ -53,7 +53,7 @@ export function useUidb(): UseUidbResult {
         // Fallback to cached data if fetch fails
         console.warn(
           "Failed to fetch UIDB data, using cached data:",
-          fetchError,
+          fetchError
         );
         data = cachedData;
         updateConnectionStatus("fallback");
@@ -67,7 +67,7 @@ export function useUidb(): UseUidbResult {
 
       // Normalize devices and collect warnings
       const { normalized, warnings: normWarnings } = normalizeDevices(
-        parseResult.devices,
+        parseResult.devices
       );
 
       setDevices(normalized);
@@ -81,7 +81,7 @@ export function useUidb(): UseUidbResult {
       // Fallback to sample data on error
       try {
         const { normalized, warnings: fallbackWarnings } = normalizeDevices(
-          cachedData.devices,
+          cachedData.devices
         );
         setDevices(normalized);
         setWarnings(fallbackWarnings);
