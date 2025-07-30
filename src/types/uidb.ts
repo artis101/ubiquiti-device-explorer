@@ -36,7 +36,7 @@ export const DeviceSchema = z
             k2: z.string().optional(),
             k3: z.string().optional(),
           })
-          .passthrough(),
+          .passthrough()
       )
       .optional(),
   })

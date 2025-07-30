@@ -1,6 +1,6 @@
 import { FixedSizeList as List } from "react-window";
-import type { NormalizedDevice, SearchHit } from "../../types/uidb";
-import { DeviceCard } from "./DeviceCard";
+import type { NormalizedDevice, SearchHit } from "@types/uidb";
+import { DeviceCard } from "@components/device/DeviceCard";
 
 interface DeviceListProps {
   devices: NormalizedDevice[];

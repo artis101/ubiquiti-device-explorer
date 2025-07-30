@@ -1,9 +1,9 @@
-import type { NormalizedDevice } from "../../types/uidb";
-import { DeviceHeader } from "./DeviceHeader";
-import { DeviceAttributes } from "./DeviceAttributes";
-import { DeviceImages } from "./DeviceImages";
-import { DeviceAliases } from "./DeviceAliases";
-import { RawJsonViewer } from "../ui/RawJsonViewer";
+import type { NormalizedDevice } from "@types/uidb";
+import { DeviceHeader } from "@components/device/DeviceHeader";
+import { DeviceAttributes } from "@components/device/DeviceAttributes";
+import { DeviceImages } from "@components/device/DeviceImages";
+import { DeviceAliases } from "@components/device/DeviceAliases";
+import { RawJsonViewer } from "@components/ui/RawJsonViewer";
 
 interface DeviceDetailsProps {
   device: NormalizedDevice;

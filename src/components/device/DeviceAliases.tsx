@@ -1,5 +1,5 @@
-import type { SearchHit } from "../../types/uidb";
-import { Highlight } from "../ui/Highlight";
+import type { SearchHit } from "@types/uidb";
+import { Highlight } from "@components/ui/Highlight";
 
 interface DeviceAliasesProps {
   aliases: string[];

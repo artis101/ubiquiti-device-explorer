@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
-import type { ConnectionInfo } from "../../hooks/useConnectionStatus";
-import { getBuildTime } from "../../config/constants";
+import type { ConnectionInfo } from "@hooks/useConnectionStatus";
+import { getBuildTime } from "@config/constants";
 
 interface ConnectionStatusIndicatorProps {
   connectionInfo: ConnectionInfo;

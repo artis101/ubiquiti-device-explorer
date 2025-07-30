@@ -1,8 +1,8 @@
 import { memo, useCallback } from "react";
 import type { KeyboardEvent } from "react";
-import type { NormalizedDevice, SearchHit } from "../../types/uidb";
-import { DeviceImage } from "./DeviceImage";
-import { DeviceInfo } from "./DeviceInfo";
+import type { NormalizedDevice, SearchHit } from "@types/uidb";
+import { DeviceImage } from "@components/device/DeviceImage";
+import { DeviceInfo } from "@components/device/DeviceInfo";
 
 interface DeviceCardProps {
   device: NormalizedDevice;

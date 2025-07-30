@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwind from "@tailwindcss/vite";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
+import path from "path";
 
 const userBrowserslist =
   // loadConfig() returns the resolved Browserslist config (or undefined)
@@ -34,5 +35,15 @@ export default defineConfig({
   build: {
     cssMinify: "lightningcss",
     target: "baseline-widely-available",
+  },
+  resolve: {
+    alias: {
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@config": path.resolve(__dirname, "./src/config"),
+      "@data": path.resolve(__dirname, "./src/data"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@types": path.resolve(__dirname, "./src/types"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
+    },
   },
 });

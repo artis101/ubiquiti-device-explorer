@@ -1,6 +1,6 @@
-import type { NormalizedDevice, SearchHit } from "../../types/uidb";
-import { Highlight } from "../ui/Highlight";
-import { DeviceAliases } from "./DeviceAliases";
+import type { NormalizedDevice, SearchHit } from "@types/uidb";
+import { Highlight } from "@components/ui/Highlight";
+import { DeviceAliases } from "@components/device/DeviceAliases";
 
 interface DeviceInfoProps {
   device: NormalizedDevice;
