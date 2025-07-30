@@ -21,6 +21,7 @@ function App() {
     selectedLineId,
     imageSize,
     selectedDeviceId,
+    viewMode,
     updateState,
   } = useUrlState();
 
@@ -30,7 +31,7 @@ function App() {
 
   // Custom hooks
   const { headerHeight, headerRef } = useHeaderHeight([warnings]);
-  const { windowHeight } = useWindowDimensions();
+  const { windowHeight, windowWidth } = useWindowDimensions();
 
   // Debounce search query for better performance
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -94,6 +95,10 @@ function App() {
     updateState({ size });
   };
 
+  const handleViewModeChange = (mode: "list" | "grid") => {
+    updateState({ view: mode });
+  };
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -114,9 +119,11 @@ function App() {
           searchQuery={searchQuery}
           selectedLineId={selectedLineId}
           imageSize={imageSize}
+          viewMode={viewMode}
           onSearchChange={handleSearchChange}
           onLineFilterChange={handleLineFilterChange}
           onImageSizeChange={handleImageSizeChange}
+          onViewModeChange={handleViewModeChange}
         />
 
         {/* Main Content */}
@@ -130,7 +137,9 @@ function App() {
             selectedDeviceId={selectedDeviceId}
             onDeviceSelect={handleDeviceSelect}
             height={windowHeight - headerHeight}
+            width={windowWidth}
             searchHits={searchHits}
+            viewMode={viewMode}
           />
         </main>
 

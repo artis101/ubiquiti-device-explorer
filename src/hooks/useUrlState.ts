@@ -5,11 +5,13 @@ interface UrlState {
   line?: string; // selected line filter
   size: number; // image size
   select?: string; // selected device ID
+  view: "list" | "grid"; // view mode
 }
 
 const DEFAULT_STATE: UrlState = {
   q: "",
   size: 128,
+  view: "grid",
 };
 
 function getStateFromUrl(): UrlState {
@@ -20,6 +22,7 @@ function getStateFromUrl(): UrlState {
     line: params.get("line") || undefined,
     size: Number(params.get("size")) || DEFAULT_STATE.size,
     select: params.get("select") || undefined,
+    view: (params.get("view") as "list" | "grid") || DEFAULT_STATE.view,
   };
 }
 
@@ -31,6 +34,7 @@ function updateUrl(state: UrlState) {
   if (state.size !== DEFAULT_STATE.size)
     params.set("size", state.size.toString());
   if (state.select) params.set("select", state.select);
+  if (state.view !== DEFAULT_STATE.view) params.set("view", state.view);
 
   const newUrl = `${window.location.pathname}${params.toString() ? "?" + params.toString() : ""}`;
   window.history.replaceState({}, "", newUrl);
@@ -63,6 +67,7 @@ export function useUrlState() {
     selectedLineId: state.line,
     imageSize: state.size,
     selectedDeviceId: state.select,
+    viewMode: state.view,
     updateState,
   };
 }

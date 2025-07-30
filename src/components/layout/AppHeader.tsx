@@ -13,9 +13,11 @@ interface AppHeaderProps {
   searchQuery: string;
   selectedLineId?: string;
   imageSize: number;
+  viewMode: "list" | "grid";
   onSearchChange: (query: string) => void;
   onLineFilterChange: (lineId?: string) => void;
   onImageSizeChange: (size: number) => void;
+  onViewModeChange: (mode: "list" | "grid") => void;
 }
 
 export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
@@ -28,11 +30,13 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       searchQuery,
       selectedLineId,
       imageSize,
+      viewMode,
       onSearchChange,
       onLineFilterChange,
       onImageSizeChange,
+      onViewModeChange,
     },
-    ref,
+    ref
   ) => {
     return (
       <div ref={ref}>
@@ -73,9 +77,11 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
           searchQuery={searchQuery}
           selectedLineId={selectedLineId}
           imageSize={imageSize}
+          viewMode={viewMode}
           onSearchChange={onSearchChange}
           onLineFilterChange={onLineFilterChange}
           onImageSizeChange={onImageSizeChange}
+          onViewModeChange={onViewModeChange}
         />
       </div>
     );

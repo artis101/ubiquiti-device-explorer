@@ -1,6 +1,7 @@
 import { FixedSizeList as List } from "react-window";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
 import { DeviceCard } from "@components/device/DeviceCard";
+import { DeviceGrid } from "@components/device/DeviceGrid";
 
 interface DeviceListProps {
   devices: NormalizedDevice[];
@@ -8,7 +9,9 @@ interface DeviceListProps {
   selectedDeviceId?: string;
   onDeviceSelect: (device: NormalizedDevice) => void;
   height: number;
+  width: number;
   searchHits: Map<string, SearchHit>;
+  viewMode: "list" | "grid";
 }
 
 interface ListItemProps {
@@ -51,7 +54,9 @@ export function DeviceList({
   selectedDeviceId,
   onDeviceSelect,
   height,
+  width,
   searchHits,
+  viewMode,
 }: DeviceListProps) {
   if (devices.length === 0) {
     return (
@@ -82,6 +87,20 @@ export function DeviceList({
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (viewMode === "grid") {
+    return (
+      <DeviceGrid
+        devices={devices}
+        imageSize={imageSize}
+        selectedDeviceId={selectedDeviceId}
+        onDeviceSelect={onDeviceSelect}
+        height={height}
+        width={width}
+        searchHits={searchHits}
+      />
     );
   }
 

@@ -10,6 +10,7 @@ interface DeviceCardProps {
   onSelect: (device: NormalizedDevice) => void;
   isSelected: boolean;
   searchHit?: SearchHit;
+  layout?: "list" | "grid";
 }
 
 function DeviceCardComponent({
@@ -18,6 +19,7 @@ function DeviceCardComponent({
   onSelect,
   isSelected,
   searchHit,
+  layout = "list",
 }: DeviceCardProps) {
   const handleSelect = useCallback(() => {
     onSelect(device);
@@ -33,12 +35,16 @@ function DeviceCardComponent({
     [handleSelect]
   );
 
+  const isListLayout = layout === "list";
+
   return (
     <div
-      className={`p-4 bg-white border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 ${
+      className={`bg-white border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 ${
         isSelected
           ? "border-blue-600 ring-2 ring-blue-600 ring-opacity-20 shadow-lg"
           : "border-gray-200 hover:border-blue-300"
+      } ${
+        isListLayout ? "p-4 w-full max-w-4xl mx-auto" : "p-3 flex flex-col items-center h-full"
       }`}
       onClick={handleSelect}
       role="button"
@@ -46,10 +52,13 @@ function DeviceCardComponent({
       onKeyDown={handleKeyDown}
       aria-label={`Select device ${device.displayName}`}
       aria-pressed={isSelected}
+      style={!isListLayout ? { width: `${imageSize + 48}px` } : {}}
     >
-      <div className="flex items-start gap-6">
+      <div
+        className={isListLayout ? "flex items-start gap-6" : "flex flex-col items-center gap-3"}
+      >
         <DeviceImage device={device} imageSize={imageSize} />
-        <DeviceInfo device={device} searchHit={searchHit} />
+        <DeviceInfo device={device} searchHit={searchHit} layout={layout} />
       </div>
     </div>
   );
