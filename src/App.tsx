@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useUidb } from "./hooks/useUidb";
 import { useUrlState } from "./hooks/useUrlState";
 import { useDebounce } from "./hooks/useDebounce";
@@ -22,8 +22,11 @@ function App() {
   } = useUrlState();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
-    null,
+    null
   );
+  const [headerHeight, setHeaderHeight] = useState(256);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   // Debounce search query for better performance
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -35,7 +38,7 @@ function App() {
     if (debouncedSearchQuery) {
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
       return searchResults.map(
-        (hit) => filtered.find((device) => device.id === hit.id)!,
+        (hit) => filtered.find((device) => device.id === hit.id)!
       );
     }
 
@@ -51,6 +54,39 @@ function App() {
       }
     }
   }, [selectedDeviceId, devices]);
+
+  // Calculate header height dynamically
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
+    if (headerRef.current) {
+      resizeObserver.observe(headerRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [warnings]);
+
+  // Track window height changes
+  useEffect(() => {
+    const updateWindowHeight = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', updateWindowHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowHeight);
+    };
+  }, []);
 
   const handleDeviceSelect = (device: NormalizedDevice) => {
     setDetailsDevice(device);
@@ -130,56 +166,62 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <header className="bg-white shadow-lg border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-20">
-              <div className="flex items-center">
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div id="header" ref={headerRef}>
+          {/* Header */}
+          <header className="bg-white shadow-lg border-b border-gray-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between h-20">
                 <div className="flex items-center">
-                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-white font-bold text-lg">U</span>
-                  </div>
-                  <div>
-                    <h1 className="text-3xl font-bold text-gray-900">
-                      UIDB Agent
-                    </h1>
-                    <span className="text-sm text-gray-500 font-medium">
-                      Internal Product Knowledge Explorer
-                    </span>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg">U</span>
+                    </div>
+                    <div>
+                      <h1 className="text-3xl font-bold text-gray-900">
+                        UIDB Agent
+                      </h1>
+                      <span className="text-sm text-gray-500 font-medium">
+                        Internal Product Knowledge Explorer
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-6">
-                <ConnectionStatusIndicator connectionInfo={connectionInfo} />
+                <div className="flex items-center gap-6">
+                  <ConnectionStatusIndicator connectionInfo={connectionInfo} />
+                </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Warning Banner */}
-        <WarningBanner warnings={warnings} />
+          {/* Warning Banner */}
+          <WarningBanner warnings={warnings} />
 
-        {/* Search and Filters */}
-        <SearchAndFilters
-          devices={devices}
-          searchQuery={searchQuery}
-          selectedLineId={selectedLineId}
-          imageSize={imageSize}
-          onSearchChange={handleSearchChange}
-          onLineFilterChange={handleLineFilterChange}
-          onImageSizeChange={handleImageSizeChange}
-        />
+          {/* Search and Filters */}
+          <SearchAndFilters
+            devices={devices}
+            filteredDevices={filteredDevices}
+            searchQuery={searchQuery}
+            selectedLineId={selectedLineId}
+            imageSize={imageSize}
+            onSearchChange={handleSearchChange}
+            onLineFilterChange={handleLineFilterChange}
+            onImageSizeChange={handleImageSizeChange}
+          />
+        </div>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main
+          className="flex-1 min-h-0"
+          style={{ height: `calc(100vh - ${headerHeight}px)` }}
+        >
           <DeviceList
             devices={filteredDevices}
             imageSize={imageSize}
             selectedDeviceId={selectedDeviceId}
             onDeviceSelect={handleDeviceSelect}
-            height={window.innerHeight - 320} // Approximate height minus header/filters
+            height={windowHeight - headerHeight}
           />
         </main>
 

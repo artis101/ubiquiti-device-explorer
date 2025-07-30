@@ -4,6 +4,7 @@ import { getProductLines } from "../utils/uidb";
 
 interface SearchAndFiltersProps {
   devices: NormalizedDevice[];
+  filteredDevices: NormalizedDevice[];
   searchQuery: string;
   selectedLineId?: string;
   imageSize: number;
@@ -21,6 +22,7 @@ const IMAGE_SIZES = [
 
 export function SearchAndFilters({
   devices,
+  filteredDevices,
   searchQuery,
   selectedLineId,
   imageSize,
@@ -125,8 +127,18 @@ export function SearchAndFilters({
         {/* Results Count */}
         <div className="mt-6 flex items-center justify-between">
           <div className="text-lg font-semibold text-gray-900">
-            {devices.length.toLocaleString()} device
-            {devices.length !== 1 ? "s" : ""} found
+            {searchQuery || selectedLineId ? (
+              <>
+                {filteredDevices.length.toLocaleString()}/
+                {devices.length.toLocaleString()} device
+                {devices.length !== 1 ? "s" : ""} found
+              </>
+            ) : (
+              <>
+                {devices.length.toLocaleString()} device
+                {devices.length !== 1 ? "s" : ""} found
+              </>
+            )}
           </div>
         </div>
       </div>
