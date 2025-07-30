@@ -18,7 +18,7 @@ export const DeviceImageDisplay = React.memo(({
   style
 }: DeviceImageDisplayProps) => {
   const { src, srcSet, sizes } = useImageUrl({ device, size });
-  
+
   const errorHandlerOptions = {
     deviceName: device.displayName,
     deviceLineAbbrev: device.line?.abbrev,
@@ -26,22 +26,15 @@ export const DeviceImageDisplay = React.memo(({
   };
 
   return (
-    <div className={`text-center ${className}`}>
-      <ImageWithFallback
-        src={src}
-        srcSet={srcSet}
-        sizes={sizes}
-        alt={device.displayName || 'Device'}
-        width={size}
-        height={size}
-        className="max-w-full h-auto mx-auto border border-gray-200 rounded-lg"
-        style={{
-          maxHeight: "400px",
-          ...style
-        }}
-        errorHandlerOptions={errorHandlerOptions}
-      />
-    </div>
+    <ImageWithFallback
+      src={src}
+      srcSet={srcSet}
+      sizes={sizes}
+      alt={device.displayName || 'Device'}
+      className={`w-full h-auto object-contain border border-gray-200 bg-white rounded-lg ${className}`}
+      style={style}
+      errorHandlerOptions={errorHandlerOptions}
+    />
   );
 });
 

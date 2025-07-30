@@ -7,11 +7,17 @@ interface ImageLoaderProps {
 
 export const ImageLoader = React.memo(({ size, className = "" }: ImageLoaderProps) => {
   return (
-    <div 
-      className={`animate-pulse bg-gray-200 rounded ${className}`}
+    <div
+      className={`relative overflow-hidden bg-gray-200 rounded-lg ${className}`}
       style={{ width: size, height: size }}
     >
-      <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" />
+      <div
+        className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"
+        style={{
+          animation: "shimmer 1.5s infinite",
+          backgroundSize: "200% 100%",
+        }}
+      />
     </div>
   );
 });

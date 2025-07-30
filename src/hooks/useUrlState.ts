@@ -10,7 +10,7 @@ interface UrlState {
 
 const DEFAULT_STATE: UrlState = {
   q: "",
-  size: 128,
+  size: 256,
   view: "grid",
 };
 
@@ -36,7 +36,9 @@ function updateUrl(state: UrlState) {
   if (state.select) params.set("select", state.select);
   if (state.view !== DEFAULT_STATE.view) params.set("view", state.view);
 
-  const newUrl = `${window.location.pathname}${params.toString() ? "?" + params.toString() : ""}`;
+  const newUrl = `${window.location.pathname}${
+    params.toString() ? "?" + params.toString() : ""
+  }`;
   window.history.replaceState({}, "", newUrl);
 }
 

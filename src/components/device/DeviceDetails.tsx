@@ -13,17 +13,21 @@ interface DeviceDetailsProps {
 export function DeviceDetails({ device, onClose }: DeviceDetailsProps) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden">
         <DeviceHeader title={device.displayName} onClose={onClose} />
 
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex-1 overflow-y-auto">
           <DeviceImages device={device} />
 
-          <div className="lg:w-1/2 p-6 overflow-y-auto">
-            <div className="space-y-4">
-              <DeviceAttributes device={device} />
-              <DeviceAliases aliases={device.shortnames || []} />
-              <RawJsonViewer data={device} />
+          <div className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div>
+                <DeviceAttributes device={device} />
+              </div>
+              <div>
+                <DeviceAliases aliases={device.shortnames || []} />
+                <RawJsonViewer data={device} />
+              </div>
             </div>
           </div>
         </div>
