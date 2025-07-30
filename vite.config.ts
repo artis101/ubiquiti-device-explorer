@@ -1,0 +1,31 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwind from "@tailwindcss/vite";
+import browserslist from "browserslist";
+import { browserslistToTargets } from "lightningcss";
+
+const userBrowserslist =
+  // loadConfig() returns the resolved Browserslist config (or undefined)
+  // when a browserslist is found in package.json or a .browserslistrc file.
+  // See Browserslist docs for the standard discovery rules.
+  browserslist.loadConfig({ path: process.cwd() });
+
+const fallbackQuery = "defaults and fully supports es6-module";
+const resolvedQuery = userBrowserslist ?? fallbackQuery;
+
+const lightningTargets = browserslistToTargets(browserslist(resolvedQuery));
+
+export default defineConfig({
+  plugins: [react(), tailwind()],
+
+  css: {
+    transformer: "lightningcss",
+    lightningcss: {
+      targets: lightningTargets,
+    },
+  },
+  build: {
+    cssMinify: "lightningcss",
+    target: "baseline-widely-available",
+  },
+});

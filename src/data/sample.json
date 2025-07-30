@@ -1,0 +1,107 @@
+{
+  "devices": [
+    {
+      "id": "ed67d43e-2d5c-4928-ace8-edf984baeff1",
+      "sku": "ACB-AC",
+      "line": {
+        "id": "aircube",
+        "name": "airCube",
+        "abbrev": "AC"
+      },
+      "product": {
+        "name": "airCube AC",
+        "abbrev": "ACB-AC"
+      },
+      "shortnames": ["ACB-AC", "airCube-AC", "aircube-ac"],
+      "sysid": "e50e",
+      "images": {
+        "default": "977c1f8c477549aeb7238727fd4ecc62",
+        "nopadding": "abc123def456",
+        "topology": "789xyz012",
+        "icon": "icon123"
+      },
+      "triplets": [
+        {
+          "k1": "ACB-AC",
+          "k2": "aircube",
+          "k3": "ac"
+        }
+      ]
+    },
+    {
+      "id": "f123456e-1234-5678-9abc-def123456789",
+      "sku": "UDM-PRO",
+      "line": {
+        "id": "unifi",
+        "name": "UniFi",
+        "abbrev": "UF"
+      },
+      "product": {
+        "name": "UniFi Dream Machine Pro",
+        "abbrev": "UDM-PRO"
+      },
+      "shortnames": ["UDM-PRO", "Dream-Machine-Pro"],
+      "sysid": ["udmpro", "udm-pro"],
+      "images": {
+        "default": "udmpro123456789abcdef",
+        "topology": "udmpro_topo_hash"
+      },
+      "triplets": [
+        {
+          "k1": "UDM-PRO",
+          "k2": "dream-machine",
+          "k3": "pro"
+        }
+      ]
+    },
+    {
+      "id": "a987654e-9876-5432-1098-fedcba987654",
+      "sku": "AF11FX",
+      "line": {
+        "id": "airmax",
+        "name": "airMAX",
+        "abbrev": "AM"
+      },
+      "product": {
+        "name": "airFiber 11FX",
+        "abbrev": "AF11FX"
+      },
+      "shortnames": ["AF11FX", "airFiber-11FX"],
+      "sysid": "af11fx",
+      "images": {
+        "default": "af11fx_default_hash123",
+        "nopadding": "af11fx_nopad_hash456"
+      }
+    },
+    {
+      "id": "b111222e-3333-4444-5555-666677778888",
+      "sku": "US-24-POE",
+      "line": {
+        "id": "unifi",
+        "name": "UniFi",
+        "abbrev": "UF"
+      },
+      "product": {
+        "name": "UniFi Switch 24 PoE",
+        "abbrev": "US-24-POE"
+      },
+      "shortnames": ["US-24-POE", "Switch-24-PoE"],
+      "images": {
+        "icon": "switch_icon_hash"
+      }
+    },
+    {
+      "id": "c999888e-7777-6666-5555-444433332222",
+      "sku": "MISSING-IMAGE",
+      "line": {
+        "id": "test",
+        "name": "Test Line",
+        "abbrev": "TL"
+      },
+      "product": {
+        "name": "Device Without Images"
+      },
+      "shortnames": ["NO-IMG"]
+    }
+  ]
+}
