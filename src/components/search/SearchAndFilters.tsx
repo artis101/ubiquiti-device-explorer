@@ -8,8 +8,6 @@ import {
 } from "./controls";
 
 interface SearchAndFiltersProps {
-  devices: NormalizedDevice[];
-  filteredDevices: NormalizedDevice[];
   searchQuery: string;
   selectedLineId?: string;
   imageSize: number;
@@ -21,8 +19,6 @@ interface SearchAndFiltersProps {
 }
 
 export function SearchAndFilters({
-  devices,
-  filteredDevices,
   searchQuery,
   selectedLineId,
   imageSize,
@@ -41,7 +37,6 @@ export function SearchAndFilters({
             onSearchChange={onSearchChange}
           />
           <ProductLineFilter
-            devices={devices}
             selectedLineId={selectedLineId}
             onLineFilterChange={onLineFilterChange}
           />
@@ -49,8 +44,6 @@ export function SearchAndFilters({
 
         <div className="mt-4 flex items-center justify-between">
           <SearchResultsCount
-            devices={devices}
-            filteredDevices={filteredDevices}
             searchQuery={searchQuery}
             selectedLineId={selectedLineId}
           />

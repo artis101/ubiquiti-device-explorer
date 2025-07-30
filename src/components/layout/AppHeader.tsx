@@ -2,14 +2,12 @@ import { forwardRef } from "react";
 import { WarningBanner } from "@components/ui/WarningBanner";
 import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { ConnectionStatusIndicator } from "@components/ui/ConnectionStatusIndicator";
-import type { NormalizedDevice, SchemaWarning } from "types/uidb";
+import type { SchemaWarning } from "types/uidb";
 import type { ConnectionInfo } from "@hooks/useConnectionStatus";
 
 interface AppHeaderProps {
   warnings: SchemaWarning[];
   connectionInfo: ConnectionInfo;
-  devices: NormalizedDevice[];
-  filteredDevices: NormalizedDevice[];
   searchQuery: string;
   selectedLineId?: string;
   imageSize: number;
@@ -25,8 +23,6 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     {
       warnings,
       connectionInfo,
-      devices,
-      filteredDevices,
       searchQuery,
       selectedLineId,
       imageSize,
@@ -72,8 +68,6 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
 
         {/* Search and Filters */}
         <SearchAndFilters
-          devices={devices}
-          filteredDevices={filteredDevices}
           searchQuery={searchQuery}
           selectedLineId={selectedLineId}
           imageSize={imageSize}

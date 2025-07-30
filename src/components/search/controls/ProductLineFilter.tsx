@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import type { NormalizedDevice } from 'types/uidb';
-import { getProductLines } from '@utils/uidb';
+import React from 'react';
+import { useProductLineData } from '@contexts/ProductLineContext';
 
 interface ProductLineFilterProps {
-  devices: NormalizedDevice[];
   selectedLineId?: string;
   onLineFilterChange: (lineId?: string) => void;
 }
 
-export function ProductLineFilter({ devices, selectedLineId, onLineFilterChange }: ProductLineFilterProps) {
-  const [productLines, setProductLines] = useState<
-    Array<{ id: string; name: string }>
-  >([]);
-
-  useEffect(() => {
-    setProductLines(getProductLines(devices));
-  }, [devices]);
+export function ProductLineFilter({ selectedLineId, onLineFilterChange }: ProductLineFilterProps) {
+  const { productLines } = useProductLineData();
 
   return (
     <div className="flex-shrink-0 min-w-48">

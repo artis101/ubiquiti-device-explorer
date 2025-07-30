@@ -1,14 +1,13 @@
 import React from 'react';
-import type { NormalizedDevice } from 'types/uidb';
+import { useUidbData } from '@contexts/UidbContext';
 
 interface SearchResultsCountProps {
-  devices: NormalizedDevice[];
-  filteredDevices: NormalizedDevice[];
   searchQuery: string;
   selectedLineId?: string;
 }
 
-export function SearchResultsCount({ devices, filteredDevices, searchQuery, selectedLineId }: SearchResultsCountProps) {
+export function SearchResultsCount({ searchQuery, selectedLineId }: SearchResultsCountProps) {
+  const { devices, filteredDevices } = useUidbData();
   return (
     <div className="text-lg font-semibold text-gray-900">
       {searchQuery || selectedLineId ? (

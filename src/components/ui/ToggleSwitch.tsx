@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 type ToggleOption<T> = {
   value: T;
@@ -13,7 +13,7 @@ interface ToggleSwitchProps<T> {
   label?: string;
 }
 
-export function ToggleSwitch<T extends string | number>({
+function ToggleSwitchComponent<T extends string | number>({
   options,
   selectedValue,
   onValueChange,
@@ -46,3 +46,5 @@ export function ToggleSwitch<T extends string | number>({
     </div>
   );
 }
+
+export const ToggleSwitch = memo(ToggleSwitchComponent) as <T extends string | number>(props: ToggleSwitchProps<T>) => React.ReactElement;

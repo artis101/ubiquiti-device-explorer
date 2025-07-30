@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 
 interface StatusScreenProps {
   status: 'loading' | 'error';
@@ -8,7 +8,7 @@ interface StatusScreenProps {
   onRetry?: () => void;
 }
 
-export function StatusScreen({ status, title, message, onRetry }: StatusScreenProps) {
+function StatusScreenComponent({ status, title, message, onRetry }: StatusScreenProps) {
   const isError = status === 'error';
 
   const icon = isError ? (
@@ -55,3 +55,5 @@ export function StatusScreen({ status, title, message, onRetry }: StatusScreenPr
     </div>
   );
 }
+
+export const StatusScreen = memo(StatusScreenComponent);

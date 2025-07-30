@@ -1,21 +1,17 @@
-import { useState, useEffect, useMemo } from "react";
-import { useUidb } from "@hooks/useUidb";
+import { useState, useEffect, useCallback } from "react";
 import { useUrlState } from "@hooks/useUrlState";
-import { useDebounce } from "@hooks/useDebounce";
 import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
-import { searchDevices, filterByLine } from "@utils/search";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
-import { LoadingScreen } from "@components/ui/LoadingScreen";
-import { ErrorScreen } from "@components/ui/ErrorScreen";
 import { AppHeader } from "@components/layout/AppHeader";
 import { DeviceList } from "@components/device/DeviceList";
 import { DeviceDetails } from "@components/device/DeviceDetails";
-import type { NormalizedDevice, SearchHit } from "types/uidb";
+import type { NormalizedDevice } from "types/uidb";
+import { useUidbData } from "./contexts/UidbContext";
 
 function App() {
-  const { devices, warnings, loading, error, connectionInfo, refetch } =
-    useUidb();
+  const { devices, warnings, connectionInfo, filteredDevices, searchHits } =
+    useUidbData();
   const {
     searchQuery,
     selectedLineId,
@@ -33,36 +29,6 @@ function App() {
   const { headerHeight, headerRef } = useHeaderHeight([warnings]);
   const { windowHeight, windowWidth } = useWindowDimensions();
 
-  // Debounce search query for better performance
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
-
-  // Filter and search devices
-  const { filteredDevices, searchHits } = useMemo(() => {
-    const filtered = filterByLine(devices, selectedLineId);
-
-    if (debouncedSearchQuery) {
-      const searchResults = searchDevices(filtered, debouncedSearchQuery);
-      const resultDevices = searchResults.map(
-        (hit) => filtered.find((device) => device.id === hit.id)!
-      );
-
-      // Create a map of device ID to search hit for easy lookup
-      const searchHitMap = new Map<string, SearchHit>(
-        searchResults.map((hit) => [hit.id, hit])
-      );
-
-      return {
-        filteredDevices: resultDevices,
-        searchHits: searchHitMap,
-      };
-    }
-
-    return {
-      filteredDevices: filtered,
-      searchHits: new Map<string, SearchHit>(),
-    };
-  }, [devices, selectedLineId, debouncedSearchQuery]);
-
   // Handle device selection from URL
   useEffect(() => {
     if (selectedDeviceId && devices.length > 0) {
@@ -73,39 +39,31 @@ function App() {
     }
   }, [selectedDeviceId, devices]);
 
-  const handleDeviceSelect = (device: NormalizedDevice) => {
+  const handleDeviceSelect = useCallback((device: NormalizedDevice) => {
     setDetailsDevice(device);
     updateState({ select: device.id });
-  };
+  }, [updateState]);
 
-  const handleCloseDetails = () => {
+  const handleCloseDetails = useCallback(() => {
     setDetailsDevice(null);
     updateState({ select: undefined });
-  };
+  }, [updateState]);
 
-  const handleSearchChange = (query: string) => {
+  const handleSearchChange = useCallback((query: string) => {
     updateState({ q: query });
-  };
+  }, [updateState]);
 
-  const handleLineFilterChange = (lineId?: string) => {
+  const handleLineFilterChange = useCallback((lineId?: string) => {
     updateState({ line: lineId });
-  };
+  }, [updateState]);
 
-  const handleImageSizeChange = (size: number) => {
+  const handleImageSizeChange = useCallback((size: number) => {
     updateState({ size });
-  };
+  }, [updateState]);
 
-  const handleViewModeChange = (mode: "list" | "grid") => {
+  const handleViewModeChange = useCallback((mode: "list" | "grid") => {
     updateState({ view: mode });
-  };
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
-  if (error) {
-    return <ErrorScreen error={error} onRetry={refetch} />;
-  }
+  }, [updateState]);
 
   return (
     <ErrorBoundary>
@@ -114,8 +72,6 @@ function App() {
           ref={headerRef}
           warnings={warnings}
           connectionInfo={connectionInfo}
-          devices={devices}
-          filteredDevices={filteredDevices}
           searchQuery={searchQuery}
           selectedLineId={selectedLineId}
           imageSize={imageSize}
