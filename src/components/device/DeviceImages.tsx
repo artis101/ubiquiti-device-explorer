@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { NormalizedDevice } from "@types/uidb";
+import type { NormalizedDevice } from "types/uidb";
 import { CopyButton } from "@components/ui/CopyButton";
 
 interface DeviceImagesProps {
@@ -66,9 +66,9 @@ export function DeviceImages({ device }: DeviceImagesProps) {
                   <code className="bg-gray-100 px-1 py-0.5 rounded truncate max-w-32">
                     {hash}
                   </code>
-                  <CopyButton 
-                    textToCopy={getImageUrl() || ""} 
-                    title={`Copy ${type} image URL`} 
+                  <CopyButton
+                    textToCopy={getImageUrl() || ""}
+                    title={`Copy ${type} image URL`}
                   />
                 </div>
               </div>

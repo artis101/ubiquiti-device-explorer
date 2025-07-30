@@ -45,7 +45,7 @@ export function searchDevices(
     lineId: item.lineId,
     imageUrl: item.imageUrl,
     score: 1 - (score || 0), // Fuse.js score is 0-1, 0 is perfect match
-    matches: matches?.map(match => ({
+    matches: matches?.map((match) => ({
       indices: match.indices,
       key: match.key,
       value: match.value,

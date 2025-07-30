@@ -6,7 +6,11 @@ interface CopyButtonProps {
   className?: string;
 }
 
-export function CopyButton({ textToCopy, title, className = "" }: CopyButtonProps) {
+export function CopyButton({
+  textToCopy,
+  title,
+  className = "",
+}: CopyButtonProps) {
   const { copied, copy } = useCopyToClipboard();
 
   return (

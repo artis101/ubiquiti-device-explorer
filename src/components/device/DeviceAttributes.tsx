@@ -1,4 +1,4 @@
-import type { NormalizedDevice } from "@types/uidb";
+import type { NormalizedDevice } from "types/uidb";
 import { CopyButton } from "@components/ui/CopyButton";
 
 interface DeviceAttributesProps {

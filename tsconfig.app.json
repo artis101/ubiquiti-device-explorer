@@ -28,7 +28,7 @@
       "@config/*": ["src/config/*"],
       "@data/*": ["src/data/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@types/*": ["src/types/*"],
+      "types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     }
   },

@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import { WarningBanner } from "@components/ui/WarningBanner";
 import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { ConnectionStatusIndicator } from "@components/ui/ConnectionStatusIndicator";
-import type { NormalizedDevice, SchemaWarning } from "@types/uidb";
+import type { NormalizedDevice, SchemaWarning } from "types/uidb";
 
 interface AppHeaderProps {
   warnings: SchemaWarning[];
@@ -31,7 +31,7 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       onLineFilterChange,
       onImageSizeChange,
     },
-    ref
+    ref,
   ) => {
     return (
       <div ref={ref}>
@@ -78,5 +78,5 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         />
       </div>
     );
-  }
+  },
 );

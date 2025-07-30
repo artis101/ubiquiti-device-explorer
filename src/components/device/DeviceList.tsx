@@ -1,5 +1,5 @@
 import { FixedSizeList as List } from "react-window";
-import type { NormalizedDevice, SearchHit } from "@types/uidb";
+import type { NormalizedDevice, SearchHit } from "types/uidb";
 import { DeviceCard } from "@components/device/DeviceCard";
 
 interface DeviceListProps {
@@ -24,7 +24,8 @@ interface ListItemProps {
 }
 
 function ListItem({ index, style, data }: ListItemProps) {
-  const { devices, imageSize, selectedDeviceId, onDeviceSelect, searchHits } = data;
+  const { devices, imageSize, selectedDeviceId, onDeviceSelect, searchHits } =
+    data;
   const device = devices[index];
 
   if (!device) return null;

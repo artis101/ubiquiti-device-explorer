@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { NormalizedDevice } from "@types/uidb";
+import type { NormalizedDevice } from "types/uidb";
 import { CopyButton } from "@components/ui/CopyButton";
 
 interface RawJsonViewerProps {
@@ -36,8 +36,8 @@ export function RawJsonViewer({ data }: RawJsonViewerProps) {
           <pre className="text-xs bg-gray-100 p-3 rounded overflow-auto max-h-64">
             {JSON.stringify(data, null, 2)}
           </pre>
-          <CopyButton 
-            textToCopy={JSON.stringify(data, null, 2)} 
+          <CopyButton
+            textToCopy={JSON.stringify(data, null, 2)}
             className="mt-2"
           />
         </div>

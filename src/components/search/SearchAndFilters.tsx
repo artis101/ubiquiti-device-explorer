@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { NormalizedDevice } from "@types/uidb";
+import type { NormalizedDevice } from "types/uidb";
 import { getProductLines } from "@utils/uidb";
 
 interface SearchAndFiltersProps {

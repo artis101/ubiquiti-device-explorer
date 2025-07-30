@@ -1,4 +1,4 @@
-import type { NormalizedDevice } from "@types/uidb";
+import type { NormalizedDevice } from "types/uidb";
 import { DeviceHeader } from "@components/device/DeviceHeader";
 import { DeviceAttributes } from "@components/device/DeviceAttributes";
 import { DeviceImages } from "@components/device/DeviceImages";

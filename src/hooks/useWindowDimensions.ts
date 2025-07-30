@@ -10,10 +10,10 @@ export function useWindowDimensions() {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', updateWindowDimensions);
+    window.addEventListener("resize", updateWindowDimensions);
 
     return () => {
-      window.removeEventListener('resize', updateWindowDimensions);
+      window.removeEventListener("resize", updateWindowDimensions);
     };
   }, []);
 

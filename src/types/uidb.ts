@@ -1,52 +1,45 @@
 import { z } from "zod";
 
-// Core UIDB device schema with .passthrough() for unknown fields
-export const DeviceSchema = z
-  .object({
-    id: z.string(),
-    sku: z.string().optional(),
-    line: z
-      .object({
-        id: z.string(),
-        name: z.string().optional(),
-        abbrev: z.string().optional(),
+export const DeviceSchema = z.looseObject({
+  id: z.string(),
+  sku: z.string().optional(),
+  line: z
+    .object({
+      id: z.string(),
+      name: z.string().optional(),
+      abbrev: z.string().optional(),
+    })
+    .optional(),
+  product: z
+    .object({
+      name: z.string().optional(),
+      abbrev: z.string().optional(),
+    })
+    .optional(),
+  shortnames: z.array(z.string()).optional(),
+  sysid: z.union([z.string(), z.array(z.string())]).optional(),
+  images: z
+    .object({
+      default: z.string().optional(),
+      nopadding: z.string().optional(),
+      topology: z.string().optional(),
+      icon: z.string().optional(),
+    })
+    .optional(),
+  triplets: z
+    .array(
+      z.looseObject({
+        k1: z.string().optional(),
+        k2: z.string().optional(),
+        k3: z.string().optional(),
       })
-      .optional(),
-    product: z
-      .object({
-        name: z.string().optional(),
-        abbrev: z.string().optional(),
-      })
-      .optional(),
-    shortnames: z.array(z.string()).optional(),
-    sysid: z.union([z.string(), z.array(z.string())]).optional(),
-    images: z
-      .object({
-        default: z.string().optional(),
-        nopadding: z.string().optional(),
-        topology: z.string().optional(),
-        icon: z.string().optional(),
-      })
-      .optional(),
-    triplets: z
-      .array(
-        z
-          .object({
-            k1: z.string().optional(),
-            k2: z.string().optional(),
-            k3: z.string().optional(),
-          })
-          .passthrough()
-      )
-      .optional(),
-  })
-  .passthrough(); // Allow unknown fields
+    )
+    .optional(),
+});
 
-export const UidbResponseSchema = z
-  .object({
-    devices: z.array(DeviceSchema),
-  })
-  .passthrough();
+export const UidbResponseSchema = z.looseObject({
+  devices: z.array(DeviceSchema),
+});
 
 // Inferred types
 export type Device = z.infer<typeof DeviceSchema>;

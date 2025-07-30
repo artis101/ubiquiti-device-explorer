@@ -1,4 +1,4 @@
-import type { NormalizedDevice, SearchHit } from "@types/uidb";
+import type { NormalizedDevice, SearchHit } from "types/uidb";
 import { Highlight } from "@components/ui/Highlight";
 import { DeviceAliases } from "@components/device/DeviceAliases";
 
@@ -11,9 +11,11 @@ export function DeviceInfo({ device, searchHit }: DeviceInfoProps) {
   return (
     <div className="flex-1 min-w-0">
       <h3 className="text-lg font-bold text-gray-900 truncate mb-3">
-        <Highlight 
-          text={device.displayName} 
-          indices={searchHit?.matches?.find(m => m.key === 'displayName')?.indices}
+        <Highlight
+          text={device.displayName}
+          indices={
+            searchHit?.matches?.find((m) => m.key === "displayName")?.indices
+          }
         />
       </h3>
 
@@ -24,9 +26,11 @@ export function DeviceInfo({ device, searchHit }: DeviceInfoProps) {
               SKU:
             </span>
             <span className="text-sm font-medium text-gray-900">
-              <Highlight 
-                text={device.sku} 
-                indices={searchHit?.matches?.find(m => m.key === 'sku')?.indices}
+              <Highlight
+                text={device.sku}
+                indices={
+                  searchHit?.matches?.find((m) => m.key === "sku")?.indices
+                }
               />
             </span>
           </div>
@@ -44,10 +48,7 @@ export function DeviceInfo({ device, searchHit }: DeviceInfoProps) {
         )}
 
         {device.shortnames && device.shortnames.length > 0 && (
-          <DeviceAliases 
-            aliases={device.shortnames} 
-            searchHit={searchHit} 
-          />
+          <DeviceAliases aliases={device.shortnames} searchHit={searchHit} />
         )}
       </div>
     </div>

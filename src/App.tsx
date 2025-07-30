@@ -11,7 +11,8 @@ import { ErrorScreen } from "@components/ui/ErrorScreen";
 import { AppHeader } from "@components/layout/AppHeader";
 import { DeviceList } from "@components/device/DeviceList";
 import { DeviceDetails } from "@components/device/DeviceDetails";
-import type { NormalizedDevice, SearchHit } from "@types/uidb";
+import type { NormalizedDevice, SearchHit } from "types/uidb";
+
 function App() {
   const { devices, warnings, loading, error, connectionInfo, refetch } =
     useUidb();
@@ -24,7 +25,7 @@ function App() {
   } = useUrlState();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
-    null
+    null,
   );
 
   // Custom hooks
@@ -41,23 +42,23 @@ function App() {
     if (debouncedSearchQuery) {
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
       const resultDevices = searchResults.map(
-        (hit) => filtered.find((device) => device.id === hit.id)!
+        (hit) => filtered.find((device) => device.id === hit.id)!,
       );
-      
+
       // Create a map of device ID to search hit for easy lookup
       const searchHitMap = new Map<string, SearchHit>(
-        searchResults.map(hit => [hit.id, hit])
+        searchResults.map((hit) => [hit.id, hit]),
       );
-      
-      return { 
-        filteredDevices: resultDevices, 
-        searchHits: searchHitMap 
+
+      return {
+        filteredDevices: resultDevices,
+        searchHits: searchHitMap,
       };
     }
 
-    return { 
-      filteredDevices: filtered, 
-      searchHits: new Map<string, SearchHit>() 
+    return {
+      filteredDevices: filtered,
+      searchHits: new Map<string, SearchHit>(),
     };
   }, [devices, selectedLineId, debouncedSearchQuery]);
 

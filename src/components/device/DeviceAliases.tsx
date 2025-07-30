@@ -1,4 +1,4 @@
-import type { SearchHit } from "@types/uidb";
+import type { SearchHit } from "types/uidb";
 import { Highlight } from "@components/ui/Highlight";
 
 interface DeviceAliasesProps {
@@ -14,10 +14,14 @@ export function DeviceAliases({ aliases, searchHit }: DeviceAliasesProps) {
   // Get highlighted aliases first, then non-highlighted ones
   const highlightedAliases: string[] = [];
   const nonHighlightedAliases: string[] = [];
-  
-  aliases.forEach(alias => {
-    const hasHighlight = searchHit?.matches?.some(m => 
-      m.key === 'shortnames' && m.value === alias && m.indices && m.indices.length > 0
+
+  aliases.forEach((alias) => {
+    const hasHighlight = searchHit?.matches?.some(
+      (m) =>
+        m.key === "shortnames" &&
+        m.value === alias &&
+        m.indices &&
+        m.indices.length > 0,
     );
     if (hasHighlight) {
       highlightedAliases.push(alias);
@@ -25,11 +29,14 @@ export function DeviceAliases({ aliases, searchHit }: DeviceAliasesProps) {
       nonHighlightedAliases.push(alias);
     }
   });
-  
+
   // Show up to 3 aliases, prioritizing highlighted ones
-  const visibleAliases = [...highlightedAliases, ...nonHighlightedAliases].slice(0, 3);
+  const visibleAliases = [
+    ...highlightedAliases,
+    ...nonHighlightedAliases,
+  ].slice(0, 3);
   const hiddenCount = aliases.length - visibleAliases.length;
-  
+
   return (
     <div className="flex items-start gap-2">
       <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-0.5">
@@ -42,22 +49,24 @@ export function DeviceAliases({ aliases, searchHit }: DeviceAliasesProps) {
             <span
               key={`${alias}-${index}`}
               className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                isHighlighted 
-                  ? 'bg-blue-50 text-blue-700 border border-blue-200' 
-                  : 'bg-gray-100 text-gray-700'
+                isHighlighted
+                  ? "bg-blue-50 text-blue-700 border border-blue-200"
+                  : "bg-gray-100 text-gray-700"
               }`}
             >
-              <Highlight 
-                text={alias} 
-                indices={searchHit?.matches?.find(m => m.key === 'shortnames' && m.value === alias)?.indices}
+              <Highlight
+                text={alias}
+                indices={
+                  searchHit?.matches?.find(
+                    (m) => m.key === "shortnames" && m.value === alias,
+                  )?.indices
+                }
               />
             </span>
           );
         })}
         {hiddenCount > 0 && (
-          <span className="text-xs text-gray-500">
-            +{hiddenCount} more
-          </span>
+          <span className="text-xs text-gray-500">+{hiddenCount} more</span>
         )}
       </div>
     </div>

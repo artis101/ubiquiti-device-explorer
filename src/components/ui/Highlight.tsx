@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface HighlightProps {
   text: string;
@@ -13,7 +13,7 @@ export const Highlight: React.FC<HighlightProps> = ({ text, indices }) => {
 
   // Sort indices by start position to handle overlapping matches
   const sortedIndices = [...indices].sort((a, b) => a[0] - b[0]);
-  
+
   // Merge overlapping indices
   const mergedIndices: [number, number][] = [];
   for (const [start, end] of sortedIndices) {
@@ -39,14 +39,10 @@ export const Highlight: React.FC<HighlightProps> = ({ text, indices }) => {
     if (start > lastIndex) {
       parts.push(text.slice(lastIndex, start));
     }
-    
+
     // Add highlighted text
-    parts.push(
-      <mark key={idx}>
-        {text.slice(start, end + 1)}
-      </mark>
-    );
-    
+    parts.push(<mark key={idx}>{text.slice(start, end + 1)}</mark>);
+
     lastIndex = end + 1;
   });
 
