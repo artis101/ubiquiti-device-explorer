@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { SchemaWarning } from "../types/uidb";
+import type { SchemaWarning } from "../../types/uidb";
 
 interface WarningBannerProps {
   warnings: SchemaWarning[];

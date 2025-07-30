@@ -1,4 +1,4 @@
-import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
+import { useCopyToClipboard } from "../../hooks/useCopyToClipboard";
 
 interface CopyButtonProps {
   textToCopy: string;

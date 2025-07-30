@@ -1,8 +1,8 @@
 import { forwardRef } from "react";
-import { WarningBanner } from "./WarningBanner";
-import { SearchAndFilters } from "./SearchAndFilters";
-import { ConnectionStatusIndicator } from "./ConnectionStatusIndicator";
-import type { NormalizedDevice, SchemaWarning } from "../types/uidb";
+import { WarningBanner } from "../ui/WarningBanner";
+import { SearchAndFilters } from "../search/SearchAndFilters";
+import { ConnectionStatusIndicator } from "../ui/ConnectionStatusIndicator";
+import type { NormalizedDevice, SchemaWarning } from "../../types/uidb";
 
 interface AppHeaderProps {
   warnings: SchemaWarning[];

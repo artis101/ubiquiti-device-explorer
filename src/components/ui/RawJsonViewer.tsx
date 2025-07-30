@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { NormalizedDevice } from "../types/uidb";
+import type { NormalizedDevice } from "../../types/uidb";
 import { CopyButton } from "./CopyButton";
 
 interface RawJsonViewerProps {

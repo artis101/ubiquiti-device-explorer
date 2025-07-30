@@ -5,12 +5,12 @@ import { useDebounce } from "./hooks/useDebounce";
 import { useHeaderHeight } from "./hooks/useHeaderHeight";
 import { useWindowDimensions } from "./hooks/useWindowDimensions";
 import { searchDevices, filterByLine } from "./utils/search";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import { LoadingScreen } from "./components/LoadingScreen";
-import { ErrorScreen } from "./components/ErrorScreen";
-import { AppHeader } from "./components/AppHeader";
-import { DeviceList } from "./components/DeviceList";
-import { DeviceDetails } from "./components/DeviceDetails";
+import { ErrorBoundary } from "./components/ui/ErrorBoundary";
+import { LoadingScreen } from "./components/ui/LoadingScreen";
+import { ErrorScreen } from "./components/ui/ErrorScreen";
+import { AppHeader } from "./components/layout/AppHeader";
+import { DeviceList } from "./components/device/DeviceList";
+import { DeviceDetails } from "./components/device/DeviceDetails";
 import type { NormalizedDevice, SearchHit } from "./types/uidb";
 function App() {
   const { devices, warnings, loading, error, connectionInfo, refetch } =

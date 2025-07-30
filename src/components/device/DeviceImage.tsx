@@ -1,4 +1,4 @@
-import type { NormalizedDevice } from "../types/uidb";
+import type { NormalizedDevice } from "../../types/uidb";
 
 interface DeviceImageProps {
   device: NormalizedDevice;

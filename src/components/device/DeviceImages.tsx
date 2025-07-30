@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { NormalizedDevice } from "../types/uidb";
-import { CopyButton } from "./CopyButton";
+import type { NormalizedDevice } from "../../types/uidb";
+import { CopyButton } from "../ui/CopyButton";
 
 interface DeviceImagesProps {
   device: NormalizedDevice;

@@ -1,9 +1,9 @@
-import type { NormalizedDevice } from "../types/uidb";
+import type { NormalizedDevice } from "../../types/uidb";
 import { DeviceHeader } from "./DeviceHeader";
 import { DeviceAttributes } from "./DeviceAttributes";
 import { DeviceImages } from "./DeviceImages";
 import { DeviceAliases } from "./DeviceAliases";
-import { RawJsonViewer } from "./RawJsonViewer";
+import { RawJsonViewer } from "../ui/RawJsonViewer";
 
 interface DeviceDetailsProps {
   device: NormalizedDevice;
@@ -22,7 +22,7 @@ export function DeviceDetails({ device, onClose }: DeviceDetailsProps) {
           <div className="lg:w-1/2 p-6 overflow-y-auto">
             <div className="space-y-4">
               <DeviceAttributes device={device} />
-              <DeviceAliases shortnames={device.shortnames || []} />
+              <DeviceAliases aliases={device.shortnames || []} />
               <RawJsonViewer data={device} />
             </div>
           </div>
