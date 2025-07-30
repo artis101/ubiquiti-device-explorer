@@ -1,4 +1,4 @@
-import { StatusScreen } from './StatusScreen';
+import { StatusScreen } from "./StatusScreen";
 
 export function LoadingScreen() {
   return (

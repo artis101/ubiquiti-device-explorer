@@ -1,4 +1,3 @@
-import type { NormalizedDevice } from "types/uidb";
 import {
   ImageSizeSelector,
   ProductLineFilter,

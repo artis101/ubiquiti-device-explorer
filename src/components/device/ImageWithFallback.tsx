@@ -42,17 +42,14 @@ export const ImageWithFallback = React.memo(
         setHasError(true);
         handleImageError(event, errorHandlerOptions);
       },
-      [errorHandlerOptions]
+      [errorHandlerOptions],
     );
 
     const style = width && height ? { width, height } : {};
 
     if (hasError || !src) {
       return (
-        <div
-          style={style}
-          className={`bg-gray-100 rounded ${className}`}
-        />
+        <div style={style} className={`bg-gray-100 rounded ${className}`} />
       );
     }
 
@@ -82,7 +79,7 @@ export const ImageWithFallback = React.memo(
         />
       </div>
     );
-  }
+  },
 );
 
 ImageWithFallback.displayName = "ImageWithFallback";

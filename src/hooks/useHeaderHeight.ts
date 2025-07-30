@@ -1,4 +1,4 @@
-import { useState, useEffect, type DependencyList, useRef } from 'react';
+import { useState, useEffect, type DependencyList, useRef } from "react";
 
 export function useHeaderHeight(dependencies: DependencyList = []) {
   const [headerHeight, setHeaderHeight] = useState(256);

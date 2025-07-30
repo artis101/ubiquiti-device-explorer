@@ -37,14 +37,17 @@ export function DeviceInfo({
       <div className={isListLayout ? "space-y-2" : "space-y-1"}>
         {device.sku && (
           <div
-            className={`flex items-center gap-2 ${
+            className={`flex items-center gap-2 min-w-0 ${
               !isListLayout && "justify-center"
             }`}
           >
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide shrink-0">
               SKU:
             </span>
-            <span className="text-sm font-medium text-gray-900">
+            <span
+              className="text-sm font-medium text-gray-900 truncate"
+              title={device.sku}
+            >
               <Highlight
                 text={device.sku}
                 indices={

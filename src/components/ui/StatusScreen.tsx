@@ -1,15 +1,19 @@
-
-import React, { memo } from 'react';
+import { memo } from "react";
 
 interface StatusScreenProps {
-  status: 'loading' | 'error';
+  status: "loading" | "error";
   title: string;
   message: string;
   onRetry?: () => void;
 }
 
-function StatusScreenComponent({ status, title, message, onRetry }: StatusScreenProps) {
-  const isError = status === 'error';
+function StatusScreenComponent({
+  status,
+  title,
+  message,
+  onRetry,
+}: StatusScreenProps) {
+  const isError = status === "error";
 
   const icon = isError ? (
     <svg
@@ -34,7 +38,7 @@ function StatusScreenComponent({ status, title, message, onRetry }: StatusScreen
       <div className="max-w-md w-full bg-white shadow-xl rounded-xl p-8">
         <div className="text-center">
           <div
-            className={`w-16 h-16 ${isError ? 'bg-red-100' : 'bg-blue-600'} rounded-full flex items-center justify-center mx-auto mb-4"`}
+            className={`w-16 h-16 ${isError ? "bg-red-100" : "bg-blue-600"} rounded-full flex items-center justify-center mx-auto mb-4"`}
           >
             {icon}
           </div>

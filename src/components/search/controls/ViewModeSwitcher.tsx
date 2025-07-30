@@ -1,26 +1,35 @@
-import React from 'react';
-import { List, Grid } from 'lucide-react';
-import { ToggleSwitch } from '@components/ui/ToggleSwitch';
+import { List, Grid } from "lucide-react";
+import { ToggleSwitch } from "@components/ui/ToggleSwitch";
+import React from "react";
 
-const viewModeOptions = [
+type ViewMode = "list" | "grid";
+
+const viewModeOptions: {
+  value: ViewMode;
+  label: React.ReactNode;
+  "aria-label": string;
+}[] = [
   {
-    value: 'list',
+    value: "list",
     label: <List className="h-5 w-5" />,
-    'aria-label': 'List view',
+    "aria-label": "List view",
   },
   {
-    value: 'grid',
+    value: "grid",
     label: <Grid className="h-5 w-5" />,
-    'aria-label': 'Grid view',
+    "aria-label": "Grid view",
   },
 ];
 
 interface ViewModeSwitcherProps {
-  viewMode: 'list' | 'grid';
-  onViewModeChange: (mode: 'list' | 'grid') => void;
+  viewMode: ViewMode;
+  onViewModeChange: (mode: ViewMode) => void;
 }
 
-export function ViewModeSwitcher({ viewMode, onViewModeChange }: ViewModeSwitcherProps) {
+export function ViewModeSwitcher({
+  viewMode,
+  onViewModeChange,
+}: ViewModeSwitcherProps) {
   return (
     <ToggleSwitch
       options={viewModeOptions}

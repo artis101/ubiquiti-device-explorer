@@ -1,4 +1,3 @@
-
 import React, { type KeyboardEvent, memo } from "react";
 
 interface DeviceCardLayoutProps {

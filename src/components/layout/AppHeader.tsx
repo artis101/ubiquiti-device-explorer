@@ -32,7 +32,7 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       onImageSizeChange,
       onViewModeChange,
     },
-    ref
+    ref,
   ) => {
     return (
       <div ref={ref}>

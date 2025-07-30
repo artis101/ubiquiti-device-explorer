@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-interface UrlState {
+export interface UrlState {
   q: string; // search query
   line?: string; // selected line filter
   size: number; // image size

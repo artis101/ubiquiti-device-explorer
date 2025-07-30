@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { useUrlState } from "@hooks/useUrlState";
 import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
@@ -8,21 +7,30 @@ import { DeviceList } from "@components/device/DeviceList";
 import { DeviceDetails } from "@components/device/DeviceDetails";
 import type { NormalizedDevice } from "types/uidb";
 import { useUidbData } from "./contexts/UidbContext";
+import type { UrlState } from "@hooks/useUrlState";
 
-function App() {
+interface AppProps {
+  searchQuery: string;
+  selectedLineId?: string;
+  imageSize: number;
+  selectedDeviceId?: string;
+  viewMode: "list" | "grid";
+  updateState: (updates: Partial<UrlState>) => void;
+}
+
+function App({
+  searchQuery,
+  selectedLineId,
+  imageSize,
+  selectedDeviceId,
+  viewMode,
+  updateState,
+}: AppProps) {
   const { devices, warnings, connectionInfo, filteredDevices, searchHits } =
     useUidbData();
-  const {
-    searchQuery,
-    selectedLineId,
-    imageSize,
-    selectedDeviceId,
-    viewMode,
-    updateState,
-  } = useUrlState();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
-    null
+    null,
   );
 
   // Custom hooks
@@ -39,31 +47,46 @@ function App() {
     }
   }, [selectedDeviceId, devices]);
 
-  const handleDeviceSelect = useCallback((device: NormalizedDevice) => {
-    setDetailsDevice(device);
-    updateState({ select: device.id });
-  }, [updateState]);
+  const handleDeviceSelect = useCallback(
+    (device: NormalizedDevice) => {
+      setDetailsDevice(device);
+      updateState({ select: device.id });
+    },
+    [updateState],
+  );
 
   const handleCloseDetails = useCallback(() => {
     setDetailsDevice(null);
     updateState({ select: undefined });
   }, [updateState]);
 
-  const handleSearchChange = useCallback((query: string) => {
-    updateState({ q: query });
-  }, [updateState]);
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      updateState({ q: query });
+    },
+    [updateState],
+  );
 
-  const handleLineFilterChange = useCallback((lineId?: string) => {
-    updateState({ line: lineId });
-  }, [updateState]);
+  const handleLineFilterChange = useCallback(
+    (lineId?: string) => {
+      updateState({ line: lineId });
+    },
+    [updateState],
+  );
 
-  const handleImageSizeChange = useCallback((size: number) => {
-    updateState({ size });
-  }, [updateState]);
+  const handleImageSizeChange = useCallback(
+    (size: number) => {
+      updateState({ size });
+    },
+    [updateState],
+  );
 
-  const handleViewModeChange = useCallback((mode: "list" | "grid") => {
-    updateState({ view: mode });
-  }, [updateState]);
+  const handleViewModeChange = useCallback(
+    (mode: "list" | "grid") => {
+      updateState({ view: mode });
+    },
+    [updateState],
+  );
 
   return (
     <ErrorBoundary>

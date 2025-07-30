@@ -32,7 +32,7 @@ export const DeviceSchema = z.looseObject({
         k1: z.string().optional(),
         k2: z.string().optional(),
         k3: z.string().optional(),
-      })
+      }),
     )
     .optional(),
 });

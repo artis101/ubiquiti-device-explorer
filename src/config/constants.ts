@@ -22,11 +22,16 @@ export function getBuildTime(): Date {
 // Image configuration
 export const UI_IMAGES_BASE_URL = `${UI_STATIC_BASE_URL}/fingerprint/ui/images`;
 
-export const IMAGE_TYPES = ["default", "nopadding", "topology", "icon"] as const;
-export type ImageType = typeof IMAGE_TYPES[number];
+export const IMAGE_TYPES = [
+  "default",
+  "nopadding",
+  "topology",
+  "icon",
+] as const;
+export type ImageType = (typeof IMAGE_TYPES)[number];
 
 export const IMAGE_SIZES = [256, 512, 1024] as const;
-export type ImageSize = typeof IMAGE_SIZES[number];
+export type ImageSize = (typeof IMAGE_SIZES)[number];
 
 export const DEFAULT_IMAGE_SIZE = 512;
 export const IMAGE_QUALITY = 75;

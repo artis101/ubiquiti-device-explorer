@@ -1,6 +1,14 @@
-import React from 'react';
+import React from "react";
 import type { NormalizedDevice } from "types/uidb";
-import { UI_IMAGES_BASE_URL, UI_IMAGES_SVC_URL, IMAGE_TYPES, IMAGE_QUALITY, IMAGE_SIZES, type ImageType, type ImageSize } from '@config/constants';
+import {
+  UI_IMAGES_BASE_URL,
+  UI_IMAGES_SVC_URL,
+  IMAGE_TYPES,
+  IMAGE_QUALITY,
+  IMAGE_SIZES,
+  type ImageType,
+  type ImageSize,
+} from "@config/constants";
 
 interface UseImageUrlOptions {
   device: NormalizedDevice;
@@ -14,7 +22,11 @@ interface ImageUrlData {
   sizes: string | undefined;
 }
 
-export const useImageUrl = ({ device, size = 512, type }: UseImageUrlOptions): ImageUrlData => {
+export const useImageUrl = ({
+  device,
+  size = 512,
+  type,
+}: UseImageUrlOptions): ImageUrlData => {
   return React.useMemo(() => {
     const getImageUrlData = (imageType: ImageType): ImageUrlData | null => {
       const hash = device.images?.[imageType];
@@ -24,10 +36,11 @@ export const useImageUrl = ({ device, size = 512, type }: UseImageUrlOptions): I
       const encodedUrl = encodeURIComponent(baseUrl);
 
       const src = `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${size}&q=${IMAGE_QUALITY}`;
-      const srcSet = IMAGE_SIZES.map(s => 
-        `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${s}&q=${IMAGE_QUALITY} ${s}w`
-      ).join(', ');
-      const sizes = '(max-width: 600px) 480px, 800px';
+      const srcSet = IMAGE_SIZES.map(
+        (s) =>
+          `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${s}&q=${IMAGE_QUALITY} ${s}w`,
+      ).join(", ");
+      const sizes = "(max-width: 600px) 480px, 800px";
 
       return { src, srcSet, sizes };
     };

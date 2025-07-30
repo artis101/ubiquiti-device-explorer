@@ -35,6 +35,13 @@ export default defineConfig({
   build: {
     cssMinify: "lightningcss",
     target: "baseline-widely-available",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'public.json': [path.resolve(__dirname, './src/data/public.json')],
+        },
+      },
+    },
   },
   resolve: {
     alias: {

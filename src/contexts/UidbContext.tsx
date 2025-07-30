@@ -1,34 +1,35 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import type { ConnectionInfo } from '@hooks/useConnectionStatus';
-import { useUidb } from '@hooks/useUidb';
-import type { NormalizedDevice, SchemaWarning, SearchHit } from 'types/uidb';
-import { LoadingScreen } from '@components/ui/LoadingScreen';
-import { ErrorScreen } from '@components/ui/ErrorScreen';
-import { useUrlState } from '@hooks/useUrlState';
-import { useDebounce } from '@hooks/useDebounce';
-import { filterByLine, searchDevices } from '@utils/search';
+import React, { createContext, useContext, useMemo } from "react";
+import type { ConnectionInfo } from "@hooks/useConnectionStatus";
+import { useUidb } from "@hooks/useUidb";
+import type { NormalizedDevice, SchemaWarning, SearchHit } from "types/uidb";
+import { LoadingScreen } from "@components/ui/LoadingScreen";
+import { ErrorScreen } from "@components/ui/ErrorScreen";
+
+import { useDebounce } from "@hooks/useDebounce";
+import { filterByLine, searchDevices } from "@utils/search";
 
 interface UidbContextType {
   devices: NormalizedDevice[];
   warnings: SchemaWarning[];
   connectionInfo: ConnectionInfo;
-  fetchData: () => Promise<void>;
+  refetch: () => void;
   filteredDevices: NormalizedDevice[];
   searchHits: Map<string, SearchHit>;
 }
 
 const UidbContext = createContext<UidbContextType | undefined>(undefined);
 
-export function UidbProvider({ children }: { children: React.ReactNode }) {
-  const {
-    devices,
-    warnings,
-    error,
-    isLoading,
-    fetchData,
-    connectionInfo,
-  } = useUidb();
-  const { searchQuery, selectedLineId } = useUrlState();
+export function UidbProvider({
+  children,
+  searchQuery,
+  selectedLineId,
+}: {
+  children: React.ReactNode;
+  searchQuery: string;
+  selectedLineId?: string;
+}) {
+  const { devices, warnings, error, loading, refetch, connectionInfo } =
+    useUidb();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   const { filteredDevices, searchHits } = useMemo(() => {
@@ -37,11 +38,11 @@ export function UidbProvider({ children }: { children: React.ReactNode }) {
     if (debouncedSearchQuery) {
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
       const resultDevices = searchResults.map(
-        (hit) => filtered.find((device) => device.id === hit.id)!
+        (hit) => filtered.find((device) => device.id === hit.id)!,
       );
 
       const searchHitMap = new Map<string, SearchHit>(
-        searchResults.map((hit) => [hit.id, hit])
+        searchResults.map((hit) => [hit.id, hit]),
       );
 
       return {
@@ -56,34 +57,35 @@ export function UidbProvider({ children }: { children: React.ReactNode }) {
     };
   }, [devices, selectedLineId, debouncedSearchQuery]);
 
-  const contextValue = useMemo(() => ({
-    devices,
-    warnings,
-    connectionInfo,
-    fetchData,
-    filteredDevices,
-    searchHits,
-  }), [devices, warnings, connectionInfo, fetchData, filteredDevices, searchHits]);
+  const contextValue = useMemo(
+    () => ({
+      devices,
+      warnings,
+      connectionInfo,
+      refetch,
+      filteredDevices,
+      searchHits,
+    }),
+    [devices, warnings, connectionInfo, refetch, filteredDevices, searchHits],
+  );
 
-  if (isLoading) {
+  if (loading) {
     return <LoadingScreen />;
   }
 
   if (error) {
-    return <ErrorScreen error={error} onRetry={fetchData} />;
+    return <ErrorScreen error={error} onRetry={refetch} />;
   }
 
   return (
-    <UidbContext.Provider value={contextValue}>
-      {children}
-    </UidbContext.Provider>
+    <UidbContext.Provider value={contextValue}>{children}</UidbContext.Provider>
   );
 }
 
 export function useUidbData() {
   const context = useContext(UidbContext);
   if (context === undefined) {
-    throw new Error('useUidbData must be used within a UidbProvider');
+    throw new Error("useUidbData must be used within a UidbProvider");
   }
   return context;
 }

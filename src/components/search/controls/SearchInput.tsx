@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SearchInputProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;

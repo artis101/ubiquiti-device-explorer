@@ -1,12 +1,14 @@
-import React from 'react';
-import { useUidbData } from '@contexts/UidbContext';
+import { useUidbData } from "@contexts/UidbContext";
 
 interface SearchResultsCountProps {
   searchQuery: string;
   selectedLineId?: string;
 }
 
-export function SearchResultsCount({ searchQuery, selectedLineId }: SearchResultsCountProps) {
+export function SearchResultsCount({
+  searchQuery,
+  selectedLineId,
+}: SearchResultsCountProps) {
   const { devices, filteredDevices } = useUidbData();
   return (
     <div className="text-lg font-semibold text-gray-900">

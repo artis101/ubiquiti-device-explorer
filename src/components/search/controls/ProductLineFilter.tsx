@@ -1,12 +1,14 @@
-import React from 'react';
-import { useProductLineData } from '@contexts/ProductLineContext';
+import { useProductLineData } from "@contexts/ProductLineContext";
 
 interface ProductLineFilterProps {
   selectedLineId?: string;
   onLineFilterChange: (lineId?: string) => void;
 }
 
-export function ProductLineFilter({ selectedLineId, onLineFilterChange }: ProductLineFilterProps) {
+export function ProductLineFilter({
+  selectedLineId,
+  onLineFilterChange,
+}: ProductLineFilterProps) {
   const { productLines } = useProductLineData();
 
   return (

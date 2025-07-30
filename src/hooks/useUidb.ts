@@ -39,7 +39,7 @@ export function useUidb(): UseUidbResult {
           const fallbackResponse = await fetch("/public.json");
           if (!fallbackResponse.ok) {
             throw new Error(
-              `Failed to fetch UIDB data: ${response.status} ${response.statusText}`
+              `Failed to fetch UIDB data: ${response.status} ${response.statusText}`,
             );
           }
           data = await fallbackResponse.json();
@@ -56,7 +56,7 @@ export function useUidb(): UseUidbResult {
         // Fallback to cached data if fetch fails
         console.warn(
           "Failed to fetch UIDB data, using cached data:",
-          fetchError
+          fetchError,
         );
         data = (await import("../data/public.json")).default;
         updateConnectionStatus("fallback");
@@ -70,7 +70,7 @@ export function useUidb(): UseUidbResult {
 
       // Normalize devices and collect warnings
       const { normalized, warnings: normWarnings } = normalizeDevices(
-        parseResult.devices
+        parseResult.devices,
       );
 
       setDevices(normalized);
@@ -85,7 +85,7 @@ export function useUidb(): UseUidbResult {
       try {
         const cachedData = (await import("../data/public.json")).default;
         const { normalized, warnings: fallbackWarnings } = normalizeDevices(
-          cachedData.devices
+          cachedData.devices,
         );
         setDevices(normalized);
         setWarnings(fallbackWarnings);
