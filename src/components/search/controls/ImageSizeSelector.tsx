@@ -1,7 +1,9 @@
+import { ToggleSwitch } from "@components/ui/ToggleSwitch";
+
 const IMAGE_SIZES = [
-  { value: 128, label: "M" },
-  { value: 256, label: "L" },
-  { value: 512, label: "XL" },
+  { value: 128, label: "M", "aria-label": "Medium" },
+  { value: 256, label: "L", "aria-label": "Large" },
+  { value: 512, label: "XL", "aria-label": "Extra Large" },
 ];
 
 interface ImageSizeSelectorProps {
@@ -14,25 +16,11 @@ export function ImageSizeSelector({
   onImageSizeChange,
 }: ImageSizeSelectorProps) {
   return (
-    <div className="flex items-center">
-      <span className="text-sm font-medium text-gray-700 mr-2">
-        Image Size:
-      </span>
-      <div className="flex items-center space-x-1 bg-gray-200 rounded-lg p-1">
-        {IMAGE_SIZES.map((size) => (
-          <button
-            key={size.value}
-            onClick={() => onImageSizeChange(size.value)}
-            className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
-              imageSize === size.value
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-gray-600 hover:bg-gray-300"
-            }`}
-          >
-            {size.label}
-          </button>
-        ))}
-      </div>
-    </div>
+    <ToggleSwitch
+      options={IMAGE_SIZES}
+      selectedValue={imageSize}
+      onValueChange={onImageSizeChange}
+      label="Image Size"
+    />
   );
 }
