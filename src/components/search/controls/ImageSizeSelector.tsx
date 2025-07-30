@@ -1,5 +1,3 @@
-import React from "react";
-
 const IMAGE_SIZES = [
   { value: 128, label: "M" },
   { value: 256, label: "L" },
