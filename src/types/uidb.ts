@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { SearchHitMatch } from "@utils/search";
 
 export const DeviceSchema = z.looseObject({
   id: z.string(),
@@ -32,7 +33,7 @@ export const DeviceSchema = z.looseObject({
         k1: z.string().optional(),
         k2: z.string().optional(),
         k3: z.string().optional(),
-      }),
+      })
     )
     .optional(),
 });
@@ -66,7 +67,7 @@ export interface SearchHit {
   lineId?: string;
   imageUrl?: string;
   score: number;
-  matches?: FuseMatch[];
+  matches?: SearchHitMatch[];
 }
 
 // Warning system types

@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import type { NormalizedDevice, SearchHit } from "../types/uidb";
+import type { NormalizedDevice, SearchHit, FuseMatch } from "types/uidb";
 
 // Configure Fuse.js
 const fuseOptions = {
@@ -24,7 +24,7 @@ const fuseOptions = {
 // Search across multiple device fields using Fuse.js
 export function searchDevices(
   devices: NormalizedDevice[],
-  query: string,
+  query: string
 ): SearchHit[] {
   if (!query.trim()) {
     return devices.map((device) => ({
@@ -45,19 +45,34 @@ export function searchDevices(
     lineId: item.lineId,
     imageUrl: item.imageUrl,
     score: 1 - (score || 0), // Fuse.js score is 0-1, 0 is perfect match
-    matches: matches?.map((match) => ({
-      indices: match.indices,
-      key: match.key,
-      value: match.value,
-    })),
+    matches: processFuseMatches(matches),
   }));
 }
 
 // Filter devices by product line
 export function filterByLine(
   devices: NormalizedDevice[],
-  lineId?: string,
+  lineId?: string
 ): NormalizedDevice[] {
   if (!lineId) return devices;
   return devices.filter((device) => device.lineId === lineId);
+}
+
+export interface SearchHitMatch {
+  indices: readonly [number, number][];
+  key?: string;
+  value?: string;
+}
+
+export function processFuseMatches(
+  matches: readonly FuseMatch[] | undefined
+): SearchHitMatch[] | undefined {
+  if (!matches) {
+    return undefined;
+  }
+  return matches.map((match) => ({
+    indices: match.indices,
+    key: match.key,
+    value: match.value,
+  }));
 }

@@ -1,6 +1,7 @@
 import type { NormalizedDevice, SearchHit } from "types/uidb";
 import { Highlight } from "@components/ui/Highlight";
 import { DeviceAliases } from "@components/device/DeviceAliases";
+import { useHighlightIndices } from "@hooks/useHighlightIndices";
 
 interface DeviceInfoProps {
   device: NormalizedDevice;
@@ -30,9 +31,7 @@ export function DeviceInfo({
       >
         <Highlight
           text={device.displayName}
-          indices={
-            searchHit?.matches?.find((m) => m.key === "displayName")?.indices
-          }
+          indices={useHighlightIndices(searchHit, "displayName")}
         />
       </h3>
 
@@ -54,9 +53,7 @@ export function DeviceInfo({
             >
               <Highlight
                 text={device.sku}
-                indices={
-                  searchHit?.matches?.find((m) => m.key === "sku")?.indices
-                }
+                indices={useHighlightIndices(searchHit, "sku")}
               />
             </span>
           </div>

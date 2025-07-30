@@ -1,5 +1,6 @@
 import type { SearchHit } from "types/uidb";
 import { Highlight } from "@components/ui/Highlight";
+import { useHighlightIndices } from "@hooks/useHighlightIndices";
 
 interface DeviceAliasesProps {
   aliases: string[];
@@ -56,11 +57,7 @@ export function DeviceAliases({ aliases, searchHit }: DeviceAliasesProps) {
             >
               <Highlight
                 text={alias}
-                indices={
-                  searchHit?.matches?.find(
-                    (m) => m.key === "shortnames" && m.value === alias,
-                  )?.indices
-                }
+                indices={useHighlightIndices(searchHit, "shortnames", alias)}
               />
             </span>
           );
