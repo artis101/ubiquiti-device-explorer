@@ -30,12 +30,12 @@ function DeviceCardComponent({
         handleSelect();
       }
     },
-    [handleSelect],
+    [handleSelect]
   );
 
   return (
     <div
-      className={`bg-white border rounded-xl p-6 cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 ${
+      className={`p-4 bg-white border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 ${
         isSelected
           ? "border-blue-600 ring-2 ring-blue-600 ring-opacity-20 shadow-lg"
           : "border-gray-200 hover:border-blue-300"

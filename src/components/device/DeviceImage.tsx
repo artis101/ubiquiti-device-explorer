@@ -2,6 +2,7 @@ import React from 'react';
 import type { NormalizedDevice } from "types/uidb";
 import { ImageWithFallback } from './ImageWithFallback';
 import { DeviceImageContainer } from './DeviceImageContainer';
+import { useImageUrl } from '@hooks/useImageUrl';
 
 interface DeviceImageProps {
   device: NormalizedDevice;
@@ -9,6 +10,8 @@ interface DeviceImageProps {
 }
 
 export const DeviceImage = React.memo(({ device, imageSize }: DeviceImageProps) => {
+  const { src, srcSet, sizes } = useImageUrl({ device, size: imageSize });
+
   const errorHandlerOptions = {
     deviceName: device.displayName,
     deviceLineAbbrev: device.line?.abbrev,
@@ -17,16 +20,16 @@ export const DeviceImage = React.memo(({ device, imageSize }: DeviceImageProps) 
 
   return (
     <DeviceImageContainer>
-      {device.imageUrl && (
-        <ImageWithFallback
-          src={device.imageUrl}
-          alt={device.displayName || 'Device'}
-          width={imageSize}
-          height={imageSize}
-          className="object-contain"
-          errorHandlerOptions={errorHandlerOptions}
-        />
-      )}
+      <ImageWithFallback
+        src={src}
+        srcSet={srcSet}
+        sizes={sizes}
+        alt={device.displayName || 'Device'}
+        width={imageSize}
+        height={imageSize}
+        className="object-contain"
+        errorHandlerOptions={errorHandlerOptions}
+      />
     </DeviceImageContainer>
   );
 });

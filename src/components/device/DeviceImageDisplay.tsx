@@ -17,7 +17,7 @@ export const DeviceImageDisplay = React.memo(({
   className = "",
   style
 }: DeviceImageDisplayProps) => {
-  const imageUrl = useImageUrl({ device, size });
+  const { src, srcSet, sizes } = useImageUrl({ device, size });
   
   const errorHandlerOptions = {
     deviceName: device.displayName,
@@ -28,7 +28,9 @@ export const DeviceImageDisplay = React.memo(({
   return (
     <div className={`text-center ${className}`}>
       <ImageWithFallback
-        src={imageUrl}
+        src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={device.displayName || 'Device'}
         width={size}
         height={size}

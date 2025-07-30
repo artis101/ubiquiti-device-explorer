@@ -1,6 +1,6 @@
 import React from 'react';
 import type { NormalizedDevice } from "types/uidb";
-import { UI_IMAGES_BASE_URL, UI_IMAGES_SVC_URL, IMAGE_TYPES, IMAGE_QUALITY, type ImageType, type ImageSize } from '@config/constants';
+import { UI_IMAGES_BASE_URL, UI_IMAGES_SVC_URL, IMAGE_TYPES, IMAGE_QUALITY, IMAGE_SIZES, type ImageType, type ImageSize } from '@config/constants';
 
 interface UseImageUrlOptions {
   device: NormalizedDevice;
@@ -8,27 +8,43 @@ interface UseImageUrlOptions {
   type?: ImageType;
 }
 
-export const useImageUrl = ({ device, size = 512, type }: UseImageUrlOptions) => {
+interface ImageUrlData {
+  src: string | undefined;
+  srcSet: string | undefined;
+  sizes: string | undefined;
+}
+
+export const useImageUrl = ({ device, size = 512, type }: UseImageUrlOptions): ImageUrlData => {
   return React.useMemo(() => {
-    // If specific type is requested, use it directly
-    if (type && device.images?.[type]) {
-      const hash = device.images[type];
-      const baseUrl = `${UI_IMAGES_BASE_URL}/${device.id}/${type}/${hash}.png`;
+    const getImageUrlData = (imageType: ImageType): ImageUrlData | null => {
+      const hash = device.images?.[imageType];
+      if (!hash) return null;
+
+      const baseUrl = `${UI_IMAGES_BASE_URL}/${device.id}/${imageType}/${hash}.png`;
       const encodedUrl = encodeURIComponent(baseUrl);
-      return `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${size}&q=${IMAGE_QUALITY}`;
+
+      const src = `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${size}&q=${IMAGE_QUALITY}`;
+      const srcSet = IMAGE_SIZES.map(s => 
+        `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${s}&q=${IMAGE_QUALITY} ${s}w`
+      ).join(', ');
+      const sizes = '(max-width: 600px) 480px, 800px';
+
+      return { src, srcSet, sizes };
+    };
+
+    // If specific type is requested, use it directly
+    if (type) {
+      const data = getImageUrlData(type);
+      if (data) return data;
     }
 
     // If no specific type, check all available image types in priority order
     for (const imageType of IMAGE_TYPES) {
-      const hash = device.images?.[imageType];
-      if (hash) {
-        const baseUrl = `${UI_IMAGES_BASE_URL}/${device.id}/${imageType}/${hash}.png`;
-        const encodedUrl = encodeURIComponent(baseUrl);
-        return `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${size}&q=${IMAGE_QUALITY}`;
-      }
+      const data = getImageUrlData(imageType);
+      if (data) return data;
     }
 
     // Fallback to device.imageUrl if no specific images are found
-    return device.imageUrl;
+    return { src: device.imageUrl, srcSet: undefined, sizes: undefined };
   }, [device, size, type]);
 };

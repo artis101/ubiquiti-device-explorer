@@ -6,7 +6,9 @@ import {
 } from "@utils/imageFallback";
 
 interface ImageWithFallbackProps {
-  src: string;
+  src?: string;
+  srcSet?: string;
+  sizes?: string;
   alt: string;
   width: number;
   height: number;
@@ -18,6 +20,8 @@ interface ImageWithFallbackProps {
 export const ImageWithFallback = React.memo(
   ({
     src,
+    srcSet,
+    sizes,
     alt,
     width,
     height,
@@ -41,6 +45,11 @@ export const ImageWithFallback = React.memo(
       [errorHandlerOptions]
     );
 
+    if (hasError || !src) {
+      // Render fallback UI, which can be an empty div or a placeholder
+      return <div style={{ width, height }} className="bg-gray-100 rounded" />;
+    }
+
     return (
       <div className="relative" style={{ width, height }}>
         {/* Loading state */}
@@ -56,6 +65,8 @@ export const ImageWithFallback = React.memo(
         {/* Actual image */}
         <img
           src={src}
+          srcSet={srcSet}
+          sizes={sizes}
           alt={alt}
           width={width}
           height={height}
@@ -65,9 +76,6 @@ export const ImageWithFallback = React.memo(
           } transition-opacity duration-300`}
           onLoad={handleLoad}
           onError={handleError}
-          style={{
-            display: hasError ? "none" : "block",
-          }}
         />
       </div>
     );
