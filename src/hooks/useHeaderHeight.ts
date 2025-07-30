@@ -1,0 +1,27 @@
+import { useState, useEffect, useRef } from "react";
+
+export function useHeaderHeight(dependencies: any[] = []) {
+  const [headerHeight, setHeaderHeight] = useState(256);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
+    if (headerRef.current) {
+      resizeObserver.observe(headerRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, dependencies);
+
+  return { headerHeight, headerRef };
+}
