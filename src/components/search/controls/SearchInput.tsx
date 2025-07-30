@@ -6,16 +6,10 @@ interface SearchInputProps {
 export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
   return (
     <div className="flex-1 min-w-0">
-      <label
-        htmlFor="search"
-        className="block text-sm font-medium text-gray-700 mb-2"
-      >
-        Search devices
-      </label>
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <svg
-            className="h-5 w-5 text-gray-400"
+            className="h-4 w-4 text-gray-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -33,8 +27,8 @@ export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="block w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-sm bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors"
-          placeholder="Search by name, SKU, aliases, or triplets..."
+          className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md text-sm bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+          placeholder="Search by name, SKU, aliases..."
           aria-label="Search devices"
         />
       </div>

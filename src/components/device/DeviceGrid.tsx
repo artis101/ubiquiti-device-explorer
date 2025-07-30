@@ -24,6 +24,7 @@ interface GridItemProps {
     onDeviceSelect: (device: NormalizedDevice) => void;
     searchHits: Map<string, SearchHit>;
     columnCount: number;
+    centerOffset: number;
   };
 }
 
@@ -35,6 +36,7 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
     onDeviceSelect,
     searchHits,
     columnCount,
+    centerOffset,
   } = data;
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
@@ -43,8 +45,14 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
 
   const searchHit = searchHits.get(device.id);
 
+  // Apply center offset to position
+  const centeredStyle = {
+    ...style,
+    left: (style.left as number) + centerOffset,
+  };
+
   return (
-    <div style={style} className="p-2 flex items-center justify-center">
+    <div style={centeredStyle} className="p-2 flex items-center justify-center">
       <DeviceCard
         device={device}
         imageSize={imageSize}
@@ -79,15 +87,16 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
 
     const rowCount = Math.ceil(devices.length / columnCount);
 
-    // Calculate grid width to center it
+    // Calculate centering offset
     const gridWidth = columnCount * columnWidth;
+    const centerOffset = Math.max(0, (width - gridWidth) / 2);
 
     return (
-      <div className="h-full flex justify-center">
+      <div className="h-full w-full">
         <Grid
           ref={ref}
           height={height}
-          width={gridWidth}
+          width={width}
           columnCount={columnCount}
           columnWidth={columnWidth}
           rowCount={rowCount}
@@ -99,6 +108,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
             onDeviceSelect,
             searchHits,
             columnCount,
+            centerOffset,
           }}
           className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
         >

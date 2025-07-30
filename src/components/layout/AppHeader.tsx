@@ -37,28 +37,19 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     return (
       <div ref={ref}>
         {/* Header */}
-        <header className="bg-white shadow-lg border-b border-gray-100">
+        <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-20">
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-white font-bold text-lg">U</span>
-                  </div>
-                  <div>
-                    <h1 className="text-3xl font-bold text-gray-900">
-                      UIDB Explorer
-                    </h1>
-                    <span className="text-sm text-gray-500 font-medium">
-                      Internal Product Knowledge Browser
-                    </span>
-                  </div>
+            <div className="flex items-center justify-between h-12">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
+                  <span className="text-white font-bold text-xs">U</span>
                 </div>
+                <h1 className="text-lg font-semibold text-gray-900">
+                  UIDB Explorer
+                </h1>
               </div>
 
-              <div className="flex items-center gap-6">
-                <ConnectionStatusIndicator connectionInfo={connectionInfo} />
-              </div>
+              <ConnectionStatusIndicator connectionInfo={connectionInfo} />
             </div>
           </div>
         </header>

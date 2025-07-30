@@ -12,18 +12,12 @@ export function ProductLineFilter({
   const { productLines } = useProductLineData();
 
   return (
-    <div className="flex-shrink-0 min-w-48">
-      <label
-        htmlFor="line-filter"
-        className="block text-sm font-medium text-gray-700 mb-2"
-      >
-        Filter by product line
-      </label>
+    <div className="flex-shrink-0 min-w-40">
       <select
         id="line-filter"
         value={selectedLineId || ""}
         onChange={(e) => onLineFilterChange(e.target.value || undefined)}
-        className="block w-full px-4 py-3 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 rounded-lg bg-white transition-colors"
+        className="block w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md bg-white transition-colors"
       >
         <option value="">All Product Lines</option>
         {productLines.map((line) => (
