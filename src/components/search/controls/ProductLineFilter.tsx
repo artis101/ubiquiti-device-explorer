@@ -17,7 +17,7 @@ export function ProductLineFilter({
         id="line-filter"
         value={selectedLineId || ""}
         onChange={(e) => onLineFilterChange(e.target.value || undefined)}
-        className="block w-full px-3 py-2 text-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-md bg-white transition-colors"
+        className="block w-full px-3 py-2 text-sm border border-[#EDEDF0] focus:outline-none focus:ring-1 focus:ring-[#006FFF] focus:border-[#006FFF] rounded-lg bg-white transition-colors text-[#212327]"
       >
         <option value="">All Product Lines</option>
         {productLines.map((line) => (

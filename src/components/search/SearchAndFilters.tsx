@@ -28,8 +28,8 @@ export function SearchAndFilters({
   onViewModeChange,
 }: SearchAndFiltersProps) {
   return (
-    <div className="bg-white border-b border-gray-100 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+    <div className="bg-white">
+      <div className="max-w-none px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col lg:flex-row gap-3 items-start lg:items-center">
           <div className="flex flex-1 gap-3 items-center w-full lg:w-auto">
             <SearchInput

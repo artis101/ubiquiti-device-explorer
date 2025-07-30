@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+/* Figma Design System Colors */
+:root {
+  --color-primary: #006FFF;
+  --color-white: #FFFFFF;
+  --color-text-primary: #212327;
+  --color-text-secondary: #808893;
+  --color-background-light: #F9FAFA;
+  --color-background-lighter: #F4F5F6;
+  --color-border: #EDEDF0;
+  --color-hover-bg: #F4F5F6;
+  --color-focus-border: #006FFF;
+}
+
 /* Custom scrollbar styles for webkit browsers */
 .scrollbar-thin {
   scrollbar-width: thin;
@@ -23,10 +36,11 @@
   background: #a1a1a1;
 }
 
-/* Base styles for better typography */
+/* Base styles for better typography - matching Figma UI Sans_v7 */
 body {
   margin: 0;
   font-family:
+    "UI Sans",
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
@@ -35,19 +49,19 @@ body {
     "Helvetica Neue",
     Arial,
     sans-serif;
-  line-height: 1.5;
+  line-height: 1.4285714285714286; /* Figma line-height for body text */
   font-weight: 400;
-  color: #1f2937;
-  background-color: #f9fafb;
+  color: var(--color-text-primary);
+  background-color: var(--color-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus styles for better accessibility */
+/* Focus styles for better accessibility - matching Figma */
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 1px solid var(--color-focus-border);
   outline-offset: 2px;
 }
 

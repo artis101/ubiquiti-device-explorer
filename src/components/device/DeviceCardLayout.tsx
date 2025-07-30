@@ -31,14 +31,14 @@ const DeviceCardLayoutComponent = ({
 
   return (
     <div
-      className={`bg-white border rounded-xl cursor-pointer transition-all duration-200 hover:shadow-xl hover:-translate-y-1 ${
+      className={`bg-white border cursor-pointer transition-all duration-200 ${
         isSelected
-          ? "border-blue-600 ring-2 ring-blue-600 ring-opacity-20 shadow-lg"
-          : "border-gray-200 hover:border-blue-300"
+          ? "border-[#006FFF] ring-1 ring-[#006FFF] ring-opacity-20 shadow-lg"
+          : "border-[#EDEDF0] hover:bg-[#F4F5F6]"
       } ${
         isListLayout
-          ? "p-4 w-full max-w-4xl mx-auto"
-          : "p-3 flex flex-col items-center h-full"
+          ? "p-6 w-full max-w-none mx-auto rounded-lg"
+          : "p-4 flex flex-col items-center h-full rounded-lg hover:shadow-md"
       }`}
       onClick={onSelect}
       role="button"

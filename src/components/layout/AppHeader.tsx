@@ -36,15 +36,15 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
   ) => {
     return (
       <div ref={ref}>
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-12">
+        {/* Header - Matching Figma Design */}
+        <header className="bg-white">
+          <div className="max-w-none px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
-                <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">U</span>
+                <div className="w-8 h-8 bg-[#006FFF] rounded-sm flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">U</span>
                 </div>
-                <h1 className="text-lg font-semibold text-gray-900">
+                <h1 className="text-4xl font-bold text-[#006FFF]" style={{fontFamily: 'UI Sans, system-ui, sans-serif', lineHeight: '1.3333333333333333'}}>
                   UIDB Explorer
                 </h1>
               </div>

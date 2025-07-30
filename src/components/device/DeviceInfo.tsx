@@ -23,7 +23,7 @@ export function DeviceInfo({
       }`}
     >
       <h3
-        className={`font-bold text-gray-900 ${
+        className={`font-bold text-[#212327] ${
           isListLayout
             ? "text-lg mb-3 truncate"
             : "text-base mb-1 h-12 line-clamp-2"
@@ -42,11 +42,11 @@ export function DeviceInfo({
               !isListLayout ? "justify-center w-full" : ""
             }`}
           >
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide shrink-0">
+            <span className="text-xs font-semibold text-[#808893] uppercase tracking-wide shrink-0">
               SKU:
             </span>
             <span
-              className={`text-sm font-medium text-gray-900 truncate ${
+              className={`text-sm font-medium text-[#212327] truncate ${
                 !isListLayout ? "max-w-26" : ""
               }`}
               title={device.sku}
@@ -65,10 +65,10 @@ export function DeviceInfo({
               !isListLayout && "justify-center"
             }`}
           >
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <span className="text-xs font-semibold text-[#808893] uppercase tracking-wide">
               Line:
             </span>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#006FFF] text-white">
               {device.line.name || device.line.id}
             </span>
           </div>

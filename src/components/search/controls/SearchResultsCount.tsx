@@ -11,7 +11,7 @@ export function SearchResultsCount({
 }: SearchResultsCountProps) {
   const { devices, filteredDevices } = useUidbData();
   return (
-    <div className="text-lg font-semibold text-gray-900">
+    <div className="text-lg font-semibold text-[#212327]">
       {searchQuery || selectedLineId ? (
         <>
           {filteredDevices.length.toLocaleString()}/
