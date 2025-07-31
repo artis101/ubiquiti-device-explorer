@@ -6,7 +6,7 @@ import { LoadingScreen } from "@components/ui/LoadingScreen";
 import { ErrorScreen } from "@components/ui/ErrorScreen";
 
 import { useDebounce } from "@hooks/useDebounce";
-import { filterByLine, searchDevices } from "@utils/search";
+import { filterByLine, filterByProductLines, searchDevices } from "@utils/search";
 
 interface UidbContextType {
   devices: NormalizedDevice[];
@@ -23,17 +23,25 @@ export function UidbProvider({
   children,
   searchQuery,
   selectedLineId,
+  selectedProductLines,
 }: {
   children: React.ReactNode;
   searchQuery: string;
   selectedLineId?: string;
+  selectedProductLines: string[];
 }) {
   const { devices, warnings, error, loading, refetch, connectionInfo } =
     useUidb();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   const { filteredDevices, searchHits } = useMemo(() => {
-    const filtered = filterByLine(devices, selectedLineId);
+    let filtered = devices;
+    
+    // Apply line filter first
+    filtered = filterByLine(filtered, selectedLineId);
+    
+    // Apply product lines filter
+    filtered = filterByProductLines(filtered, selectedProductLines);
 
     if (debouncedSearchQuery) {
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
@@ -55,7 +63,7 @@ export function UidbProvider({
       filteredDevices: filtered,
       searchHits: new Map<string, SearchHit>(),
     };
-  }, [devices, selectedLineId, debouncedSearchQuery]);
+  }, [devices, selectedLineId, selectedProductLines, debouncedSearchQuery]);
 
   const contextValue = useMemo(
     () => ({

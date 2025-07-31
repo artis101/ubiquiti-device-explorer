@@ -6,6 +6,7 @@ export interface UrlState {
   size: number; // image size
   select?: string; // selected device ID
   view: "list" | "grid"; // view mode
+  productLines?: string[]; // selected product lines
 }
 
 const DEFAULT_STATE: UrlState = {
@@ -17,12 +18,16 @@ const DEFAULT_STATE: UrlState = {
 function getStateFromUrl(): UrlState {
   const params = new URLSearchParams(window.location.search);
 
+  const productLinesParam = params.get("productLines");
+  const productLines = productLinesParam ? productLinesParam.split(",") : undefined;
+
   return {
     q: params.get("q") || DEFAULT_STATE.q,
     line: params.get("line") || undefined,
     size: Number(params.get("size")) || DEFAULT_STATE.size,
     select: params.get("select") || undefined,
     view: (params.get("view") as "list" | "grid") || DEFAULT_STATE.view,
+    productLines,
   };
 }
 
@@ -35,6 +40,8 @@ function updateUrl(state: UrlState) {
     params.set("size", state.size.toString());
   if (state.select) params.set("select", state.select);
   if (state.view !== DEFAULT_STATE.view) params.set("view", state.view);
+  if (state.productLines && state.productLines.length > 0) 
+    params.set("productLines", state.productLines.join(","));
 
   const newUrl = `${window.location.pathname}${
     params.toString() ? "?" + params.toString() : ""
@@ -70,6 +77,7 @@ export function useUrlState() {
     imageSize: state.size,
     selectedDeviceId: state.select,
     viewMode: state.view,
+    selectedProductLines: state.productLines || [],
     updateState,
   };
 }

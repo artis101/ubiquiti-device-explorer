@@ -16,6 +16,7 @@ interface AppProps {
   imageSize: number;
   selectedDeviceId?: string;
   viewMode: "list" | "grid";
+  selectedProductLines: string[];
   updateState: (updates: Partial<UrlState>) => void;
 }
 
@@ -25,6 +26,7 @@ function App({
   imageSize,
   selectedDeviceId,
   viewMode,
+  selectedProductLines,
   updateState,
 }: AppProps) {
   const { devices, warnings, connectionInfo, filteredDevices, searchHits } =
@@ -99,6 +101,13 @@ function App({
     [updateState]
   );
 
+  const handleFilterChange = useCallback(
+    (selectedProductLines: string[]) => {
+      updateState({ productLines: selectedProductLines });
+    },
+    [updateState]
+  );
+
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-white flex flex-col overflow-hidden">
@@ -118,6 +127,7 @@ function App({
           onLineFilterChange={handleLineFilterChange}
           onImageSizeChange={handleImageSizeChange}
           onViewModeChange={handleViewModeChange}
+          onFilterChange={handleFilterChange}
         />
 
         {/* Main Content */}

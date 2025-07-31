@@ -16,6 +16,7 @@ interface SearchAndFiltersProps {
   onLineFilterChange: (lineId?: string) => void;
   onImageSizeChange: (size: number) => void;
   onViewModeChange: (mode: "list" | "grid") => void;
+  onFilterChange: (selectedProductLines: string[]) => void;
 }
 
 export function SearchAndFilters({
@@ -27,6 +28,7 @@ export function SearchAndFilters({
   onLineFilterChange,
   onImageSizeChange,
   onViewModeChange,
+  onFilterChange,
 }: SearchAndFiltersProps) {
   return (
     <div className="bg-white">
@@ -49,7 +51,7 @@ export function SearchAndFilters({
             viewMode={viewMode}
             onViewModeChange={onViewModeChange}
           />
-          <FilterButton />
+          <FilterButton onFilterChange={onFilterChange} />
         </div>
       </div>
       

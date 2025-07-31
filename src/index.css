@@ -10,6 +10,10 @@
   --color-search-bg-hover: #F6F6F8;
   --color-search-bg-active: #F4F5F6;
 
+  --color-reset-default: #F9B0B2;
+  --color-reset-active: #F03A3E;
+
+
   --animation-shimmer: shimmer 1.5s infinite;
 
   --keyframes-shimmer: {

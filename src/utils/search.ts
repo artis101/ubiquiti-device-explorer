@@ -58,6 +58,15 @@ export function filterByLine(
   return devices.filter((device) => device.lineId === lineId);
 }
 
+// Filter devices by multiple product lines
+export function filterByProductLines(
+  devices: NormalizedDevice[],
+  productLines: string[]
+): NormalizedDevice[] {
+  if (!productLines || productLines.length === 0) return devices;
+  return devices.filter((device) => productLines.includes(device.lineId));
+}
+
 export interface SearchHitMatch {
   indices: readonly [number, number][];
   key?: string;

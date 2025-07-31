@@ -13,12 +13,13 @@ function Root() {
     imageSize,
     selectedDeviceId,
     viewMode,
+    selectedProductLines,
     updateState,
   } = useUrlState();
 
   return (
     <StrictMode>
-      <UidbProvider searchQuery={searchQuery} selectedLineId={selectedLineId}>
+      <UidbProvider searchQuery={searchQuery} selectedLineId={selectedLineId} selectedProductLines={selectedProductLines}>
         <ProductLineProvider>
           <App
             searchQuery={searchQuery}
@@ -26,6 +27,7 @@ function Root() {
             imageSize={imageSize}
             selectedDeviceId={selectedDeviceId}
             viewMode={viewMode}
+            selectedProductLines={selectedProductLines}
             updateState={updateState}
           />
         </ProductLineProvider>

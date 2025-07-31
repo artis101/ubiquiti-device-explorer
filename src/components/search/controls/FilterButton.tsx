@@ -11,6 +11,7 @@ export function FilterButton({ onFilterChange }: FilterButtonProps) {
   const [selectedProductLines, setSelectedProductLines] = useState<string[]>(
     []
   );
+  const hasActiveFilters = selectedProductLines.length > 0;
 
   const handleCheckboxChange = (productLineId: string) => {
     const newSelectedProductLines = selectedProductLines.includes(productLineId)
@@ -35,7 +36,7 @@ export function FilterButton({ onFilterChange }: FilterButtonProps) {
       </button>
       {isOpen && (
         <div className="absolute z-50 mt-2 w-48 bg-white shadow-lg rounded-md -left-36">
-          <ul className="py-1">
+          <ul className="py-1 max-h-56 overflow-y-auto">
             {productLines.map((productLine) => (
               <li key={productLine.id}>
                 <label className="flex items-center px-3 py-2">
@@ -52,6 +53,19 @@ export function FilterButton({ onFilterChange }: FilterButtonProps) {
               </li>
             ))}
           </ul>
+          <div className="px-3 py-2">
+            <button
+              onClick={() => {
+                setSelectedProductLines([]);
+                onFilterChange([]);
+              }}
+              className={`text-left text-sm ${
+                hasActiveFilters ? "text-reset-active" : "text-reset-default"
+              } focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-reset-active transition-colors duration-200`}
+            >
+              Reset
+            </button>
+          </div>
         </div>
       )}
     </div>
