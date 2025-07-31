@@ -13,7 +13,6 @@ const DEFAULT_STATE: UrlState = {
   view: "list",
 };
 
-// Custom event to sync state across hook instances
 const URL_STATE_CHANGE_EVENT = "urlStateChange";
 
 function getStateFromUrl(): UrlState {
@@ -52,12 +51,18 @@ function updateUrl(state: UrlState) {
 export function useUrlState() {
   const [state, setState] = useState<UrlState>(getStateFromUrl);
 
-  // Update URL when state changes
+  const updateState = useCallback((updates: Partial<UrlState>) => {
+    setState((prev) => ({ ...prev, ...updates }));
+  }, []);
+
   useEffect(() => {
-    updateUrl(state);
+    const currentUrlState = getStateFromUrl();
+    if (JSON.stringify(state) !== JSON.stringify(currentUrlState)) {
+      updateUrl(state);
+      window.dispatchEvent(new Event(URL_STATE_CHANGE_EVENT));
+    }
   }, [state]);
 
-  // Listen for browser back/forward navigation and custom event
   useEffect(() => {
     const handleStateChange = () => {
       setState(getStateFromUrl());
@@ -70,16 +75,6 @@ export function useUrlState() {
       window.removeEventListener("popstate", handleStateChange);
       window.removeEventListener(URL_STATE_CHANGE_EVENT, handleStateChange);
     };
-  }, []);
-
-  const updateState = useCallback((updates: Partial<UrlState>) => {
-    setState((prev) => {
-      const newState = { ...prev, ...updates };
-      // Update URL and notify other hooks
-      updateUrl(newState);
-      window.dispatchEvent(new Event(URL_STATE_CHANGE_EVENT));
-      return newState;
-    });
   }, []);
 
   return {

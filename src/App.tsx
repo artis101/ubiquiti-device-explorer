@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
 import { AppHeader } from "@components/layout/AppHeader";
@@ -10,18 +10,9 @@ import { useUrlState } from "@hooks/useUrlState";
 
 function App() {
   const { warnings, connectionInfo } = useUidbData();
-  const { selectedDeviceId, searchQuery, selectedLineId, updateState } =
-    useUrlState();
-
-  const deviceListRef = useRef<{ scrollToTop: () => void }>(null);
+  const { selectedDeviceId, updateState } = useUrlState();
 
   const { headerHeight, headerRef } = useHeaderHeight([warnings]);
-
-  useEffect(() => {
-    if (deviceListRef.current) {
-      deviceListRef.current.scrollToTop();
-    }
-  }, [searchQuery, selectedLineId]);
 
   const handleCloseDetails = useCallback(() => {
     updateState({ select: undefined });
@@ -39,10 +30,7 @@ function App() {
           className="flex-1 min-h-0"
           style={{ height: `calc(100vh - ${headerHeight}px)` }}
         >
-          <DeviceList
-            ref={deviceListRef}
-            height={window.innerHeight - headerHeight}
-          />
+          <DeviceList height={window.innerHeight - headerHeight} />
         </main>
 
         {selectedDeviceId && (
