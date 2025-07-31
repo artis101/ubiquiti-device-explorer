@@ -33,7 +33,8 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
 
-  if (!device) return null;
+  // No device at this grid position (grid can have empty cells)
+  if (index >= devices.length) return null;
 
   const { src: imageUrl } = useImageUrl({ device, size: 256 });
 

@@ -29,8 +29,6 @@ function ListItem({ index, style, data }: ListItemProps) {
   const { devices } = data;
   const device = devices[index];
 
-  if (!device) return null;
-
   return (
     <div style={style} className="py-4">
       <DeviceCard

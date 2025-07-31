@@ -47,7 +47,17 @@ export function normalizeDevices(devices: Device[]): {
   const seenIds = new Set<string>();
 
   for (const device of devices) {
-    // Skip empty objects
+    // Skip if device is null/undefined or not an object
+    if (!device || typeof device !== "object") {
+      warnings.push({
+        deviceId: "unknown",
+        field: "device",
+        reason: "Invalid device object",
+      });
+      continue;
+    }
+
+    // Skip empty objects or devices without ID
     if (!device.id) {
       warnings.push({
         deviceId: "unknown",
@@ -121,7 +131,7 @@ export function parseUidbResponse(data: unknown): {
     const parsed = UidbResponseSchema.parse(data);
     return {
       devices: parsed.devices.filter(
-        (device) => device && typeof device === "object",
+        (device) => device && typeof device === "object" && device.id,
       ),
       warnings: [],
     };
