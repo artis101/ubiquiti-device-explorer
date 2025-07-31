@@ -10,10 +10,7 @@ function Root() {
   const {
     searchQuery,
     selectedLineId,
-    selectedDeviceId,
-    viewMode,
     selectedProductLines,
-    updateState,
   } = useUrlState();
 
   return (
@@ -24,14 +21,7 @@ function Root() {
         selectedProductLines={selectedProductLines}
       >
         <ProductLineProvider>
-          <App
-            searchQuery={searchQuery}
-            selectedLineId={selectedLineId}
-            selectedDeviceId={selectedDeviceId}
-            viewMode={viewMode}
-            selectedProductLines={selectedProductLines}
-            updateState={updateState}
-          />
+          <App />
         </ProductLineProvider>
       </UidbProvider>
     </StrictMode>

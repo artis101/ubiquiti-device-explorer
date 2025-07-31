@@ -4,30 +4,41 @@ import {
   ViewModeSwitcher,
   FilterButton,
 } from "./controls";
+import { useUrlState } from "@hooks/useUrlState";
+import { useUidbData } from "@contexts/UidbContext";
+import { useCallback } from "react";
 
-import type { NormalizedDevice } from "types/uidb";
+export function SearchAndFilters() {
+  const {
+    searchQuery,
+    selectedLineId,
+    viewMode,
+    selectedProductLines,
+    updateState,
+  } = useUrlState();
+  const { devicesForProductLineFilter } = useUidbData();
 
-interface SearchAndFiltersProps {
-  searchQuery: string;
-  selectedLineId?: string;
-  viewMode: "list" | "grid";
-  devicesForProductLineFilter: NormalizedDevice[];
-  selectedProductLines: string[];
-  onSearchChange: (query: string) => void;
-  onViewModeChange: (mode: "list" | "grid") => void;
-  onFilterChange: (selectedProductLines: string[]) => void;
-}
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      updateState({ q: query, productLines: [] });
+    },
+    [updateState]
+  );
 
-export function SearchAndFilters({
-  searchQuery,
-  selectedLineId,
-  viewMode,
-  devicesForProductLineFilter,
-  selectedProductLines,
-  onSearchChange,
-  onViewModeChange,
-  onFilterChange,
-}: SearchAndFiltersProps) {
+  const handleViewModeChange = useCallback(
+    (mode: "list" | "grid") => {
+      updateState({ view: mode });
+    },
+    [updateState]
+  );
+
+  const handleFilterChange = useCallback(
+    (selectedProductLines: string[]) => {
+      updateState({ productLines: selectedProductLines });
+    },
+    [updateState]
+  );
+
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto">
@@ -36,7 +47,7 @@ export function SearchAndFilters({
           <div className="flex items-center gap-4">
             <SearchInput
               searchQuery={searchQuery}
-              onSearchChange={onSearchChange}
+              onSearchChange={handleSearchChange}
             />
             <SearchResultsCount
               searchQuery={searchQuery}
@@ -48,10 +59,10 @@ export function SearchAndFilters({
           <div className="flex items-center gap-2">
             <ViewModeSwitcher
               viewMode={viewMode}
-              onViewModeChange={onViewModeChange}
+              onViewModeChange={handleViewModeChange}
             />
             <FilterButton
-              onFilterChange={onFilterChange}
+              onFilterChange={handleFilterChange}
               filteredDevices={devicesForProductLineFilter}
               selectedProductLines={selectedProductLines}
             />
