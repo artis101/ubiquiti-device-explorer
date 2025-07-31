@@ -50,7 +50,7 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
     <div style={style}>
       <button
         type="button"
-        className={`${rowClassName} focus:outline-none focus:ring-2 focus:ring-ui-blue-primary focus:ring-inset w-full text-left`}
+        className={`${rowClassName} focus:outline-none focus:border-y focus:border-ui-blue-primary w-full text-left`}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         role="row"

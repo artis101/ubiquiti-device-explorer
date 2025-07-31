@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { FixedSizeList as List } from "react-window";
 import { TableHeader } from "./TableHeader";
 import { TableRow } from "./TableRow";
