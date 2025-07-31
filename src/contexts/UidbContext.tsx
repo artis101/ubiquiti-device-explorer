@@ -6,7 +6,11 @@ import { LoadingScreen } from "@components/ui/LoadingScreen";
 import { ErrorScreen } from "@components/ui/ErrorScreen";
 
 import { useDebounce } from "@hooks/useDebounce";
-import { filterByLine, filterByProductLines, searchDevices } from "@utils/search";
+import {
+  filterByLine,
+  filterByProductLines,
+  searchDevices,
+} from "@utils/search";
 
 interface UidbContextType {
   devices: NormalizedDevice[];
@@ -35,48 +39,53 @@ export function UidbProvider({
     useUidb();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const { filteredDevices, searchHits, devicesForProductLineFilter } = useMemo(() => {
-    let filtered = devices;
-    
-    // Apply line filter first
-    filtered = filterByLine(filtered, selectedLineId);
-    
-    // Keep devices filtered only by line and search (for product line dropdown)
-    let devicesForProductLineFilter = filtered;
-    
-    // Apply product lines filter for main results
-    filtered = filterByProductLines(filtered, selectedProductLines);
+  const { filteredDevices, searchHits, devicesForProductLineFilter } =
+    useMemo(() => {
+      let filtered = devices;
 
-    if (debouncedSearchQuery) {
-      // Apply search to both sets
-      const searchResults = searchDevices(filtered, debouncedSearchQuery);
-      const resultDevices = searchResults.map(
-        (hit) => filtered.find((device) => device.id === hit.id)!,
-      );
+      // Apply line filter first
+      filtered = filterByLine(filtered, selectedLineId);
 
-      const searchHitMap = new Map<string, SearchHit>(
-        searchResults.map((hit) => [hit.id, hit]),
-      );
+      // Keep devices filtered only by line and search (for product line dropdown)
+      let devicesForProductLineFilter = filtered;
 
-      // Apply search to devices for product line filter too
-      const searchResultsForFilter = searchDevices(devicesForProductLineFilter, debouncedSearchQuery);
-      const devicesForFilterWithSearch = searchResultsForFilter.map(
-        (hit) => devicesForProductLineFilter.find((device) => device.id === hit.id)!,
-      );
+      // Apply product lines filter for main results
+      filtered = filterByProductLines(filtered, selectedProductLines);
+
+      if (debouncedSearchQuery) {
+        // Apply search to both sets
+        const searchResults = searchDevices(filtered, debouncedSearchQuery);
+        const resultDevices = searchResults.map(
+          (hit) => filtered.find((device) => device.id === hit.id)!,
+        );
+
+        const searchHitMap = new Map<string, SearchHit>(
+          searchResults.map((hit) => [hit.id, hit]),
+        );
+
+        // Apply search to devices for product line filter too
+        const searchResultsForFilter = searchDevices(
+          devicesForProductLineFilter,
+          debouncedSearchQuery,
+        );
+        const devicesForFilterWithSearch = searchResultsForFilter.map(
+          (hit) =>
+            devicesForProductLineFilter.find((device) => device.id === hit.id)!,
+        );
+
+        return {
+          filteredDevices: resultDevices,
+          searchHits: searchHitMap,
+          devicesForProductLineFilter: devicesForFilterWithSearch,
+        };
+      }
 
       return {
-        filteredDevices: resultDevices,
-        searchHits: searchHitMap,
-        devicesForProductLineFilter: devicesForFilterWithSearch,
+        filteredDevices: filtered,
+        searchHits: new Map<string, SearchHit>(),
+        devicesForProductLineFilter,
       };
-    }
-
-    return {
-      filteredDevices: filtered,
-      searchHits: new Map<string, SearchHit>(),
-      devicesForProductLineFilter,
-    };
-  }, [devices, selectedLineId, selectedProductLines, debouncedSearchQuery]);
+    }, [devices, selectedLineId, selectedProductLines, debouncedSearchQuery]);
 
   const contextValue = useMemo(
     () => ({
@@ -88,7 +97,15 @@ export function UidbProvider({
       searchHits,
       devicesForProductLineFilter,
     }),
-    [devices, warnings, connectionInfo, refetch, filteredDevices, searchHits, devicesForProductLineFilter],
+    [
+      devices,
+      warnings,
+      connectionInfo,
+      refetch,
+      filteredDevices,
+      searchHits,
+      devicesForProductLineFilter,
+    ],
   );
 
   if (loading) {

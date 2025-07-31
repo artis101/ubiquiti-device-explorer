@@ -57,7 +57,7 @@ export const DeviceListTable = forwardRef<List, DeviceListTableProps>(
       height,
       searchHits,
     },
-    ref
+    ref,
   ) => {
     // Calculate item height based on image size + padding for new card design
     const itemHeight = Math.max(imageSize + 80, 160);
@@ -85,7 +85,7 @@ export const DeviceListTable = forwardRef<List, DeviceListTableProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 DeviceListTable.displayName = "DeviceListTable";

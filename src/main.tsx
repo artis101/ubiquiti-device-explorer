@@ -18,7 +18,11 @@ function Root() {
 
   return (
     <StrictMode>
-      <UidbProvider searchQuery={searchQuery} selectedLineId={selectedLineId} selectedProductLines={selectedProductLines}>
+      <UidbProvider
+        searchQuery={searchQuery}
+        selectedLineId={selectedLineId}
+        selectedProductLines={selectedProductLines}
+      >
         <ProductLineProvider>
           <App
             searchQuery={searchQuery}

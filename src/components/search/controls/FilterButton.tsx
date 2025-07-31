@@ -18,7 +18,7 @@ export function FilterButton({
 }: FilterButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProductLines, setSelectedProductLines] = useState<string[]>(
-    externalSelectedProductLines
+    externalSelectedProductLines,
   );
   const hasActiveFilters = selectedProductLines.length > 0;
 

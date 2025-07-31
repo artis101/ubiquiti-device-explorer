@@ -22,7 +22,9 @@ function ToggleSwitchComponent<T extends string | number>({
   return (
     <div className="flex items-center">
       {label && (
-        <span className="text-sm font-normal text-[var(--ui-text-primary)] mr-2">{label}:</span>
+        <span className="text-sm font-normal text-[var(--ui-text-primary)] mr-2">
+          {label}:
+        </span>
       )}
       <div className="flex items-center rounded-lg border border-[var(--ui-gray-200)] p-1">
         {options.map((option) => (

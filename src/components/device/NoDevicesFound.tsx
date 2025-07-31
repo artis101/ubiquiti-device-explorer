@@ -1,5 +1,3 @@
-
-
 export function NoDevicesFound() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -23,9 +21,7 @@ export function NoDevicesFound() {
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
             No devices found
           </h3>
-          <p className="text-gray-600">
-            Try adjusting your search or filters
-          </p>
+          <p className="text-gray-600">Try adjusting your search or filters</p>
         </div>
       </div>
     </div>

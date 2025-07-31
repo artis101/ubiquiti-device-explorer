@@ -36,8 +36,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                     connectionInfo.status === "live"
                       ? "bg-ui-green-primary"
                       : connectionInfo.status === "offline"
-                      ? "bg-ui-yellow-primary"
-                      : "bg-ui-amber-600"
+                        ? "bg-ui-yellow-primary"
+                        : "bg-ui-amber-600"
                   }`}
                   title="Data freshness information"
                 ></div>
@@ -55,8 +55,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                           {connectionInfo.status === "live"
                             ? "Live Data"
                             : connectionInfo.status === "offline"
-                            ? "Fresh Data (Offline)"
-                            : "Cached Data"}
+                              ? "Fresh Data (Offline)"
+                              : "Cached Data"}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -65,8 +65,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                           {connectionInfo.dataSource === "api"
                             ? "API"
                             : connectionInfo.dataSource === "cache"
-                            ? "Cache"
-                            : "Fallback"}
+                              ? "Cache"
+                              : "Fallback"}
                         </span>
                       </div>
                       {connectionInfo.lastFetch && (
@@ -101,5 +101,5 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         <WarningBanner warnings={warnings} />
       </div>
     );
-  }
+  },
 );

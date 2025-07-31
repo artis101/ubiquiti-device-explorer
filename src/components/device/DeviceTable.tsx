@@ -31,7 +31,7 @@ export const DeviceTable = forwardRef<List, DeviceTableProps>(
         </List>
       </div>
     );
-  }
+  },
 );
 
 DeviceTable.displayName = "DeviceTable";

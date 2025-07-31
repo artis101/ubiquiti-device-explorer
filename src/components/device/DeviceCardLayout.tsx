@@ -24,10 +24,12 @@ const DeviceCardLayoutComponent = ({
 
   const isListLayout = layout === "list";
 
-  const containerStyle = !isListLayout ? { 
-    width: `${imageSize + 48}px`,
-    maxWidth: `${imageSize + 48}px`
-  } : {};
+  const containerStyle = !isListLayout
+    ? {
+        width: `${imageSize + 48}px`,
+        maxWidth: `${imageSize + 48}px`,
+      }
+    : {};
 
   return (
     <div
@@ -47,7 +49,7 @@ const DeviceCardLayoutComponent = ({
       aria-pressed={isSelected}
       style={{
         ...containerStyle,
-        boxShadow: !isSelected ? 'var(--ui-shadow-card)' : undefined
+        boxShadow: !isSelected ? "var(--ui-shadow-card)" : undefined,
       }}
     >
       <div

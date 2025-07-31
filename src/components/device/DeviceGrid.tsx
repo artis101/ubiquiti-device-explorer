@@ -35,7 +35,7 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
     columnCount,
     centerOffset,
   } = data;
-  
+
   const imageSize = 256; // Fixed image size
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
@@ -66,15 +66,8 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
 
 export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
   (
-    {
-      devices,
-      selectedDeviceId,
-      onDeviceSelect,
-      height,
-      width,
-      searchHits,
-    },
-    ref
+    { devices, selectedDeviceId, onDeviceSelect, height, width, searchHits },
+    ref,
   ) => {
     const imageSize = 256; // Fixed image size
     const columnWidth = imageSize + 64;
@@ -114,7 +107,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
         </Grid>
       </div>
     );
-  }
+  },
 );
 
 DeviceGrid.displayName = "DeviceGrid";

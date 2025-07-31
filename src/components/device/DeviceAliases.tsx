@@ -59,7 +59,9 @@ export function DeviceAliases({ aliases, searchHit }: DeviceAliasesProps) {
         );
       })}
       {hiddenCount > 0 && (
-        <span className="text-xs text-[var(--ui-gray-500)]">+{hiddenCount} more</span>
+        <span className="text-xs text-[var(--ui-gray-500)]">
+          +{hiddenCount} more
+        </span>
       )}
     </div>
   );

@@ -3,7 +3,10 @@ interface ProductLineDropdownProps {
   children: React.ReactNode;
 }
 
-export function ProductLineDropdown({ isOpen, children }: ProductLineDropdownProps) {
+export function ProductLineDropdown({
+  isOpen,
+  children,
+}: ProductLineDropdownProps) {
   if (!isOpen) return null;
 
   return (

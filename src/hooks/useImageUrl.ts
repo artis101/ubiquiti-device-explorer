@@ -36,10 +36,12 @@ export const useImageUrl = ({
 
       const src = `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${size}&q=${IMAGE_QUALITY}`;
       const imageSizes = [256, 512, 1024] as const;
-      const srcSet = imageSizes.map(
-        (s) =>
-          `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${s}&q=${IMAGE_QUALITY} ${s}w`,
-      ).join(", ");
+      const srcSet = imageSizes
+        .map(
+          (s) =>
+            `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${s}&q=${IMAGE_QUALITY} ${s}w`,
+        )
+        .join(", ");
       const sizes = "(max-width: 600px) 480px, 800px";
 
       return { src, srcSet, sizes };

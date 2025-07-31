@@ -24,7 +24,7 @@ const fuseOptions = {
 // Search across multiple device fields using Fuse.js
 export function searchDevices(
   devices: NormalizedDevice[],
-  query: string
+  query: string,
 ): SearchHit[] {
   if (!query.trim()) {
     return devices.map((device) => ({
@@ -52,7 +52,7 @@ export function searchDevices(
 // Filter devices by product line
 export function filterByLine(
   devices: NormalizedDevice[],
-  lineId?: string
+  lineId?: string,
 ): NormalizedDevice[] {
   if (!lineId) return devices;
   return devices.filter((device) => device.lineId === lineId);
@@ -61,10 +61,12 @@ export function filterByLine(
 // Filter devices by multiple product lines
 export function filterByProductLines(
   devices: NormalizedDevice[],
-  productLines: string[]
+  productLines: string[],
 ): NormalizedDevice[] {
   if (!productLines || productLines.length === 0) return devices;
-  return devices.filter((device) => device.lineId && productLines.includes(device.lineId));
+  return devices.filter(
+    (device) => device.lineId && productLines.includes(device.lineId),
+  );
 }
 
 export interface SearchHitMatch {
@@ -74,7 +76,7 @@ export interface SearchHitMatch {
 }
 
 export function processFuseMatches(
-  matches: readonly FuseMatch[] | undefined
+  matches: readonly FuseMatch[] | undefined,
 ): SearchHitMatch[] | undefined {
   if (!matches) {
     return undefined;

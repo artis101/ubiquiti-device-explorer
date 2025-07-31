@@ -39,7 +39,7 @@ export const DeviceList = forwardRef<any, DeviceListProps>(
     const viewRef = viewMode === "grid" ? gridRef : listRef;
 
     return <ViewComponent ref={viewRef} {...commonProps} />;
-  }
+  },
 );
 
 DeviceList.displayName = "DeviceList";

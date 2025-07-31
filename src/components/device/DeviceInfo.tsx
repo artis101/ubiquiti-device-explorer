@@ -38,13 +38,7 @@ export function DeviceInfo({
 
       {/* Device Subtitle - SKU */}
       {device.sku && (
-        <div
-          className={`${
-            isListLayout
-              ? "mb-3"
-              : "mb-2"
-          }`}
-        >
+        <div className={`${isListLayout ? "mb-3" : "mb-2"}`}>
           <span
             className={`text-sm font-normal text-[var(--ui-gray-500)] truncate block ${
               !isListLayout ? "max-w-26" : ""
@@ -84,7 +78,10 @@ export function DeviceInfo({
               Aliases
             </span>
             <div className="text-right">
-              <DeviceAliases aliases={device.shortnames} searchHit={searchHit} />
+              <DeviceAliases
+                aliases={device.shortnames}
+                searchHit={searchHit}
+              />
             </div>
           </div>
         )}

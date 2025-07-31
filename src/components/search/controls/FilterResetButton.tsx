@@ -3,7 +3,10 @@ interface FilterResetButtonProps {
   onReset: () => void;
 }
 
-export function FilterResetButton({ hasActiveFilters, onReset }: FilterResetButtonProps) {
+export function FilterResetButton({
+  hasActiveFilters,
+  onReset,
+}: FilterResetButtonProps) {
   return (
     <div className="p-3">
       <button
