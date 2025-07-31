@@ -29,7 +29,7 @@ vi.mock('fuse.js', () => ({
       return [];
     }),
   })),
-});
+}));
 
 describe('searchDevices', () => {
   const mockDevices = [

@@ -1,0 +1,47 @@
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import App from '../App';
+import { useHeaderHeight } from '@hooks/useHeaderHeight';
+import { useUidbData } from '@hooks/useUidbData';
+import { useWindowDimensions } from '@hooks/useWindowDimensions';
+import { useUrlState } from '@hooks/useUrlState';
+
+// Mock the hooks
+vi.mock('@hooks/useHeaderHeight');
+vi.mock('@hooks/useUidbData');
+vi.mock('@hooks/useWindowDimensions');
+vi.mock('@hooks/useUrlState');
+
+describe('App', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    (useHeaderHeight as vi.Mock).mockReturnValue({ headerHeight: 0, headerRef: { current: null } });
+    (useUidbData as vi.Mock).mockReturnValue({ warnings: [], connectionInfo: { status: 'connected' } });
+    (useWindowDimensions as vi.Mock).mockReturnValue({ windowHeight: 768, windowWidth: 1024 });
+    (useUrlState as vi.Mock).mockReturnValue({ searchQuery: '', selectedLineId: undefined, viewMode: 'list', selectedProductLines: [], updateState: vi.fn() });
+  });
+
+  it('renders the AppHeader', () => {
+    render(<App />);
+    expect(screen.getByText('Product Catalog')).toBeInTheDocument(); // Assuming AppHeader renders this text
+  });
+
+  it('renders SearchAndFilters when no device is selected', () => {
+    render(<App />);
+    expect(screen.getByPlaceholderText('Search devices...')).toBeInTheDocument();
+  });
+
+  it('does not render SearchAndFilters when a device is selected', () => {
+    (useUrlState as vi.Mock).mockReturnValue({
+      searchQuery: '',
+      selectedLineId: undefined,
+      viewMode: 'list',
+      selectedDeviceId: 'some-device-id',
+      selectedProductLines: [],
+      updateState: vi.fn(),
+    });
+    render(<App />);
+    expect(screen.queryByPlaceholderText('Search devices...')).not.toBeInTheDocument();
+    expect(screen.getByText('Device Details')).toBeInTheDocument(); // Assuming DeviceDetails renders this text
+  });
+});

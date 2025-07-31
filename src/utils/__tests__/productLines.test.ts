@@ -42,4 +42,16 @@ describe('getProductLines', () => {
       { id: 'line1', name: 'Product Line 1' },
     ]);
   });
+
+  it('should ignore devices with empty product line id or name', () => {
+    const devices = [
+      { id: '1', line: { id: 'line1', name: 'Product Line 1' } },
+      { id: '2', line: { id: '', name: 'Empty ID' } },
+      { id: '3', line: { id: 'line3', name: '' } },
+      { id: '4', line: { id: '', name: '' } },
+    ];
+    expect(getProductLines(devices as any)).toEqual([
+      { id: 'line1', name: 'Product Line 1' },
+    ]);
+  });
 });
