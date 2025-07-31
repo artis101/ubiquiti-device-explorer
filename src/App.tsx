@@ -10,9 +10,12 @@ import { useUrlState } from "@hooks/useUrlState";
 
 function App() {
   const { warnings, connectionInfo } = useUidbData();
-  const { headerHeight, headerRef } = useHeaderHeight([warnings]);
-  const { windowHeight } = useWindowDimensions();
   const { selectedDeviceId, updateState } = useUrlState();
+  const { headerHeight, headerRef } = useHeaderHeight([
+    warnings,
+    selectedDeviceId,
+  ]);
+  const { windowHeight } = useWindowDimensions();
 
   return (
     <ErrorBoundary>

@@ -1,7 +1,7 @@
 import { useState, useEffect, type DependencyList, useRef } from "react";
 
 export function useHeaderHeight(dependencies: DependencyList = []) {
-  const [headerHeight, setHeaderHeight] = useState(256);
+  const [headerHeight, setHeaderHeight] = useState(49);
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
