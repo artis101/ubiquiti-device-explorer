@@ -9,8 +9,6 @@ import { useUrlState } from "@hooks/useUrlState";
 function Root() {
   const { searchQuery, selectedLineId, selectedProductLines } = useUrlState();
 
-  console.log("searchQuery", searchQuery);
-
   return (
     <StrictMode>
       <UidbProvider

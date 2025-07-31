@@ -13,6 +13,9 @@ const DEFAULT_STATE: UrlState = {
   view: "list",
 };
 
+// Custom event to sync state across hook instances
+const URL_STATE_CHANGE_EVENT = "urlStateChange";
+
 function getStateFromUrl(): UrlState {
   const params = new URLSearchParams(window.location.search);
 
@@ -54,18 +57,29 @@ export function useUrlState() {
     updateUrl(state);
   }, [state]);
 
-  // Listen for browser back/forward navigation
+  // Listen for browser back/forward navigation and custom event
   useEffect(() => {
-    const handlePopState = () => {
+    const handleStateChange = () => {
       setState(getStateFromUrl());
     };
 
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    window.addEventListener("popstate", handleStateChange);
+    window.addEventListener(URL_STATE_CHANGE_EVENT, handleStateChange);
+
+    return () => {
+      window.removeEventListener("popstate", handleStateChange);
+      window.removeEventListener(URL_STATE_CHANGE_EVENT, handleStateChange);
+    };
   }, []);
 
   const updateState = useCallback((updates: Partial<UrlState>) => {
-    setState((prev) => ({ ...prev, ...updates }));
+    setState((prev) => {
+      const newState = { ...prev, ...updates };
+      // Update URL and notify other hooks
+      updateUrl(newState);
+      window.dispatchEvent(new Event(URL_STATE_CHANGE_EVENT));
+      return newState;
+    });
   }, []);
 
   return {

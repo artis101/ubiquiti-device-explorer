@@ -19,9 +19,6 @@ export const DeviceList = forwardRef<any, DeviceListProps>(
     const { filteredDevices, searchHits } = useUidbData();
     const { selectedDeviceId, viewMode, updateState, searchQuery } =
       useUrlState();
-    console.log({
-      searchQuery,
-    });
     const { windowWidth } = useWindowDimensions();
 
     const handleDeviceSelect = useCallback(
