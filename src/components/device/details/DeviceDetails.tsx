@@ -1,9 +1,10 @@
-import { useUidbData } from "@contexts/UidbContext";
-import { DeviceHeader } from "@components/device/DeviceHeader";
-import { DeviceAttributes } from "@components/device/DeviceAttributes";
+import { useUidbData } from "@hooks/useUidbData";
+import { DeviceHeader } from "../common/DeviceHeader";
+import { DeviceAttributes } from "./DeviceAttributes";
 // import { DeviceImages } from "@components/device/DeviceImages";
-import { DeviceAliases } from "@components/device/DeviceAliases";
+import { DeviceAliases } from "./DeviceAliases";
 import { RawJsonViewer } from "@components/ui/RawJsonViewer";
+import type { NormalizedDevice } from "types/uidb";
 
 interface DeviceDetailsProps {
   deviceId: string;
@@ -12,7 +13,7 @@ interface DeviceDetailsProps {
 
 export function DeviceDetails({ deviceId, onClose }: DeviceDetailsProps) {
   const { devices } = useUidbData();
-  const device = devices.find((d) => d.id === deviceId);
+  const device = devices.find((d: NormalizedDevice) => d.id === deviceId);
 
   if (!device) {
     return null; // Or a loading/error state

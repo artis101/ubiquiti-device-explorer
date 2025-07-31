@@ -1,5 +1,5 @@
 import React from "react";
-import { UidbProvider as UidbProviderComponent } from "./UidbContext";
+import UidbProviderComponent from "./UidbContext";
 import { useUrlState } from "@hooks/useUrlState";
 
 export function UidbProvider({ children }: { children: React.ReactNode }) {

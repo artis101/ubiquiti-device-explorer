@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { FixedSizeList as List } from "react-window";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
-import { DeviceGridCard as DeviceCard } from "@components/device/DeviceGridCard";
+import { DeviceGridCard as DeviceCard } from "../grid/DeviceGridCard";
 
 interface DeviceListTableProps {
   devices: NormalizedDevice[];

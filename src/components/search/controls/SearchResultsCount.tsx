@@ -1,4 +1,4 @@
-import { useUidbData } from "@contexts/UidbContext";
+import { useUidbData } from "@hooks/useUidbData";
 
 interface SearchResultsCountProps {
   searchQuery: string;

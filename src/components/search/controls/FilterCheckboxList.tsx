@@ -1,5 +1,6 @@
-import { useProductLineData } from "@contexts/ProductLineContext";
+import { useProductLineData } from "@hooks/useProductLineData";
 import type { NormalizedDevice } from "types/uidb";
+import type { ProductLine } from "@contexts/ProductLineTypes";
 
 interface FilterCheckboxListProps {
   filteredDevices: NormalizedDevice[];
@@ -20,7 +21,7 @@ export function FilterCheckboxList({
 
   return (
     <ul className="max-h-56 overflow-y-auto">
-      {productLines.map((productLine) => {
+      {productLines.map((productLine: ProductLine) => {
         const isAvailable = availableProductLineIds.has(productLine.id);
         const isChecked = selectedProductLines.includes(productLine.id);
         return (

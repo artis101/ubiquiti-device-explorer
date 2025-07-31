@@ -1,21 +1,12 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useMemo } from "react";
 import { getProductLines } from "@utils/productLines";
-import { useUidbData } from "./UidbContext";
+import { useUidbData } from "@hooks/useUidbData";
 
-interface ProductLine {
-  id: string;
-  name: string;
-}
+import type { ProductLineContextType } from "./ProductLineTypes";
 
-interface ProductLineContextType {
-  productLines: ProductLine[];
-}
+export const ProductLineContext = createContext<ProductLineContextType | undefined>(undefined);
 
-const ProductLineContext = createContext<ProductLineContextType | undefined>(
-  undefined,
-);
-
-export function ProductLineProvider({
+export default function ProductLineProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -33,12 +24,4 @@ export function ProductLineProvider({
   );
 }
 
-export function useProductLineData() {
-  const context = useContext(ProductLineContext);
-  if (context === undefined) {
-    throw new Error(
-      "useProductLineData must be used within a ProductLineProvider",
-    );
-  }
-  return context;
-}
+

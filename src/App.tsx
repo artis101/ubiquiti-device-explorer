@@ -3,9 +3,9 @@ import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
 import { AppHeader } from "@components/layout/AppHeader";
 import { SearchAndFilters } from "@components/search/SearchAndFilters";
-import { DeviceList } from "@components/device/DeviceList";
+import { DeviceList } from "@components/device/list/DeviceList";
 // import { DeviceDetails } from "@components/device/DeviceDetails";
-import { useUidbData } from "./contexts/UidbContext";
+import { useUidbData } from "@hooks/useUidbData";
 
 
 function App() {

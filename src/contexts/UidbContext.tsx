@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useMemo } from "react";
 import type { ConnectionInfo } from "@hooks/useConnectionStatus";
 import { useUidb } from "@hooks/useUidb";
 import type { NormalizedDevice, SchemaWarning, SearchHit } from "types/uidb";
@@ -21,9 +21,9 @@ interface UidbContextType {
   devicesForProductLineFilter: NormalizedDevice[];
 }
 
-const UidbContext = createContext<UidbContextType | undefined>(undefined);
+export const UidbContext = createContext<UidbContextType | undefined>(undefined);
 
-export function UidbProviderComponent({
+export default function UidbProvider({
   children,
   searchQuery,
   selectedLineId,
@@ -114,12 +114,6 @@ export function UidbProviderComponent({
   );
 }
 
-export const UidbProvider = UidbProviderComponent;
 
-export function useUidbData() {
-  const context = useContext(UidbContext);
-  if (context === undefined) {
-    throw new Error("useUidbData must be used within a UidbProvider");
-  }
-  return context;
-}
+
+

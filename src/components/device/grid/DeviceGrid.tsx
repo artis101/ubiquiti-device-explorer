@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
-import { DeviceGridCard } from "@components/device/DeviceGridCard";
+import { DeviceGridCard } from "./DeviceGridCard";
 import { useImageUrl } from "@hooks/useImageUrl";
 
 interface DeviceGridProps {
@@ -32,13 +32,10 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
 
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
-
-  // No device at this grid position (grid can have empty cells)
-  if (index >= devices.length) return null;
-
   const { src: imageUrl } = useImageUrl({ device, size: 256 });
 
-  if (!imageUrl) return null;
+  // No device at this grid position (grid can have empty cells)
+  if (index >= devices.length || !imageUrl) return null;
 
   const isSelected = device.id === selectedDeviceId;
 

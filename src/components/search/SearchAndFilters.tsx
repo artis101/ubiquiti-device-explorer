@@ -5,7 +5,7 @@ import {
   FilterButton,
 } from "./controls";
 import { useUrlState } from "@hooks/useUrlState";
-import { useUidbData } from "@contexts/UidbContext";
+import { useUidbData } from "@hooks/useUidbData";
 import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "@hooks/useDebounce";
 

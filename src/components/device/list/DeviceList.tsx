@@ -1,10 +1,10 @@
 import { FixedSizeList as List } from "react-window";
 import { FixedSizeGrid as Grid } from "react-window";
-import { DeviceGrid } from "./DeviceGrid";
-import { NoDevicesFound } from "./NoDevicesFound";
+import { DeviceGrid } from "../grid/DeviceGrid";
+import { NoDevicesFound } from "../common/NoDevicesFound";
 import { DeviceTable } from "./DeviceTable";
 import type { NormalizedDevice } from "types/uidb";
-import { useUidbData } from "@contexts/UidbContext";
+import { useUidbData } from "@hooks/useUidbData";
 import { useUrlState } from "@hooks/useUrlState";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
 import { useRef, useEffect, useCallback } from "react";
