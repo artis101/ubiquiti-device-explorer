@@ -13,64 +13,70 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     return (
       <div ref={ref}>
         {/* Header - Matching Figma Design Exactly */}
-        <header className="bg-[#F4F5F6] border-b border-[var(--ui-gray-200)]">
+        <header className="bg-ui-gray-100 border-b border-ui-gray-200">
           <div className="flex items-center justify-between px-8 py-4">
             <div className="flex items-center gap-4">
               {/* Logo from public/logo.png */}
               <div className="flex items-center justify-center">
-                <img 
-                  src="/logo.png" 
-                  alt="Ubiquiti Logo" 
+                <img
+                  src="/logo.png"
+                  alt="Ubiquiti Logo"
                   className="w-8 h-8"
                   onError={(e) => {
                     const img = e.target as HTMLImageElement;
-                    img.style.display = 'none';
+                    img.style.display = "none";
                   }}
                 />
               </div>
-              
+
               {/* Devices Title */}
-              <h1 className="text-sm font-normal text-[rgba(0,0,0,0.85)]">
+              <h1 className="text-sm font-normal text-ui-text-primary">
                 Devices
               </h1>
             </div>
 
             {/* Right Side - Author and Live Status */}
             <div className="flex items-center gap-2">
-              <span className="text-sm font-normal text-[#808893]">
+              <span className="text-sm font-normal text-ui-gray-500">
                 Artis Avotins
               </span>
               <div className="flex items-center gap-1 relative group">
-                <div 
+                <div
                   className={`w-2 h-2 rounded-full cursor-help ${
-                    connectionInfo.status === 'live' ? 'bg-green-500' :
-                    connectionInfo.status === 'offline' ? 'bg-yellow-500' :
-                    'bg-amber-600'
+                    connectionInfo.status === "live"
+                      ? "bg-ui-green-primary"
+                      : connectionInfo.status === "offline"
+                      ? "bg-ui-yellow-primary"
+                      : "bg-ui-amber-600"
                   }`}
                   title="Data freshness information"
                 ></div>
-                
+
                 {/* Tooltip */}
-                <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute right-0 top-full mt-2 w-64 bg-ui-white border border-ui-gray-200 rounded-lg shadow-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   <div className="text-sm space-y-2">
-                    <div className="font-medium text-gray-900">
+                    <div className="font-medium text-ui-gray-700">
                       Data Freshness
                     </div>
-                    <div className="text-gray-700">
+                    <div className="text-ui-gray-600">
                       <div className="flex justify-between">
                         <span>Status:</span>
                         <span className="capitalize font-medium">
-                          {connectionInfo.status === 'live' ? 'Live Data' :
-                           connectionInfo.status === 'offline' ? 'Fresh Data (Offline)' :
-                           'Cached Data'}
+                          {connectionInfo.status === "live"
+                            ? "Live Data"
+                            : connectionInfo.status === "offline"
+                            ? "Fresh Data (Offline)"
+                            : "Cached Data"}
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span>Source:</span>
                         <span className="capitalize font-medium">
-                          {connectionInfo.dataSource === 'api' ? 'API' :
-                           connectionInfo.dataSource === 'cache' ? 'Cache' :
-                           'Fallback'}
+                          {connectionInfo.dataSource === "api"
+                            ? "API"
+                            : connectionInfo.dataSource === "cache"
+                            ? "Cache"
+                            : "Fallback"}
                         </span>
                       </div>
                       {connectionInfo.lastFetch && (
@@ -83,10 +89,14 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                       )}
                       <div className="flex justify-between">
                         <span>Connection:</span>
-                        <span className={`font-medium ${
-                          connectionInfo.isOnline ? 'text-green-600' : 'text-red-600'
-                        }`}>
-                          {connectionInfo.isOnline ? 'Online' : 'Offline'}
+                        <span
+                          className={`font-medium ${
+                            connectionInfo.isOnline
+                              ? "text-ui-green-600"
+                              : "text-ui-red-primary"
+                          }`}
+                        >
+                          {connectionInfo.isOnline ? "Online" : "Offline"}
                         </span>
                       </div>
                     </div>
@@ -101,5 +111,5 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         <WarningBanner warnings={warnings} />
       </div>
     );
-  },
+  }
 );
