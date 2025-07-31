@@ -34,7 +34,7 @@ export function SearchAndFilters({
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between px-8 py-4">
+        <div className="flex items-center justify-between py-4">
           {/* Left Side - Search and Device Count */}
           <div className="flex items-center gap-4">
             <SearchInput
