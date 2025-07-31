@@ -47,22 +47,12 @@ export function normalizeDevices(devices: Device[]): {
   const seenIds = new Set<string>();
 
   for (const device of devices) {
-    // Skip if device is null/undefined or not an object
-    if (!device || typeof device !== "object") {
+    // Skip if device is null/undefined or not an object, or if it's missing an ID
+    if (!device || typeof device !== "object" || !device.id) {
       warnings.push({
-        deviceId: "unknown",
+        deviceId: device?.id || "unknown",
         field: "device",
-        reason: "Invalid device object",
-      });
-      continue;
-    }
-
-    // Skip empty objects or devices without ID
-    if (!device.id) {
-      warnings.push({
-        deviceId: "unknown",
-        field: "id",
-        reason: "Missing device ID",
+        reason: "Invalid or incomplete device object",
       });
       continue;
     }

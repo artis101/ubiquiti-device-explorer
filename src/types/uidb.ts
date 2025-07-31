@@ -39,7 +39,7 @@ export const DeviceSchema = z.looseObject({
 });
 
 export const UidbResponseSchema = z.looseObject({
-  devices: z.array(DeviceSchema),
+  devices: z.array(DeviceSchema.nullable().optional()),
 });
 
 // Inferred types
