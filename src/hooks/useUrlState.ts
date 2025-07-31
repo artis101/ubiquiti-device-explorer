@@ -12,14 +12,16 @@ export interface UrlState {
 const DEFAULT_STATE: UrlState = {
   q: "",
   size: 256,
-  view: "grid",
+  view: "list",
 };
 
 function getStateFromUrl(): UrlState {
   const params = new URLSearchParams(window.location.search);
 
   const productLinesParam = params.get("productLines");
-  const productLines = productLinesParam ? productLinesParam.split(",") : undefined;
+  const productLines = productLinesParam
+    ? productLinesParam.split(",")
+    : undefined;
 
   return {
     q: params.get("q") || DEFAULT_STATE.q,
@@ -40,7 +42,7 @@ function updateUrl(state: UrlState) {
     params.set("size", state.size.toString());
   if (state.select) params.set("select", state.select);
   if (state.view !== DEFAULT_STATE.view) params.set("view", state.view);
-  if (state.productLines && state.productLines.length > 0) 
+  if (state.productLines && state.productLines.length > 0)
     params.set("productLines", state.productLines.join(","));
 
   const newUrl = `${window.location.pathname}${

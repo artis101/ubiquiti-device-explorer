@@ -114,31 +114,28 @@ function App({
     [updateState]
   );
 
-  // console.log({ headerHeight });
-
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-white flex flex-col overflow-hidden">
-        <AppHeader
-          ref={headerRef}
-          warnings={warnings}
-          connectionInfo={connectionInfo}
-        />
+        {/* Header */}
+        <div ref={headerRef}>
+          <AppHeader warnings={warnings} connectionInfo={connectionInfo} />
 
-        {/* Search and Filters */}
-        <SearchAndFilters
-          searchQuery={searchQuery}
-          selectedLineId={selectedLineId}
-          imageSize={imageSize}
-          viewMode={viewMode}
-          devicesForProductLineFilter={devicesForProductLineFilter}
-          selectedProductLines={selectedProductLines}
-          onSearchChange={handleSearchChange}
-          onLineFilterChange={handleLineFilterChange}
-          onImageSizeChange={handleImageSizeChange}
-          onViewModeChange={handleViewModeChange}
-          onFilterChange={handleFilterChange}
-        />
+          {/* Search and Filters */}
+          <SearchAndFilters
+            searchQuery={searchQuery}
+            selectedLineId={selectedLineId}
+            imageSize={imageSize}
+            viewMode={viewMode}
+            devicesForProductLineFilter={devicesForProductLineFilter}
+            selectedProductLines={selectedProductLines}
+            onSearchChange={handleSearchChange}
+            onLineFilterChange={handleLineFilterChange}
+            onImageSizeChange={handleImageSizeChange}
+            onViewModeChange={handleViewModeChange}
+            onFilterChange={handleFilterChange}
+          />
+        </div>
 
         {/* Main Content */}
         <main
