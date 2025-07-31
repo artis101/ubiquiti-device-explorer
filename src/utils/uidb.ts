@@ -113,6 +113,8 @@ export function normalizeDevices(devices: Device[]): {
           displayName,
           lineId: device.line?.id,
         }),
+      // Ensure images property exists
+      images: device.images || {},
     };
 
     normalized.push(normalizedDevice);

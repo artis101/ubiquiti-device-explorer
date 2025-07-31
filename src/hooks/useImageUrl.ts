@@ -27,6 +27,11 @@ export const useImageUrl = ({
   type,
 }: UseImageUrlOptions): ImageUrlData => {
   return React.useMemo(() => {
+    // Safety check for device and images
+    if (!device || !device.images) {
+      return { src: device?.imageUrl, srcSet: undefined, sizes: undefined };
+    }
+
     const getImageUrlData = (imageType: ImageType): ImageUrlData | null => {
       const hash = device.images?.[imageType];
       if (!hash) return null;
