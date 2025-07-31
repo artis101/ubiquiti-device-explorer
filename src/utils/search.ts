@@ -64,7 +64,7 @@ export function filterByProductLines(
   productLines: string[]
 ): NormalizedDevice[] {
   if (!productLines || productLines.length === 0) return devices;
-  return devices.filter((device) => productLines.includes(device.lineId));
+  return devices.filter((device) => device.lineId && productLines.includes(device.lineId));
 }
 
 export interface SearchHitMatch {

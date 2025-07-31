@@ -29,8 +29,14 @@ function App({
   selectedProductLines, // Used via UidbProvider for filtering
   updateState,
 }: AppProps) {
-  const { devices, warnings, connectionInfo, filteredDevices, searchHits, devicesForProductLineFilter } =
-    useUidbData();
+  const {
+    devices,
+    warnings,
+    connectionInfo,
+    filteredDevices,
+    searchHits,
+    devicesForProductLineFilter,
+  } = useUidbData();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
     null
@@ -107,6 +113,8 @@ function App({
     },
     [updateState]
   );
+
+  // console.log({ headerHeight });
 
   return (
     <ErrorBoundary>

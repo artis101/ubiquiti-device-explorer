@@ -14,7 +14,7 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       <div ref={ref}>
         {/* Header - Matching Figma Design Exactly */}
         <header className="bg-ui-gray-100 border-b border-ui-gray-200">
-          <div className="flex items-center justify-between px-8 py-4">
+          <div className="flex items-center justify-between px-8 py-2">
             <div className="flex items-center gap-4">
               {/* Logo from public/logo.png */}
               <div className="flex items-center justify-center">
@@ -30,9 +30,7 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
               </div>
 
               {/* Devices Title */}
-              <h1 className="text-sm font-normal text-ui-text-primary">
-                Devices
-              </h1>
+              <h1 className="text-sm font-normal text-ui-gray-500">Devices</h1>
             </div>
 
             {/* Right Side - Author and Live Status */}

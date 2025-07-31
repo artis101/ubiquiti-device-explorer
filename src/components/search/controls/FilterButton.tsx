@@ -59,7 +59,10 @@ export function FilterButton({
           selectedProductLines={selectedProductLines}
           onCheckboxChange={handleCheckboxChange}
         />
-        <FilterResetButton hasActiveFilters={hasActiveFilters} onReset={handleReset} />
+        <FilterResetButton
+          hasActiveFilters={hasActiveFilters}
+          onReset={handleReset}
+        />
       </ProductLineDropdown>
     </div>
   );

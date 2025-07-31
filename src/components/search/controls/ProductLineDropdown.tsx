@@ -1,5 +1,3 @@
-import type { NormalizedDevice } from "types/uidb";
-
 interface ProductLineDropdownProps {
   isOpen: boolean;
   children: React.ReactNode;

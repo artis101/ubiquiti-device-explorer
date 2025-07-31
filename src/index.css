@@ -1,16 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --color-icon-default: #838691;
-  --color-icon-hover-bg: #F4F5F6;
-  --color-icon-active: #006FFF;
-  --color-icon-focus-ring: #006FFF;
-
-  /* Aliases for existing components (map to Figma colors) */
-  --color-search-bg-default: #F9FAFA;
-  --color-search-bg-hover: #F4F5F6;
-  --color-search-bg-active: #EDEDF0;
-
   /* UI Design System Colors - From Figma */
   --color-ui-blue-primary: #006FFF;
   --color-ui-blue-hover: #0059CC;
@@ -18,6 +8,7 @@
   
   --color-ui-gray-50: #F9FAFA;
   --color-ui-gray-100: #F4F5F6;
+  --color-ui-gray-150: #F6F6F8;
   --color-ui-gray-200: #EDEDF0;
   --color-ui-gray-300: #B6B9C4;
   --color-ui-gray-500: #808893;
@@ -29,9 +20,21 @@
   
   --color-ui-red-primary: #F03A3E;
   --color-ui-red-light: #F9B0B2;
+
+  /* Component-specific aliases mapping to design system */
+  --color-icon-default: #838691;
+  --color-icon-hover-bg: #F4F5F6;
+  --color-icon-active: #006FFF;
+  --color-icon-focus-ring: #006FFF;
+  --color-search-bg-default: #F6F6F8;
+  --color-search-bg-hover: #F4F5F6;
+  --color-search-bg-active: #EDEDF0;
   
   --color-reset-default: #F9B0B2;
   --color-reset-active: #F03A3E;
+  --color-checkbox-active: #006FFF;
+  --color-text-primary: #212327;
+  --color-text-disabled: #B6B9C4;
   
   /* Status indicator colors (not in Figma but used for connection status) */
   --color-ui-green-primary: #10B981;
