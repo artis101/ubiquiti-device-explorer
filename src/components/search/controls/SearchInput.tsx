@@ -27,7 +27,7 @@ export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="block w-full h-8 pl-8 pr-3 border-0 rounded text-sm font-normal bg-[#F6F6F8] placeholder-[rgba(0,0,0,0.45)] hover:bg-[#F9FAFA] focus:outline-none focus:ring-1 focus:ring-[#006FFF] focus:bg-white active:bg-[#F4F5F6] transition-all duration-200"
+          className="block w-full h-8 pl-8 pr-3 border-0 rounded text-sm font-normal bg-search-bg-default placeholder-[rgba(0,0,0,0.45)] hover:bg-search-bg-hover focus:bg-search-bg-default active:bg-search-bg-active focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-icon-focus-ring transition-all duration-200"
           placeholder="Search"
           aria-label="Search devices"
         />

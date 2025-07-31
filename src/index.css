@@ -6,12 +6,18 @@
   --color-icon-active: #006FFF;
   --color-icon-focus-ring: #006FFF;
 
+  --color-search-bg-default: #F9FAFA;
+  --color-search-bg-hover: #F6F6F8;
+  --color-search-bg-active: #F4F5F6;
+
   --animation-shimmer: shimmer 1.5s infinite;
 
   --keyframes-shimmer: {
     "0%": { transform: "translateX(-100%)" },
     "100%": { transform: "translateX(100%)" },
   };
+
+  --radius: 4px;
 }
 
 /* Figma Design System Colors */
