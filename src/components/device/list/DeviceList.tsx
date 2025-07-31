@@ -20,11 +20,33 @@ export function DeviceList({ height }: DeviceListProps) {
   const { selectedDeviceId, viewMode, updateState } = useUrlState();
   const { windowWidth } = useWindowDimensions();
 
+  // Scroll to selected device when component mounts or selectedDeviceId changes
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTo(0);
+    if (selectedDeviceId && filteredDevices.length > 0) {
+      const selectedIndex = filteredDevices.findIndex(
+        (device) => device.id === selectedDeviceId
+      );
+
+      if (selectedIndex !== -1) {
+        if (viewMode === "grid" && gridRef.current) {
+          // Calculate grid position
+          const CARD_WIDTH = 263;
+          const CARD_HORIZONTAL_GAP = 16;
+          const columnWidth = CARD_WIDTH + CARD_HORIZONTAL_GAP;
+          const columnCount = Math.floor(windowWidth / columnWidth);
+          const rowIndex = Math.floor(selectedIndex / columnCount);
+          
+          gridRef.current.scrollToItem({
+            rowIndex,
+            columnIndex: 0,
+            align: "center",
+          });
+        } else if (viewMode === "list" && listRef.current) {
+          listRef.current.scrollToItem(selectedIndex, "center");
+        }
+      }
     }
-  }, [filteredDevices, viewMode]);
+  }, [selectedDeviceId, filteredDevices, viewMode, windowWidth]);
 
   const handleDeviceSelect = useCallback(
     (device: NormalizedDevice) => {

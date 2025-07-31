@@ -6,11 +6,13 @@ import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { DeviceList } from "@components/device/list/DeviceList";
 // import { DeviceDetails } from "@components/device/DeviceDetails";
 import { useUidbData } from "@hooks/useUidbData";
+import { useWindowDimensions } from "@hooks/useWindowDimensions";
 
 
 function App() {
   const { warnings, connectionInfo } = useUidbData();
   const { headerHeight, headerRef } = useHeaderHeight([warnings]);
+  const { windowHeight } = useWindowDimensions();
 
   return (
     <ErrorBoundary>
@@ -24,7 +26,7 @@ function App() {
           className="flex-1 min-h-0"
           style={{ height: `calc(100vh - ${headerHeight}px)` }}
         >
-          <DeviceList height={window.innerHeight - headerHeight} />
+          <DeviceList height={windowHeight - headerHeight} />
         </main>
 
         {/* {selectedDeviceId && (
