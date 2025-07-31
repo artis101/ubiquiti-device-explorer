@@ -15,6 +15,7 @@ interface UidbContextType {
   refetch: () => void;
   filteredDevices: NormalizedDevice[];
   searchHits: Map<string, SearchHit>;
+  devicesForProductLineFilter: NormalizedDevice[];
 }
 
 const UidbContext = createContext<UidbContextType | undefined>(undefined);
@@ -34,16 +35,20 @@ export function UidbProvider({
     useUidb();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const { filteredDevices, searchHits } = useMemo(() => {
+  const { filteredDevices, searchHits, devicesForProductLineFilter } = useMemo(() => {
     let filtered = devices;
     
     // Apply line filter first
     filtered = filterByLine(filtered, selectedLineId);
     
-    // Apply product lines filter
+    // Keep devices filtered only by line and search (for product line dropdown)
+    let devicesForProductLineFilter = filtered;
+    
+    // Apply product lines filter for main results
     filtered = filterByProductLines(filtered, selectedProductLines);
 
     if (debouncedSearchQuery) {
+      // Apply search to both sets
       const searchResults = searchDevices(filtered, debouncedSearchQuery);
       const resultDevices = searchResults.map(
         (hit) => filtered.find((device) => device.id === hit.id)!,
@@ -53,15 +58,23 @@ export function UidbProvider({
         searchResults.map((hit) => [hit.id, hit]),
       );
 
+      // Apply search to devices for product line filter too
+      const searchResultsForFilter = searchDevices(devicesForProductLineFilter, debouncedSearchQuery);
+      const devicesForFilterWithSearch = searchResultsForFilter.map(
+        (hit) => devicesForProductLineFilter.find((device) => device.id === hit.id)!,
+      );
+
       return {
         filteredDevices: resultDevices,
         searchHits: searchHitMap,
+        devicesForProductLineFilter: devicesForFilterWithSearch,
       };
     }
 
     return {
       filteredDevices: filtered,
       searchHits: new Map<string, SearchHit>(),
+      devicesForProductLineFilter,
     };
   }, [devices, selectedLineId, selectedProductLines, debouncedSearchQuery]);
 
@@ -73,8 +86,9 @@ export function UidbProvider({
       refetch,
       filteredDevices,
       searchHits,
+      devicesForProductLineFilter,
     }),
-    [devices, warnings, connectionInfo, refetch, filteredDevices, searchHits],
+    [devices, warnings, connectionInfo, refetch, filteredDevices, searchHits, devicesForProductLineFilter],
   );
 
   if (loading) {

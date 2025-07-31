@@ -26,10 +26,10 @@ function App({
   imageSize,
   selectedDeviceId,
   viewMode,
-  selectedProductLines,
+  selectedProductLines, // Used via UidbProvider for filtering
   updateState,
 }: AppProps) {
-  const { devices, warnings, connectionInfo, filteredDevices, searchHits } =
+  const { devices, warnings, connectionInfo, filteredDevices, searchHits, devicesForProductLineFilter } =
     useUidbData();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
@@ -75,7 +75,7 @@ function App({
 
   const handleSearchChange = useCallback(
     (query: string) => {
-      updateState({ q: query });
+      updateState({ q: query, productLines: [] });
     },
     [updateState]
   );
@@ -123,6 +123,8 @@ function App({
           selectedLineId={selectedLineId}
           imageSize={imageSize}
           viewMode={viewMode}
+          devicesForProductLineFilter={devicesForProductLineFilter}
+          selectedProductLines={selectedProductLines}
           onSearchChange={handleSearchChange}
           onLineFilterChange={handleLineFilterChange}
           onImageSizeChange={handleImageSizeChange}

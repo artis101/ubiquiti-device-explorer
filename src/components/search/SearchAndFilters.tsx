@@ -7,11 +7,15 @@ import {
   FilterButton,
 } from "./controls";
 
+import type { NormalizedDevice } from "types/uidb";
+
 interface SearchAndFiltersProps {
   searchQuery: string;
   selectedLineId?: string;
   imageSize: number;
   viewMode: "list" | "grid";
+  devicesForProductLineFilter: NormalizedDevice[];
+  selectedProductLines: string[];
   onSearchChange: (query: string) => void;
   onLineFilterChange: (lineId?: string) => void;
   onImageSizeChange: (size: number) => void;
@@ -24,6 +28,8 @@ export function SearchAndFilters({
   selectedLineId,
   imageSize,
   viewMode,
+  devicesForProductLineFilter,
+  selectedProductLines,
   onSearchChange,
   onLineFilterChange,
   onImageSizeChange,
@@ -51,7 +57,7 @@ export function SearchAndFilters({
             viewMode={viewMode}
             onViewModeChange={onViewModeChange}
           />
-          <FilterButton onFilterChange={onFilterChange} />
+          <FilterButton onFilterChange={onFilterChange} filteredDevices={devicesForProductLineFilter} selectedProductLines={selectedProductLines} />
         </div>
       </div>
       
