@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { FixedSizeList as List } from "react-window";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
-import { DeviceCard } from "@components/device/DeviceCard";
+import { DeviceGridCard as DeviceCard } from "@components/device/DeviceGridCard";
 
 interface DeviceListTableProps {
   devices: NormalizedDevice[];
@@ -26,22 +26,18 @@ interface ListItemProps {
 }
 
 function ListItem({ index, style, data }: ListItemProps) {
-  const { devices, imageSize, selectedDeviceId, onDeviceSelect, searchHits } =
-    data;
+  const { devices } = data;
   const device = devices[index];
 
   if (!device) return null;
 
-  const searchHit = searchHits.get(device.id);
-
   return (
     <div style={style} className="py-4">
       <DeviceCard
-        device={device}
-        imageSize={imageSize}
-        onSelect={onDeviceSelect}
-        isSelected={device.id === selectedDeviceId}
-        searchHit={searchHit}
+        imageUrl={device.imageUrl || ""}
+        productLineName={device.line?.name || device.line?.id || "UniFi"}
+        deviceName={device.product?.name || ""}
+        shortName={device.shortnames?.join(", ") || ""}
       />
     </div>
   );

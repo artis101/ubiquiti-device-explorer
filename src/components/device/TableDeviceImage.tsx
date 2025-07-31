@@ -13,5 +13,5 @@ export const TableDeviceImage: React.FC<TableDeviceImageProps> = ({ device }) =>
     return <div className="w-full h-full bg-ui-gray-200 rounded-sm" />;
   }
 
-  return <img src={src} alt={device.product.name} className="w-full h-full object-contain" />;
+  return <img src={src} alt={device.product?.name || ""} className="w-full h-full object-contain" />;
 };

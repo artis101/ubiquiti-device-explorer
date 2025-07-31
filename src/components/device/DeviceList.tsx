@@ -46,8 +46,9 @@ export function DeviceList({ height }: DeviceListProps) {
     searchHits,
   };
 
-  const ViewComponent = viewMode === "grid" ? DeviceGrid : DeviceTable;
-  const viewRef = viewMode === "grid" ? gridRef : listRef;
-
-  return <ViewComponent ref={viewRef} {...commonProps} />;
+  if (viewMode === "grid") {
+    return <DeviceGrid ref={gridRef} {...commonProps} />;
+  } else {
+    return <DeviceTable ref={listRef} {...commonProps} />;
+  }
 }

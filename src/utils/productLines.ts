@@ -1,4 +1,4 @@
-import type { NormalizedDevice } from "@/types/uidb";
+import type { NormalizedDevice } from "../types/uidb";
 
 export const getProductLines = (devices: NormalizedDevice[]) => {
   const productLineMap = new Map<string, string>();

@@ -28,19 +28,16 @@ interface GridItemProps {
 }
 
 function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
-  const {
-    devices,
-    onDeviceSelect,
-    searchHits,
-    columnCount,
-    centerOffset,
-  } = data;
+  const { devices, onDeviceSelect, columnCount, centerOffset } = data;
 
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
+
+  if (!device) return null;
+
   const { src: imageUrl } = useImageUrl({ device, size: 256 });
 
-  if (!device || !imageUrl) return null;
+  if (!imageUrl) return null;
 
   // Apply center offset to position
   const centeredStyle = {
@@ -49,12 +46,16 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   };
 
   return (
-    <div style={centeredStyle} className="p-2 flex items-center justify-center" onClick={() => onDeviceSelect(device)}>
+    <div
+      style={centeredStyle}
+      className="flex items-center justify-center"
+      onClick={() => onDeviceSelect(device)}
+    >
       <DeviceGridCard
-        imageUrl={imageUrl}
-        modelName={device.line.name}
-        deviceName={device.product.name}
-        shortName={device.shortnames[0]}
+        imageUrl={imageUrl || ""}
+        productLineName={device.line?.name || device.line?.id || "UniFi"}
+        deviceName={device.product?.name || ""}
+        shortName={device.shortnames?.join(", ") || ""}
       />
     </div>
   );
@@ -63,14 +64,17 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
 export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
   (
     { devices, selectedDeviceId, onDeviceSelect, height, width, searchHits },
-    ref,
+    ref
   ) => {
-    const columnWidth = 217 + 16;
-    const rowHeight = 172 + 16;
-    const maxColumns = 6;
+    const CARD_WIDTH = 263; // The target width for each device card
+    const CARD_HORIZONTAL_GAP = 16; // The horizontal gap between device cards
+    const CARD_HEIGHT = 174; // The target height for each device card
+    const CARD_VERTICAL_GAP = 16; // The vertical gap between device cards
 
+    const columnWidth = CARD_WIDTH + CARD_HORIZONTAL_GAP;
+    const rowHeight = CARD_HEIGHT + CARD_VERTICAL_GAP;
     // Calculate column count
-    const columnCount = Math.min(Math.floor(width / columnWidth), maxColumns);
+    const columnCount = Math.floor(width / columnWidth);
 
     const rowCount = Math.ceil(devices.length / columnCount);
 
@@ -102,7 +106,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
         </Grid>
       </div>
     );
-  },
+  }
 );
 
 DeviceGrid.displayName = "DeviceGrid";

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+
 import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
 import { AppHeader } from "@components/layout/AppHeader";
@@ -6,17 +6,11 @@ import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { DeviceList } from "@components/device/DeviceList";
 // import { DeviceDetails } from "@components/device/DeviceDetails";
 import { useUidbData } from "./contexts/UidbContext";
-import { useUrlState } from "@hooks/useUrlState";
+
 
 function App() {
   const { warnings, connectionInfo } = useUidbData();
-  const { selectedDeviceId, updateState } = useUrlState();
-
   const { headerHeight, headerRef } = useHeaderHeight([warnings]);
-
-  const handleCloseDetails = useCallback(() => {
-    updateState({ select: undefined });
-  }, [updateState]);
 
   return (
     <ErrorBoundary>

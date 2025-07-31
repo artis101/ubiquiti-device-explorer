@@ -31,5 +31,5 @@ export const IMAGE_TYPES = [
 export type ImageType = (typeof IMAGE_TYPES)[number];
 
 export const DEFAULT_IMAGE_SIZE = 512;
-export type ImageSize = 256 | 512 | 1024;
+export type ImageSize = 32 | 256 | 512 | 1024;
 export const IMAGE_QUALITY = 75;
