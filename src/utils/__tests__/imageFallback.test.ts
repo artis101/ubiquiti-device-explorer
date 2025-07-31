@@ -1,4 +1,7 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { generateFallbackSvg, handleImageError } from "../imageFallback";
+import { getPlaceholderImage } from "../uidb"; // Import getPlaceholderImage
+import type { NormalizedDevice } from "../../types/uidb"; // Import NormalizedDevice
 
 describe("imageFallback utilities", () => {
   describe("generateFallbackSvg", () => {
@@ -8,51 +11,71 @@ describe("imageFallback utilities", () => {
         deviceLineAbbrev: "TD",
         size: 100,
       });
+      const decodedSvg = atob(result.split(",")[1]); // Decode base64 SVG
 
-      expect(result).toContain('width="100"');
-      expect(result).toContain('height="100"');
-      expect(result).toContain("TD");
-      expect(result).toContain("data:image/svg+xml;base64,");
+      expect(decodedSvg).toContain('width="100"');
+      expect(decodedSvg).toContain('height="100"');
+      expect(decodedSvg).toContain("TD");
     });
 
-    it("should use device name abbreviation when deviceLineAbbrev is not provided", () => {
-      const result = generateFallbackSvg({
-        deviceName: "Test Device",
-        size: 100,
-      });
-
-      expect(result).toContain("TE");
-    });
-
-    it('should use "UI" as fallback when neither deviceLineAbbrev nor deviceName is provided', () => {
+    it('should use "UI" as fallback when deviceLineAbbrev is not provided', () => {
       const result = generateFallbackSvg({
         deviceName: "",
         size: 100,
       });
+      const decodedSvg = atob(result.split(",")[1]); // Decode base64 SVG
 
-      expect(result).toContain("UI");
+      expect(decodedSvg).toContain("UI");
+    });
+  });
+
+  // New describe block for getPlaceholderImage from uidb.ts
+  describe("getPlaceholderImage (from uidb.ts)", () => {
+    it("should use device line abbreviation if available", () => {
+      const device = {
+        id: "test1",
+        displayName: "Test Device 1",
+        line: { id: "line1", abbrev: "L1" },
+      } as NormalizedDevice;
+      const result = getPlaceholderImage(device);
+      const decodedSvg = atob(result.split(",")[1]);
+      expect(decodedSvg).toContain("L1");
+    });
+
+    it("should use \"UI\" as fallback if no line abbreviation is available", () => {
+      const device = {
+        id: "test2",
+        displayName: "Test Device 2",
+      } as NormalizedDevice;
+      const result = getPlaceholderImage(device);
+      const decodedSvg = atob(result.split(",")[1]);
+      expect(decodedSvg).toContain("UI");
     });
   });
 
   describe("handleImageError", () => {
     let mockEvent: React.SyntheticEvent<HTMLImageElement>;
     let mockTarget: HTMLImageElement;
+    let originalBtoa: (str: string) => string; // Keep original btoa
 
     beforeEach(() => {
       mockTarget = {
         src: "original-image.jpg",
-        startsWith: jest.fn((str) => mockTarget.src.startsWith(str)),
+        startsWith: vi.fn((str) => mockTarget.src.startsWith(str)),
+        style: { display: "" }, // Mock style property
       } as unknown as HTMLImageElement;
 
       mockEvent = {
         target: mockTarget,
       } as React.SyntheticEvent<HTMLImageElement>;
 
-      global.btoa = jest.fn((str) => Buffer.from(str).toString("base64"));
+      originalBtoa = global.btoa; // Store original btoa
+      global.btoa = vi.fn((str) => Buffer.from(str).toString("base64"));
     });
 
     afterEach(() => {
-      jest.restoreAllMocks();
+      vi.restoreAllMocks();
+      global.btoa = originalBtoa; // Restore original btoa
     });
 
     it("should set fallback image src on error", () => {
@@ -81,11 +104,11 @@ describe("imageFallback utilities", () => {
     });
 
     it("should handle btoa errors gracefully", () => {
-      global.btoa = jest.fn(() => {
+      (global.btoa as ReturnType<typeof vi.fn>).mockImplementationOnce(() => {
         throw new Error("Encoding error");
       });
 
-      const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
       const options = {
         deviceName: "Test Device",

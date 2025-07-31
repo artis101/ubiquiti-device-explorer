@@ -43,6 +43,7 @@ export function useUidb(): UseUidbResult {
             );
           }
           data = await fallbackResponse.json();
+          setError(`API fetch failed: ${response.status} ${response.statusText}. Using fallback data.`);
           updateConnectionStatus("fallback");
         } else {
           data = await response.json();
@@ -54,6 +55,8 @@ export function useUidb(): UseUidbResult {
         }
       } catch (fetchError) {
         // Fallback to cached data if fetch fails
+        const errorMessage = fetchError instanceof Error ? fetchError.message : "Unknown network error";
+        setError(`Network error: ${errorMessage}. Using fallback data.`);
         console.warn(
           "Failed to fetch UIDB data, using cached data:",
           fetchError,
