@@ -7,6 +7,7 @@ export interface DeviceTableProps {
   height: number;
   width: number;
   searchHits: Map<string, SearchHit>;
+  isInteractive: boolean;
 }
 
 export interface TableRowProps {
@@ -17,5 +18,6 @@ export interface TableRowProps {
     selectedDeviceId?: string;
     onDeviceSelect: (device: NormalizedDevice) => void;
     searchHits: Map<string, SearchHit>;
+    isInteractive: boolean;
   };
 }

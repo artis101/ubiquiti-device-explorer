@@ -10,7 +10,7 @@ import { useUrlState } from "@hooks/useUrlState";
 
 function App() {
   const { warnings, connectionInfo } = useUidbData();
-  const { selectedDeviceId, updateState } = useUrlState();
+  const { selectedDeviceId } = useUrlState();
   const { headerHeight, headerRef } = useHeaderHeight([
     warnings,
     selectedDeviceId,
@@ -30,8 +30,9 @@ function App() {
         <main
           className="flex-1 min-h-0"
           style={{ height: `calc(100vh - ${headerHeight}px)` }}
+          tabIndex={selectedDeviceId ? -1 : 0} // Allow focus for keyboard navigation
         >
-          <DeviceList height={windowHeight - headerHeight} />
+          <DeviceList height={windowHeight - headerHeight} isInteractive={!selectedDeviceId} />
         </main>
       </div>
     </ErrorBoundary>

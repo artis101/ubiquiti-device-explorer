@@ -5,7 +5,7 @@ import { TableDeviceImage } from "./TableDeviceImage";
 import type { TableRowProps } from "./DeviceTableTypes";
 
 export const TableRow = memo(({ index, style, data }: TableRowProps) => {
-  const { devices, selectedDeviceId, onDeviceSelect, searchHits } = data;
+  const { devices, selectedDeviceId, onDeviceSelect, searchHits, isInteractive } = data;
   const device = devices[index];
   const searchHit = searchHits.get(device.id);
   const isSelected = device.id === selectedDeviceId;
@@ -17,15 +17,17 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
   );
 
   const handleClick = useCallback(() => {
-    onDeviceSelect(device);
-  }, [device, onDeviceSelect]);
+    if (isInteractive) {
+      onDeviceSelect(device);
+    }
+  }, [device, onDeviceSelect, isInteractive]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (isInteractive && (e.key === "Enter" || e.key === " ")) {
       e.preventDefault();
       onDeviceSelect(device);
     }
-  }, [device, onDeviceSelect]);
+  }, [device, onDeviceSelect, isInteractive]);
 
   const rowClassName = useMemo(() => 
     `group flex items-center max-w-7xl mx-auto transition-colors ${
@@ -53,7 +55,7 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
         role="row"
         aria-selected={isSelected}
         aria-label={`${productLineName} - ${device.displayName}`}
-        tabIndex={0}
+        tabIndex={isInteractive ? 0 : -1}
       >
         <div className="flex items-center justify-center w-9 h-8 px-2 py-1.5 gap-2" role="cell">
           <div className="w-5 h-5" aria-hidden="true">

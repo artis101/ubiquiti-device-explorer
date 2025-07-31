@@ -7,6 +7,7 @@ interface DeviceGridCardProps {
   shortName: string;
   isSelected?: boolean;
   onClick?: () => void;
+  tabIndex?: number;
 }
 
 export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
@@ -16,31 +17,37 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
   shortName,
   isSelected = false,
   onClick,
+  tabIndex = 0,
 }) => {
   const handleClick = useCallback(() => {
     onClick?.();
   }, [onClick]);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      onClick?.();
-    }
-  }, [onClick]);
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onClick?.();
+      }
+    },
+    [onClick]
+  );
 
-  const cardClassName = useMemo(() => 
-    `group flex flex-col gap-2 pb-2 w-[263px] h-[174px] transition-colors duration-200 rounded-card ${
-      isSelected
-        ? "bg-ui-gray-50 border border-ui-blue-primary"
-        : "border border-ui-gray-200 hover:bg-ui-gray-50 hover:border-ui-gray-200"
-    }`,
+  const cardClassName = useMemo(
+    () =>
+      `group flex flex-col gap-2 pb-2 w-[263px] h-[174px] transition-colors duration-200 rounded-card ${
+        isSelected
+          ? "bg-ui-gray-50 border border-ui-blue-primary"
+          : "border border-ui-gray-200 hover:bg-ui-gray-50 hover:border-ui-gray-200"
+      }`,
     [isSelected]
   );
 
-  const imageContainerClassName = useMemo(() =>
-    `relative flex justify-center items-center bg-ui-gray-50 rounded-t-card transition-colors duration-200 ${
-      isSelected ? "bg-ui-gray-100" : "group-hover:bg-ui-gray-100"
-    }`,
+  const imageContainerClassName = useMemo(
+    () =>
+      `relative flex justify-center items-center bg-ui-gray-50 rounded-t-card transition-colors duration-200 ${
+        isSelected ? "bg-ui-gray-100" : "group-hover:bg-ui-gray-100"
+      }`,
     [isSelected]
   );
 
@@ -52,7 +59,7 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
       onKeyDown={handleKeyDown}
       aria-selected={isSelected}
       aria-label={`${productLineName} - ${deviceName}`}
-      tabIndex={0}
+      tabIndex={tabIndex}
     >
       <div className={imageContainerClassName}>
         <img

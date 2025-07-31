@@ -1,10 +1,8 @@
-import React, { createContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import { getProductLines } from "@utils/productLines";
 import { useUidbData } from "@hooks/useUidbData";
 
-import type { ProductLineContextType } from "./ProductLineTypes";
-
-export const ProductLineContext = createContext<ProductLineContextType | undefined>(undefined);
+import { ProductLineContext } from "./ProductLineContext";
 
 export default function ProductLineProvider({
   children,
@@ -23,5 +21,3 @@ export default function ProductLineProvider({
     </ProductLineContext.Provider>
   );
 }
-
-

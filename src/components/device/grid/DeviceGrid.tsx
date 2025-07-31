@@ -11,6 +11,7 @@ interface DeviceGridProps {
   height: number;
   width: number;
   searchHits: Map<string, SearchHit>;
+  isInteractive: boolean;
 }
 
 interface GridItemProps {
@@ -24,11 +25,19 @@ interface GridItemProps {
     searchHits: Map<string, SearchHit>;
     columnCount: number;
     centerOffset: number;
+    isInteractive: boolean;
   };
 }
 
 function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
-  const { devices, selectedDeviceId, onDeviceSelect, columnCount, centerOffset } = data;
+  const {
+    devices,
+    selectedDeviceId,
+    onDeviceSelect,
+    columnCount,
+    centerOffset,
+    isInteractive,
+  } = data;
 
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
@@ -46,17 +55,15 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   };
 
   return (
-    <div
-      style={centeredStyle}
-      className="flex items-center justify-center"
-    >
+    <div style={centeredStyle} className="flex items-center justify-center">
       <DeviceGridCard
         imageUrl={imageUrl || ""}
         productLineName={device.line?.name || device.line?.id || "UniFi"}
         deviceName={device.product?.name || ""}
         shortName={device.shortnames?.join(", ") || ""}
         isSelected={isSelected}
-        onClick={() => onDeviceSelect(device)}
+        onClick={isInteractive ? () => onDeviceSelect(device) : undefined}
+        tabIndex={isInteractive ? 0 : -1}
       />
     </div>
   );
@@ -64,7 +71,15 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
 
 export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
   (
-    { devices, selectedDeviceId, onDeviceSelect, height, width, searchHits },
+    {
+      devices,
+      selectedDeviceId,
+      onDeviceSelect,
+      height,
+      width,
+      searchHits,
+      isInteractive,
+    },
     ref
   ) => {
     const CARD_WIDTH = 263; // The target width for each device card
@@ -100,6 +115,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
             searchHits,
             columnCount,
             centerOffset,
+            isInteractive,
           }}
           className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
         >

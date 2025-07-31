@@ -11,9 +11,10 @@ import { useRef, useEffect, useCallback } from "react";
 
 interface DeviceListProps {
   height: number;
+  isInteractive: boolean;
 }
 
-export function DeviceList({ height }: DeviceListProps) {
+export function DeviceList({ height, isInteractive }: DeviceListProps) {
   const listRef = useRef<List>(null);
   const gridRef = useRef<Grid>(null);
   const { filteredDevices, searchHits } = useUidbData();
@@ -66,6 +67,7 @@ export function DeviceList({ height }: DeviceListProps) {
     height,
     width: windowWidth,
     searchHits,
+    isInteractive,
   };
 
   if (viewMode === "grid") {
