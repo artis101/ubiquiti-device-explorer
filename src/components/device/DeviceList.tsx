@@ -5,74 +5,40 @@ import { NoDevicesFound } from "./NoDevicesFound";
 import { DeviceTable } from "./DeviceTable";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
 
-interface DeviceListProps {
+type CommonDeviceViewProps = {
   devices: NormalizedDevice[];
-  imageSize: number;
   selectedDeviceId?: string;
   onDeviceSelect: (device: NormalizedDevice) => void;
   height: number;
   width: number;
   searchHits: Map<string, SearchHit>;
+};
+
+interface DeviceListProps extends CommonDeviceViewProps {
   viewMode: "list" | "grid";
 }
 
 export const DeviceList = forwardRef<any, DeviceListProps>(
-  (
-    {
-      devices,
-      imageSize,
-      selectedDeviceId,
-      onDeviceSelect,
-      height,
-      width,
-      searchHits,
-      viewMode,
-    },
-    ref
-  ) => {
-    const listRef = useRef<any>(null); // Ref for DeviceListTable
+  ({ viewMode, ...commonProps }, ref) => {
+    const listRef = useRef<any>(null);
     const gridRef = useRef<Grid>(null);
 
     useImperativeHandle(ref, () => ({
       scrollToTop: () => {
-        if (viewMode === "list" && listRef.current) {
+        if (listRef.current) {
           listRef.current.scrollTo(0);
-        } else if (viewMode === "grid" && gridRef.current) {
-          gridRef.current.scrollTo({ scrollTop: 0, scrollLeft: 0 });
         }
       },
     }));
 
-    if (devices.length === 0) {
+    if (commonProps.devices.length === 0) {
       return <NoDevicesFound />;
     }
 
-    if (viewMode === "grid") {
-      return (
-        <DeviceGrid
-          ref={gridRef}
-          devices={devices}
-          imageSize={imageSize}
-          selectedDeviceId={selectedDeviceId}
-          onDeviceSelect={onDeviceSelect}
-          height={height}
-          width={width}
-          searchHits={searchHits}
-        />
-      );
-    }
+    const ViewComponent = viewMode === "grid" ? DeviceGrid : DeviceTable;
+    const viewRef = viewMode === "grid" ? gridRef : listRef;
 
-    return (
-      <DeviceTable
-        ref={listRef}
-        devices={devices}
-        selectedDeviceId={selectedDeviceId}
-        onDeviceSelect={onDeviceSelect}
-        height={height}
-        width={width}
-        searchHits={searchHits}
-      />
-    );
+    return <ViewComponent ref={viewRef} {...commonProps} />;
   }
 );
 

@@ -30,8 +30,6 @@ export const IMAGE_TYPES = [
 ] as const;
 export type ImageType = (typeof IMAGE_TYPES)[number];
 
-export const IMAGE_SIZES = [256, 512, 1024] as const;
-export type ImageSize = (typeof IMAGE_SIZES)[number];
-
 export const DEFAULT_IMAGE_SIZE = 512;
+export type ImageSize = 256 | 512 | 1024;
 export const IMAGE_QUALITY = 75;

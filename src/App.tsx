@@ -13,7 +13,6 @@ import type { UrlState } from "@hooks/useUrlState";
 interface AppProps {
   searchQuery: string;
   selectedLineId?: string;
-  imageSize: number;
   selectedDeviceId?: string;
   viewMode: "list" | "grid";
   selectedProductLines: string[];
@@ -23,7 +22,6 @@ interface AppProps {
 function App({
   searchQuery,
   selectedLineId,
-  imageSize,
   selectedDeviceId,
   viewMode,
   selectedProductLines, // Used via UidbProvider for filtering
@@ -93,12 +91,6 @@ function App({
     [updateState]
   );
 
-  const handleImageSizeChange = useCallback(
-    (size: number) => {
-      updateState({ size });
-    },
-    [updateState]
-  );
 
   const handleViewModeChange = useCallback(
     (mode: "list" | "grid") => {
@@ -125,13 +117,11 @@ function App({
           <SearchAndFilters
             searchQuery={searchQuery}
             selectedLineId={selectedLineId}
-            imageSize={imageSize}
             viewMode={viewMode}
             devicesForProductLineFilter={devicesForProductLineFilter}
             selectedProductLines={selectedProductLines}
             onSearchChange={handleSearchChange}
             onLineFilterChange={handleLineFilterChange}
-            onImageSizeChange={handleImageSizeChange}
             onViewModeChange={handleViewModeChange}
             onFilterChange={handleFilterChange}
           />
@@ -145,7 +135,6 @@ function App({
           <DeviceList
             ref={deviceListRef}
             devices={filteredDevices}
-            imageSize={imageSize}
             selectedDeviceId={selectedDeviceId}
             onDeviceSelect={handleDeviceSelect}
             height={windowHeight - headerHeight}

@@ -5,7 +5,6 @@ import {
   UI_IMAGES_SVC_URL,
   IMAGE_TYPES,
   IMAGE_QUALITY,
-  IMAGE_SIZES,
   type ImageType,
   type ImageSize,
 } from "@config/constants";
@@ -36,7 +35,8 @@ export const useImageUrl = ({
       const encodedUrl = encodeURIComponent(baseUrl);
 
       const src = `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${size}&q=${IMAGE_QUALITY}`;
-      const srcSet = IMAGE_SIZES.map(
+      const imageSizes = [256, 512, 1024] as const;
+      const srcSet = imageSizes.map(
         (s) =>
           `${UI_IMAGES_SVC_URL}/?u=${encodedUrl}&w=${s}&q=${IMAGE_QUALITY} ${s}w`,
       ).join(", ");

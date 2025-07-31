@@ -14,19 +14,11 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       <div ref={ref}>
         {/* Header - Matching Figma Design Exactly */}
         <header className="bg-ui-gray-100 border-b border-ui-gray-200">
-          <div className="flex items-center justify-between px-8 py-2">
+          <div className="flex items-center justify-between px-8 py-2 mx-auto max-w-7xl">
             <div className="flex items-center gap-4">
               {/* Logo from public/logo.png */}
               <div className="flex items-center justify-center">
-                <img
-                  src="/logo.png"
-                  alt="Ubiquiti Logo"
-                  className="w-8 h-8"
-                  onError={(e) => {
-                    const img = e.target as HTMLImageElement;
-                    img.style.display = "none";
-                  }}
-                />
+                <img src="/logo.png" alt="Ubiquiti Logo" className="w-8 h-8" />
               </div>
 
               {/* Devices Title */}

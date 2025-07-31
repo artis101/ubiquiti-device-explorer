@@ -11,15 +11,14 @@ function isImageSize(size: number): size is ImageSize {
 
 interface DeviceImageProps {
   device: NormalizedDevice;
-  imageSize: number;
 }
 
 export const DeviceImage = React.memo(
-  ({ device, imageSize }: DeviceImageProps) => {
-    const validImageSize = isImageSize(imageSize) ? imageSize : 256;
+  ({ device }: DeviceImageProps) => {
+    const imageSize = 256; // Fixed image size
     const { src, srcSet, sizes } = useImageUrl({
       device,
-      size: validImageSize,
+      size: imageSize,
     });
 
     const errorHandlerOptions = {

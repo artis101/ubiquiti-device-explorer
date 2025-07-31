@@ -6,7 +6,6 @@ import { DeviceCardLayout } from "./DeviceCardLayout";
 
 interface DeviceCardProps {
   device: NormalizedDevice;
-  imageSize: number;
   onSelect: (device: NormalizedDevice) => void;
   isSelected: boolean;
   searchHit?: SearchHit;
@@ -15,12 +14,12 @@ interface DeviceCardProps {
 
 function DeviceCardComponent({
   device,
-  imageSize,
   onSelect,
   isSelected,
   searchHit,
   layout = "list",
 }: DeviceCardProps) {
+  const imageSize = 256; // Fixed image size
   const handleSelect = useCallback(() => {
     onSelect(device);
   }, [device, onSelect]);
@@ -32,7 +31,7 @@ function DeviceCardComponent({
       imageSize={imageSize}
       onSelect={handleSelect}
     >
-      <DeviceImage device={device} imageSize={imageSize} />
+      <DeviceImage device={device} />
       <DeviceInfo device={device} searchHit={searchHit} layout={layout} />
     </DeviceCardLayout>
   );

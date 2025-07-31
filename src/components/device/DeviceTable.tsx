@@ -59,8 +59,8 @@ function TableRow({ index, style, data }: TableRowProps) {
   return (
     <div 
       style={style} 
-      className={`border-b border-[var(--ui-gray-200)] hover:bg-[var(--ui-gray-50)] cursor-pointer transition-colors ${
-        isSelected ? "bg-[var(--ui-gray-100)]" : ""
+      className={`border-b border-ui-gray-200 hover:bg-ui-gray-50 cursor-pointer transition-colors ${
+        isSelected ? "bg-ui-gray-100" : ""
       }`}
       onClick={() => onDeviceSelect(device)}
     >
@@ -74,14 +74,14 @@ function TableRow({ index, style, data }: TableRowProps) {
         
         {/* Line Column */}
         <div className="flex items-center px-2 py-1.5 min-w-0 flex-1">
-          <span className="text-sm font-normal text-[rgba(0,0,0,0.65)] truncate">
+          <span className="text-sm font-normal text-ui-text-muted truncate">
             {device.line?.name || device.line?.id || "UniFi"}
           </span>
         </div>
         
         {/* Name Column */}
         <div className="flex items-center px-2 py-1.5 min-w-0 flex-1">
-          <span className="text-sm font-normal text-[rgba(0,0,0,0.45)] truncate">
+          <span className="text-sm font-normal text-ui-text-subtle truncate">
             <Highlight
               text={device.displayName}
               indices={highlightIndices}
@@ -107,27 +107,27 @@ export const DeviceTable = forwardRef<List, DeviceTableProps>(
     const rowHeight = 32; // Fixed row height matching Figma spec (6px + 20px + 6px)
 
     return (
-      <div className="h-full bg-white">
+      <div className="h-full bg-ui-white">
         {/* Table Header - Matching Figma design exactly */}
-        <div className="border-b border-[var(--ui-gray-200)] bg-[#F4F5F6] sticky top-0 z-10">
+        <div className="border-b border-ui-gray-200 bg-ui-gray-100 sticky top-0 z-10">
           <div className="flex items-center h-12">
             {/* IMG Header */}
             <div className="flex items-center justify-center w-9 px-2 py-1.5">
-              <span className="text-sm font-normal text-[var(--ui-text-muted)]">
+              <span className="text-sm font-normal text-ui-text-muted">
                 IMG
               </span>
             </div>
             
             {/* Line Header */}
             <div className="flex items-center px-2 py-1.5 min-w-0 flex-1">
-              <span className="text-sm font-normal text-[var(--ui-text-muted)]">
+              <span className="text-sm font-normal text-ui-text-muted">
                 Line
               </span>
             </div>
             
             {/* Name Header */}
             <div className="flex items-center px-2 py-1.5 min-w-0 flex-1">
-              <span className="text-sm font-normal text-[var(--ui-text-muted)]">
+              <span className="text-sm font-normal text-ui-text-muted">
                 Name
               </span>
             </div>

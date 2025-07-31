@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 export interface UrlState {
   q: string; // search query
   line?: string; // selected line filter
-  size: number; // image size
   select?: string; // selected device ID
   view: "list" | "grid"; // view mode
   productLines?: string[]; // selected product lines
@@ -11,7 +10,6 @@ export interface UrlState {
 
 const DEFAULT_STATE: UrlState = {
   q: "",
-  size: 256,
   view: "list",
 };
 
@@ -26,7 +24,6 @@ function getStateFromUrl(): UrlState {
   return {
     q: params.get("q") || DEFAULT_STATE.q,
     line: params.get("line") || undefined,
-    size: Number(params.get("size")) || DEFAULT_STATE.size,
     select: params.get("select") || undefined,
     view: (params.get("view") as "list" | "grid") || DEFAULT_STATE.view,
     productLines,
@@ -38,8 +35,6 @@ function updateUrl(state: UrlState) {
 
   if (state.q) params.set("q", state.q);
   if (state.line) params.set("line", state.line);
-  if (state.size !== DEFAULT_STATE.size)
-    params.set("size", state.size.toString());
   if (state.select) params.set("select", state.select);
   if (state.view !== DEFAULT_STATE.view) params.set("view", state.view);
   if (state.productLines && state.productLines.length > 0)
@@ -76,7 +71,6 @@ export function useUrlState() {
   return {
     searchQuery: state.q,
     selectedLineId: state.line,
-    imageSize: state.size,
     selectedDeviceId: state.select,
     viewMode: state.view,
     selectedProductLines: state.productLines || [],

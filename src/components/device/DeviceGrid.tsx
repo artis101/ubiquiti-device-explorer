@@ -5,7 +5,6 @@ import { DeviceCard } from "@components/device/DeviceCard";
 
 interface DeviceGridProps {
   devices: NormalizedDevice[];
-  imageSize: number;
   selectedDeviceId?: string;
   onDeviceSelect: (device: NormalizedDevice) => void;
   height: number;
@@ -19,7 +18,6 @@ interface GridItemProps {
   style: React.CSSProperties;
   data: {
     devices: NormalizedDevice[];
-    imageSize: number;
     selectedDeviceId?: string;
     onDeviceSelect: (device: NormalizedDevice) => void;
     searchHits: Map<string, SearchHit>;
@@ -31,13 +29,14 @@ interface GridItemProps {
 function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   const {
     devices,
-    imageSize,
     selectedDeviceId,
     onDeviceSelect,
     searchHits,
     columnCount,
     centerOffset,
   } = data;
+  
+  const imageSize = 256; // Fixed image size
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
 
@@ -69,7 +68,6 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
   (
     {
       devices,
-      imageSize,
       selectedDeviceId,
       onDeviceSelect,
       height,
@@ -78,6 +76,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
     },
     ref
   ) => {
+    const imageSize = 256; // Fixed image size
     const columnWidth = imageSize + 64;
     const rowHeight = imageSize + 180;
     const maxColumns = 6;
@@ -103,7 +102,6 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
           rowHeight={rowHeight}
           itemData={{
             devices,
-            imageSize,
             selectedDeviceId,
             onDeviceSelect,
             searchHits,

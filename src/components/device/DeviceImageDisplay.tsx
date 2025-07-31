@@ -6,12 +6,12 @@ import type { ImageSize } from "@config/constants";
 
 interface DeviceImageDisplayProps {
   device: NormalizedDevice;
-  size: ImageSize;
   className?: string;
 }
 
 export const DeviceImageDisplay = React.memo(
-  ({ device, size, className = "" }: DeviceImageDisplayProps) => {
+  ({ device, className = "" }: DeviceImageDisplayProps) => {
+    const size = 512; // Fixed image size
     const { src, srcSet, sizes } = useImageUrl({ device, size });
 
     const errorHandlerOptions = {

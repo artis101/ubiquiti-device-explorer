@@ -10,7 +10,6 @@ function Root() {
   const {
     searchQuery,
     selectedLineId,
-    imageSize,
     selectedDeviceId,
     viewMode,
     selectedProductLines,
@@ -24,7 +23,6 @@ function Root() {
           <App
             searchQuery={searchQuery}
             selectedLineId={selectedLineId}
-            imageSize={imageSize}
             selectedDeviceId={selectedDeviceId}
             viewMode={viewMode}
             selectedProductLines={selectedProductLines}
