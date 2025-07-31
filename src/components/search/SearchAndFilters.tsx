@@ -6,7 +6,8 @@ import {
 } from "./controls";
 import { useUrlState } from "@hooks/useUrlState";
 import { useUidbData } from "@contexts/UidbContext";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "@hooks/useDebounce";
 
 export function SearchAndFilters() {
   const {
@@ -17,13 +18,22 @@ export function SearchAndFilters() {
     updateState,
   } = useUrlState();
   const { devicesForProductLineFilter } = useUidbData();
+  const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
+  const debouncedSearchQuery = useDebounce(localSearchQuery, 300);
 
-  const handleSearchChange = useCallback(
-    (query: string) => {
-      updateState({ q: query, productLines: [] });
-    },
-    [updateState]
-  );
+  useEffect(() => {
+    if (debouncedSearchQuery !== searchQuery) {
+      updateState({ q: debouncedSearchQuery, productLines: [] });
+    }
+  }, [debouncedSearchQuery, searchQuery, updateState]);
+
+  useEffect(() => {
+    setLocalSearchQuery(searchQuery);
+  }, [searchQuery]);
+
+  const handleSearchChange = useCallback((query: string) => {
+    setLocalSearchQuery(query);
+  }, []);
 
   const handleViewModeChange = useCallback(
     (mode: "list" | "grid") => {
@@ -46,7 +56,7 @@ export function SearchAndFilters() {
           {/* Left Side - Search and Device Count */}
           <div className="flex items-center gap-4">
             <SearchInput
-              searchQuery={searchQuery}
+              searchQuery={localSearchQuery}
               onSearchChange={handleSearchChange}
             />
             <SearchResultsCount

@@ -39,7 +39,10 @@ function App() {
           className="flex-1 min-h-0"
           style={{ height: `calc(100vh - ${headerHeight}px)` }}
         >
-          <DeviceList ref={deviceListRef} height={window.innerHeight - headerHeight} />
+          <DeviceList
+            ref={deviceListRef}
+            height={window.innerHeight - headerHeight}
+          />
         </main>
 
         {selectedDeviceId && (

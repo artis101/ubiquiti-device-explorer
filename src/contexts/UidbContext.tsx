@@ -5,7 +5,6 @@ import type { NormalizedDevice, SchemaWarning, SearchHit } from "types/uidb";
 import { LoadingScreen } from "@components/ui/LoadingScreen";
 import { ErrorScreen } from "@components/ui/ErrorScreen";
 
-import { useDebounce } from "@hooks/useDebounce";
 import {
   filterByLine,
   filterByProductLines,
@@ -37,7 +36,6 @@ export function UidbProvider({
 }) {
   const { devices, warnings, error, loading, refetch, connectionInfo } =
     useUidb();
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   const { filteredDevices, searchHits, devicesForProductLineFilter } =
     useMemo(() => {
@@ -52,25 +50,25 @@ export function UidbProvider({
       // Apply product lines filter for main results
       filtered = filterByProductLines(filtered, selectedProductLines);
 
-      if (debouncedSearchQuery) {
+      if (searchQuery) {
         // Apply search to both sets
-        const searchResults = searchDevices(filtered, debouncedSearchQuery);
+        const searchResults = searchDevices(filtered, searchQuery);
         const resultDevices = searchResults.map(
-          (hit) => filtered.find((device) => device.id === hit.id)!,
+          (hit) => filtered.find((device) => device.id === hit.id)!
         );
 
         const searchHitMap = new Map<string, SearchHit>(
-          searchResults.map((hit) => [hit.id, hit]),
+          searchResults.map((hit) => [hit.id, hit])
         );
 
         // Apply search to devices for product line filter too
         const searchResultsForFilter = searchDevices(
           devicesForProductLineFilter,
-          debouncedSearchQuery,
+          searchQuery
         );
         const devicesForFilterWithSearch = searchResultsForFilter.map(
           (hit) =>
-            devicesForProductLineFilter.find((device) => device.id === hit.id)!,
+            devicesForProductLineFilter.find((device) => device.id === hit.id)!
         );
 
         return {
@@ -85,7 +83,7 @@ export function UidbProvider({
         searchHits: new Map<string, SearchHit>(),
         devicesForProductLineFilter,
       };
-    }, [devices, selectedLineId, selectedProductLines, debouncedSearchQuery]);
+    }, [devices, selectedLineId, selectedProductLines, searchQuery]);
 
   const contextValue = useMemo(
     () => ({
@@ -105,7 +103,7 @@ export function UidbProvider({
       filteredDevices,
       searchHits,
       devicesForProductLineFilter,
-    ],
+    ]
   );
 
   if (loading) {
