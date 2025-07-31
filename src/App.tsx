@@ -37,7 +37,7 @@ function App({
   } = useUidbData();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
-    null,
+    null
   );
 
   // Refs
@@ -69,7 +69,7 @@ function App({
       setDetailsDevice(device);
       updateState({ select: device.id });
     },
-    [updateState],
+    [updateState]
   );
 
   const handleCloseDetails = useCallback(() => {
@@ -81,28 +81,21 @@ function App({
     (query: string) => {
       updateState({ q: query, productLines: [] });
     },
-    [updateState],
-  );
-
-  const handleLineFilterChange = useCallback(
-    (lineId?: string) => {
-      updateState({ line: lineId });
-    },
-    [updateState],
+    [updateState]
   );
 
   const handleViewModeChange = useCallback(
     (mode: "list" | "grid") => {
       updateState({ view: mode });
     },
-    [updateState],
+    [updateState]
   );
 
   const handleFilterChange = useCallback(
     (selectedProductLines: string[]) => {
       updateState({ productLines: selectedProductLines });
     },
-    [updateState],
+    [updateState]
   );
 
   return (
@@ -120,7 +113,6 @@ function App({
             devicesForProductLineFilter={devicesForProductLineFilter}
             selectedProductLines={selectedProductLines}
             onSearchChange={handleSearchChange}
-            onLineFilterChange={handleLineFilterChange}
             onViewModeChange={handleViewModeChange}
             onFilterChange={handleFilterChange}
           />
