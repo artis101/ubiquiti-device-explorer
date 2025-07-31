@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const iconButtonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-icon-focus-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center rounded text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-icon-focus-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -10,7 +10,7 @@ export const iconButtonVariants = cva(
         active: "bg-icon-hover-bg text-icon-active",
       },
       size: {
-        default: "h-9 w-9",
+        default: "h-8 w-8",
         sm: "h-8 w-8",
         lg: "h-10 w-10",
       },

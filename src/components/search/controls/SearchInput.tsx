@@ -1,3 +1,5 @@
+import { Search } from "lucide-react";
+
 interface SearchInputProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
@@ -8,19 +10,7 @@ export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
     <div className="w-80">
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-          <svg
-            className="h-4 w-4 text-[rgba(0,0,0,0.45)]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
+          <Search className="h-4 w-4 text-[rgba(0,0,0,0.45)]" />
         </div>
         <input
           id="search"
