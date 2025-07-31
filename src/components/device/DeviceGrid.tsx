@@ -28,7 +28,7 @@ interface GridItemProps {
 }
 
 function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
-  const { devices, onDeviceSelect, columnCount, centerOffset } = data;
+  const { devices, selectedDeviceId, onDeviceSelect, columnCount, centerOffset } = data;
 
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
@@ -38,6 +38,8 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   const { src: imageUrl } = useImageUrl({ device, size: 256 });
 
   if (!imageUrl) return null;
+
+  const isSelected = device.id === selectedDeviceId;
 
   // Apply center offset to position
   const centeredStyle = {
@@ -49,13 +51,14 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
     <div
       style={centeredStyle}
       className="flex items-center justify-center"
-      onClick={() => onDeviceSelect(device)}
     >
       <DeviceGridCard
         imageUrl={imageUrl || ""}
         productLineName={device.line?.name || device.line?.id || "UniFi"}
         deviceName={device.product?.name || ""}
         shortName={device.shortnames?.join(", ") || ""}
+        isSelected={isSelected}
+        onClick={() => onDeviceSelect(device)}
       />
     </div>
   );

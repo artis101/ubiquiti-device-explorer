@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 
 interface DeviceGridCardProps {
   imageUrl: string;
   productLineName: string;
   deviceName: string;
   shortName: string;
+  isSelected?: boolean;
+  onClick?: () => void;
 }
 
 export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
@@ -12,10 +14,47 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
   productLineName,
   deviceName,
   shortName,
+  isSelected = false,
+  onClick,
 }) => {
+  const handleClick = useCallback(() => {
+    onClick?.();
+  }, [onClick]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onClick?.();
+    }
+  }, [onClick]);
+
+  const cardClassName = useMemo(() => 
+    `group flex flex-col gap-2 pb-2 w-[263px] h-[174px] transition-colors duration-200 rounded-card ${
+      isSelected
+        ? "bg-ui-gray-50 border border-ui-blue-primary"
+        : "border border-ui-gray-200 hover:bg-ui-gray-50 hover:border-ui-gray-200"
+    }`,
+    [isSelected]
+  );
+
+  const imageContainerClassName = useMemo(() =>
+    `relative flex justify-center items-center bg-ui-gray-50 rounded-t-card transition-colors duration-200 ${
+      isSelected ? "bg-ui-gray-100" : "group-hover:bg-ui-gray-100"
+    }`,
+    [isSelected]
+  );
+
   return (
-    <div className="flex flex-col gap-2 pb-2 border border-ui-gray-200 rounded-card w-[263px] h-[174px]">
-      <div className="relative flex justify-center items-center bg-ui-gray-50 rounded-t-card">
+    <button
+      type="button"
+      className={`${cardClassName} focus:outline-none focus:border focus:border-ui-blue-primary text-left`}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      aria-selected={isSelected}
+      aria-label={`${productLineName} - ${deviceName}`}
+      tabIndex={0}
+    >
+      <div className={imageContainerClassName}>
         <img
           src={imageUrl}
           alt={deviceName}
@@ -33,6 +72,6 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
           {shortName}
         </span>
       </div>
-    </div>
+    </button>
   );
 };
