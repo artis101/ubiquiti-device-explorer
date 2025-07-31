@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { NormalizedDevice } from "types/uidb";
 import { ProductLineDropdown } from "./ProductLineDropdown";
 import { FilterDropdownHeader } from "./FilterDropdownHeader";
@@ -21,10 +21,27 @@ export function FilterButton({
     externalSelectedProductLines,
   );
   const hasActiveFilters = selectedProductLines.length > 0;
+  const filterRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSelectedProductLines(externalSelectedProductLines);
   }, [externalSelectedProductLines]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleCheckboxChange = (productLineId: string) => {
     const newSelectedProductLines = selectedProductLines.includes(productLineId)
@@ -40,7 +57,7 @@ export function FilterButton({
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={filterRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`px-1.5 py-1.5 rounded border-0 hover:bg-icon-hover-bg active:bg-icon-hover-bg focus:outline-none focus:ring-1 focus:ring-icon-focus-ring transition-colors ${

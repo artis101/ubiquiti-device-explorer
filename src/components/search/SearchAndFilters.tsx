@@ -1,5 +1,4 @@
 import {
-  ProductLineFilter,
   SearchInput,
   SearchResultsCount,
   ViewModeSwitcher,
@@ -15,7 +14,6 @@ interface SearchAndFiltersProps {
   devicesForProductLineFilter: NormalizedDevice[];
   selectedProductLines: string[];
   onSearchChange: (query: string) => void;
-  onLineFilterChange: (lineId?: string) => void;
   onViewModeChange: (mode: "list" | "grid") => void;
   onFilterChange: (selectedProductLines: string[]) => void;
 }
@@ -27,7 +25,6 @@ export function SearchAndFilters({
   devicesForProductLineFilter,
   selectedProductLines,
   onSearchChange,
-  onLineFilterChange,
   onViewModeChange,
   onFilterChange,
 }: SearchAndFiltersProps) {
@@ -57,14 +54,6 @@ export function SearchAndFilters({
               onFilterChange={onFilterChange}
               filteredDevices={devicesForProductLineFilter}
               selectedProductLines={selectedProductLines}
-            />
-          </div>
-
-          {/* Hidden components that are no longer visible but might be needed for functionality */}
-          <div className="hidden">
-            <ProductLineFilter
-              selectedLineId={selectedLineId}
-              onLineFilterChange={onLineFilterChange}
             />
           </div>
         </div>
