@@ -2,7 +2,7 @@ import { forwardRef, useRef, useImperativeHandle } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import { DeviceGrid } from "./DeviceGrid";
 import { NoDevicesFound } from "./NoDevicesFound";
-import { DeviceListTable } from "./DeviceListTable";
+import { DeviceTable } from "./DeviceTable";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
 
 interface DeviceListProps {
@@ -63,10 +63,9 @@ export const DeviceList = forwardRef<any, DeviceListProps>(
     }
 
     return (
-      <DeviceListTable
+      <DeviceTable
         ref={listRef}
         devices={devices}
-        imageSize={imageSize}
         selectedDeviceId={selectedDeviceId}
         onDeviceSelect={onDeviceSelect}
         height={height}

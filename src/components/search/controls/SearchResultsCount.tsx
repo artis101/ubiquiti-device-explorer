@@ -10,20 +10,11 @@ export function SearchResultsCount({
   selectedLineId,
 }: SearchResultsCountProps) {
   const { devices, filteredDevices } = useUidbData();
+  const count = searchQuery || selectedLineId ? filteredDevices.length : devices.length;
+  
   return (
-    <div className="text-lg font-semibold text-[#212327]">
-      {searchQuery || selectedLineId ? (
-        <>
-          {filteredDevices.length.toLocaleString()}/
-          {devices.length.toLocaleString()} device
-          {devices.length !== 1 ? "s" : ""} found
-        </>
-      ) : (
-        <>
-          {devices.length.toLocaleString()} device
-          {devices.length !== 1 ? "s" : ""} found
-        </>
-      )}
+    <div className="text-xs font-normal text-[#BDBDBD]">
+      {count} Device{count !== 1 ? "s" : ""}
     </div>
   );
 }

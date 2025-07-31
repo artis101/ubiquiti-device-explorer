@@ -22,17 +22,17 @@ function ToggleSwitchComponent<T extends string | number>({
   return (
     <div className="flex items-center">
       {label && (
-        <span className="text-sm font-medium text-[#212327] mr-2">{label}:</span>
+        <span className="text-sm font-normal text-[var(--ui-text-primary)] mr-2">{label}:</span>
       )}
-      <div className="flex items-center space-x-1 bg-[#F4F5F6] rounded-lg p-1">
+      <div className="flex items-center rounded-lg border border-[var(--ui-gray-200)] p-1">
         {options.map((option) => (
           <button
             key={option.value}
             onClick={() => onValueChange(option.value)}
-            className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+            className={`px-2 py-1.5 text-sm font-normal rounded transition-all duration-200 ${
               selectedValue === option.value
-                ? "bg-white text-[#006FFF] shadow-sm"
-                : "text-[#808893] hover:bg-[#F4F5F6]"
+                ? "bg-[var(--ui-gray-100)] text-[var(--ui-gray-700)]"
+                : "text-[var(--ui-gray-500)] hover:bg-[var(--ui-gray-50)] active:bg-[var(--ui-gray-100)] focus:border-[var(--ui-blue-primary)]"
             }`}
             aria-label={option["aria-label"]}
             aria-pressed={selectedValue === option.value}

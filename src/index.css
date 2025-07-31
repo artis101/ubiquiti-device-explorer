@@ -2,15 +2,30 @@
 
 /* Figma Design System Colors */
 :root {
-  --color-primary: #006FFF;
-  --color-white: #FFFFFF;
-  --color-text-primary: #212327;
-  --color-text-secondary: #808893;
-  --color-background-light: #F9FAFA;
-  --color-background-lighter: #F4F5F6;
-  --color-border: #EDEDF0;
-  --color-hover-bg: #F4F5F6;
-  --color-focus-border: #006FFF;
+  /* Primary Colors */
+  --ui-blue-primary: #006FFF;
+  --ui-blue-hover: #0059CC;
+  --ui-white: #FFFFFF;
+  
+  /* Neutral Colors */
+  --ui-gray-50: #F9FAFA;
+  --ui-gray-100: #F4F5F6;
+  --ui-gray-200: #EDEDF0;
+  --ui-gray-300: #B6B9C4;
+  --ui-gray-500: #808893;
+  --ui-gray-600: #50565E;
+  --ui-gray-700: #212327;
+  --ui-text-primary: rgba(0, 0, 0, 0.85);
+  --ui-text-muted: rgba(0, 0, 0, 0.65);
+  --ui-text-subtle: rgba(0, 0, 0, 0.45);
+  
+  /* Accent Colors */
+  --ui-red-primary: #F03A3E;
+  --ui-red-light: #F9B0B2;
+  
+  /* Shadow */
+  --ui-shadow-card: 0px 16px 32px 0px rgba(28, 30, 45, 0.2);
+  --ui-shadow-backdrop: rgba(255, 255, 255, 0.85);
 }
 
 /* Custom scrollbar styles for webkit browsers */
@@ -40,6 +55,7 @@
 body {
   margin: 0;
   font-family:
+    "UI Sans_v7",
     "UI Sans",
     system-ui,
     -apple-system,
@@ -51,8 +67,9 @@ body {
     sans-serif;
   line-height: 1.4285714285714286; /* Figma line-height for body text */
   font-weight: 400;
-  color: var(--color-text-primary);
-  background-color: var(--color-white);
+  font-size: 14px; /* Figma body text size */
+  color: var(--ui-text-primary);
+  background-color: var(--ui-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -61,8 +78,8 @@ body {
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 1px solid var(--color-focus-border);
-  outline-offset: 2px;
+  outline: 1px solid var(--ui-blue-primary);
+  outline-offset: 1px;
 }
 
 /* Better button styles */

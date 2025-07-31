@@ -3,6 +3,7 @@ import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
 import { ErrorBoundary } from "@components/ui/ErrorBoundary";
 import { AppHeader } from "@components/layout/AppHeader";
+import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { DeviceList } from "@components/device/DeviceList";
 import { DeviceDetails } from "@components/device/DeviceDetails";
 import type { NormalizedDevice } from "types/uidb";
@@ -105,6 +106,10 @@ function App({
           ref={headerRef}
           warnings={warnings}
           connectionInfo={connectionInfo}
+        />
+
+        {/* Search and Filters */}
+        <SearchAndFilters
           searchQuery={searchQuery}
           selectedLineId={selectedLineId}
           imageSize={imageSize}

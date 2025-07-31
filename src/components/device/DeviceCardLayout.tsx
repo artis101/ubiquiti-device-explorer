@@ -33,25 +33,28 @@ const DeviceCardLayoutComponent = ({
     <div
       className={`bg-white border cursor-pointer transition-all duration-200 ${
         isSelected
-          ? "border-[#006FFF] ring-1 ring-[#006FFF] ring-opacity-20 shadow-lg"
-          : "border-[#EDEDF0] hover:bg-[#F4F5F6]"
+          ? "border-[var(--ui-blue-primary)] shadow-[var(--ui-shadow-card)]"
+          : "border-[var(--ui-gray-200)] hover:bg-[var(--ui-gray-50)] hover:-translate-y-0.5"
       } ${
         isListLayout
-          ? "p-6 w-full max-w-none mx-auto rounded-lg"
-          : "p-4 flex flex-col items-center h-full rounded-lg hover:shadow-md"
+          ? "p-2 w-full max-w-none mx-auto rounded-lg"
+          : "p-2 flex flex-col items-center h-full rounded-lg hover:shadow-[var(--ui-shadow-card)]"
       }`}
       onClick={onSelect}
       role="button"
       tabIndex={0}
       onKeyDown={handleKeyDown}
       aria-pressed={isSelected}
-      style={containerStyle}
+      style={{
+        ...containerStyle,
+        boxShadow: !isSelected ? 'var(--ui-shadow-card)' : undefined
+      }}
     >
       <div
         className={
           isListLayout
-            ? "flex items-start gap-6"
-            : "flex flex-col items-center gap-3"
+            ? "flex items-start gap-2"
+            : "flex flex-col items-center gap-2"
         }
       >
         {children}

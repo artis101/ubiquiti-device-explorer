@@ -22,11 +22,12 @@ export function DeviceInfo({
         isListLayout ? "flex-1 min-w-0" : "text-center min-w-0"
       }`}
     >
+      {/* Device Title - Main name */}
       <h3
-        className={`font-bold text-[#212327] ${
+        className={`font-normal text-[var(--ui-gray-600)] ${
           isListLayout
-            ? "text-lg mb-3 truncate"
-            : "text-base mb-1 h-12 line-clamp-2"
+            ? "text-sm mb-1 truncate"
+            : "text-sm mb-1 h-8 line-clamp-2"
         }`}
       >
         <Highlight
@@ -35,47 +36,57 @@ export function DeviceInfo({
         />
       </h3>
 
-      <div className={isListLayout ? "space-y-2" : "space-y-1"}>
-        {device.sku && (
-          <div
-            className={`flex items-center gap-2 min-w-0 ${
-              !isListLayout ? "justify-center w-full" : ""
+      {/* Device Subtitle - SKU */}
+      {device.sku && (
+        <div
+          className={`${
+            isListLayout
+              ? "mb-3"
+              : "mb-2"
+          }`}
+        >
+          <span
+            className={`text-sm font-normal text-[var(--ui-gray-500)] truncate block ${
+              !isListLayout ? "max-w-26" : ""
             }`}
+            title={device.sku}
           >
-            <span className="text-xs font-semibold text-[#808893] uppercase tracking-wide shrink-0">
-              SKU:
-            </span>
-            <span
-              className={`text-sm font-medium text-[#212327] truncate ${
-                !isListLayout ? "max-w-26" : ""
-              }`}
-              title={device.sku}
-            >
-              <Highlight
-                text={device.sku}
-                indices={useHighlightIndices(searchHit, "sku")}
-              />
-            </span>
-          </div>
-        )}
+            <Highlight
+              text={device.sku}
+              indices={useHighlightIndices(searchHit, "sku")}
+            />
+          </span>
+        </div>
+      )}
 
+      {/* Device Specs - following Figma layout pattern */}
+      <div className={`${isListLayout ? "space-y-2" : "space-y-1"}`}>
+        {/* Product Line spec row */}
         {device.line && (
           <div
-            className={`flex items-center gap-2 ${
-              !isListLayout && "justify-center"
+            className={`flex items-center justify-between gap-20 py-1.5 ${
+              !isListLayout ? "justify-center flex-col gap-1" : ""
             }`}
           >
-            <span className="text-xs font-semibold text-[#808893] uppercase tracking-wide">
-              Line:
+            <span className="text-sm font-normal text-[var(--ui-text-muted)] shrink-0">
+              Product Line
             </span>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#006FFF] text-white">
+            <span className="text-sm font-normal text-[var(--ui-text-muted)] text-right">
               {device.line.name || device.line.id}
             </span>
           </div>
         )}
 
+        {/* Additional spec rows can be added here following the same pattern */}
         {isListLayout && device.shortnames && device.shortnames.length > 0 && (
-          <DeviceAliases aliases={device.shortnames} searchHit={searchHit} />
+          <div className="flex items-center justify-between gap-20 py-1.5">
+            <span className="text-sm font-normal text-[var(--ui-text-muted)] shrink-0">
+              Aliases
+            </span>
+            <div className="text-right">
+              <DeviceAliases aliases={device.shortnames} searchHit={searchHit} />
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -5,11 +5,11 @@ interface SearchInputProps {
 
 export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
   return (
-    <div className="flex-1 min-w-0">
+    <div className="w-80">
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
           <svg
-            className="h-4 w-4 text-gray-400"
+            className="h-4 w-4 text-[rgba(0,0,0,0.45)]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -27,8 +27,8 @@ export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="block w-full pl-10 pr-3 py-2 border border-[#EDEDF0] rounded-lg text-sm bg-white placeholder-[#808893] focus:outline-none focus:ring-1 focus:ring-[#006FFF] focus:border-[#006FFF] transition-colors"
-          placeholder="Search devices"
+          className="block w-full h-8 pl-8 pr-3 border-0 rounded text-sm font-normal bg-[#F6F6F8] placeholder-[rgba(0,0,0,0.45)] focus:outline-none focus:ring-0 transition-all duration-200"
+          placeholder="Search"
           aria-label="Search devices"
         />
       </div>

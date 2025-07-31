@@ -4,6 +4,7 @@ import {
   SearchInput,
   SearchResultsCount,
   ViewModeSwitcher,
+  FilterButton,
 } from "./controls";
 
 interface SearchAndFiltersProps {
@@ -29,36 +30,39 @@ export function SearchAndFilters({
 }: SearchAndFiltersProps) {
   return (
     <div className="bg-white">
-      <div className="max-w-none px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex flex-col lg:flex-row gap-3 items-start lg:items-center">
-          <div className="flex flex-1 gap-3 items-center w-full lg:w-auto">
-            <SearchInput
-              searchQuery={searchQuery}
-              onSearchChange={onSearchChange}
-            />
-            <ProductLineFilter
-              selectedLineId={selectedLineId}
-              onLineFilterChange={onLineFilterChange}
-            />
-          </div>
-          
-          <div className="flex items-center justify-between lg:justify-end gap-4 w-full lg:w-auto">
-            <SearchResultsCount
-              searchQuery={searchQuery}
-              selectedLineId={selectedLineId}
-            />
-            <div className="flex items-center gap-2">
-              <ImageSizeSelector
-                imageSize={imageSize}
-                onImageSizeChange={onImageSizeChange}
-              />
-              <ViewModeSwitcher
-                viewMode={viewMode}
-                onViewModeChange={onViewModeChange}
-              />
-            </div>
-          </div>
+      <div className="flex items-center justify-between px-8 py-4">
+        {/* Left Side - Search and Device Count */}
+        <div className="flex items-center gap-4">
+          <SearchInput
+            searchQuery={searchQuery}
+            onSearchChange={onSearchChange}
+          />
+          <SearchResultsCount
+            searchQuery={searchQuery}
+            selectedLineId={selectedLineId}
+          />
         </div>
+        
+        {/* Right Side - View Mode and Filter */}
+        <div className="flex items-center gap-2">
+          <ViewModeSwitcher
+            viewMode={viewMode}
+            onViewModeChange={onViewModeChange}
+          />
+          <FilterButton />
+        </div>
+      </div>
+      
+      {/* Hidden components that are no longer visible but might be needed for functionality */}
+      <div className="hidden">
+        <ProductLineFilter
+          selectedLineId={selectedLineId}
+          onLineFilterChange={onLineFilterChange}
+        />
+        <ImageSizeSelector
+          imageSize={imageSize}
+          onImageSizeChange={onImageSizeChange}
+        />
       </div>
     </div>
   );
