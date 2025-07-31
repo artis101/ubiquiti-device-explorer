@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUidbData } from "@hooks/useUidbData";
 import { useHeaderHeight } from "@hooks/useHeaderHeight";
 import { useImageUrl } from "@hooks/useImageUrl";
+import { useUrlState } from "@hooks/useUrlState";
 import type { NormalizedDevice } from "types/uidb";
 
 interface DeviceDetailsProps {
@@ -12,11 +13,13 @@ export function DeviceDetails({ deviceId }: DeviceDetailsProps) {
   const [showJson, setShowJson] = useState(false);
   const { devices } = useUidbData();
   const { headerHeight } = useHeaderHeight();
+  const { updateState } = useUrlState();
   const device = devices.find((d: NormalizedDevice) => d.id === deviceId);
-  if (!device) {
-    return null; // Or a loading/error state
-  }
   const { src: imageUrl } = useImageUrl({ device, size: 512 });
+
+  const handleBack = () => {
+    updateState({ select: undefined });
+  };
 
   if (!device) {
     return null; // Or a loading/error state
@@ -30,6 +33,44 @@ export function DeviceDetails({ deviceId }: DeviceDetailsProps) {
       {/* Modal content that covers full screen except header */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
+          {/* Back Button - Frame 23170 */}
+          <button
+            onClick={handleBack}
+            className="flex items-center p-1 mb-12 w-14 h-7 bg-white rounded shadow-sm hover:shadow-md transition-shadow"
+            style={{
+              boxShadow:
+                "0px 0px 1px rgba(0, 0, 0, 0.06), 0px 8px 24px rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            <div className="flex items-center justify-center w-5 h-5">
+              <svg
+                width="6"
+                height="12"
+                viewBox="0 0 6 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-neutral-600"
+                style={{ color: "#838691" }}
+              >
+                <path
+                  d="M5 1L1 6L5 11"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <span
+              className="ml-1 text-sm leading-5 flex items-center"
+              style={{
+                fontFamily: "UI Sans_v7, system-ui, sans-serif",
+                color: "rgba(0, 0, 0, 0.45)",
+              }}
+            >
+              Back
+            </span>
+          </button>
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
             {/* Left Column - Image */}
             <div className="flex-shrink-0 w-full lg:w-1/3 flex justify-center items-center bg-gray-50 rounded-lg p-4">
