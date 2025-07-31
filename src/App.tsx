@@ -31,7 +31,7 @@ function App({
     useUidbData();
 
   const [detailsDevice, setDetailsDevice] = useState<NormalizedDevice | null>(
-    null,
+    null
   );
 
   // Refs
@@ -63,7 +63,7 @@ function App({
       setDetailsDevice(device);
       updateState({ select: device.id });
     },
-    [updateState],
+    [updateState]
   );
 
   const handleCloseDetails = useCallback(() => {
@@ -75,33 +75,33 @@ function App({
     (query: string) => {
       updateState({ q: query });
     },
-    [updateState],
+    [updateState]
   );
 
   const handleLineFilterChange = useCallback(
     (lineId?: string) => {
       updateState({ line: lineId });
     },
-    [updateState],
+    [updateState]
   );
 
   const handleImageSizeChange = useCallback(
     (size: number) => {
       updateState({ size });
     },
-    [updateState],
+    [updateState]
   );
 
   const handleViewModeChange = useCallback(
     (mode: "list" | "grid") => {
       updateState({ view: mode });
     },
-    [updateState],
+    [updateState]
   );
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-white flex flex-col">
+      <div className="min-h-screen bg-white flex flex-col overflow-hidden">
         <AppHeader
           ref={headerRef}
           warnings={warnings}
