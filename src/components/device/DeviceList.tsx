@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from "react";
+import { FixedSizeList as List } from "react-window";
 import { FixedSizeGrid as Grid } from "react-window";
 import { DeviceGrid } from "./DeviceGrid";
 import { NoDevicesFound } from "./NoDevicesFound";
@@ -7,13 +7,14 @@ import type { NormalizedDevice } from "types/uidb";
 import { useUidbData } from "@contexts/UidbContext";
 import { useUrlState } from "@hooks/useUrlState";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
+import { useRef, useEffect, useCallback } from "react";
 
 interface DeviceListProps {
   height: number;
 }
 
 export function DeviceList({ height }: DeviceListProps) {
-  const listRef = useRef<any>(null);
+  const listRef = useRef<List>(null);
   const gridRef = useRef<Grid>(null);
   const { filteredDevices, searchHits } = useUidbData();
   const { selectedDeviceId, viewMode, updateState } = useUrlState();

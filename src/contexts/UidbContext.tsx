@@ -23,7 +23,7 @@ interface UidbContextType {
 
 const UidbContext = createContext<UidbContextType | undefined>(undefined);
 
-export function UidbProvider({
+export function UidbProviderComponent({
   children,
   searchQuery,
   selectedLineId,
@@ -39,22 +39,17 @@ export function UidbProvider({
 
   const { filteredDevices, searchHits, devicesForProductLineFilter } =
     useMemo(() => {
-      let filtered = devices;
+      const filtered = filterByLine(devices, selectedLineId);
 
-      // Apply line filter first
-      filtered = filterByLine(filtered, selectedLineId);
+      const devicesForProductLineFilter = filtered;
 
-      // Keep devices filtered only by line and search (for product line dropdown)
-      let devicesForProductLineFilter = filtered;
-
-      // Apply product lines filter for main results
-      filtered = filterByProductLines(filtered, selectedProductLines);
+      const filteredWithProductLines = filterByProductLines(filtered, selectedProductLines);
 
       if (searchQuery) {
         // Apply search to both sets
-        const searchResults = searchDevices(filtered, searchQuery);
+        const searchResults = searchDevices(filteredWithProductLines, searchQuery);
         const resultDevices = searchResults.map(
-          (hit) => filtered.find((device) => device.id === hit.id)!
+          (hit) => filteredWithProductLines.find((device) => device.id === hit.id)!
         );
 
         const searchHitMap = new Map<string, SearchHit>(
@@ -79,7 +74,7 @@ export function UidbProvider({
       }
 
       return {
-        filteredDevices: filtered,
+        filteredDevices: filteredWithProductLines,
         searchHits: new Map<string, SearchHit>(),
         devicesForProductLineFilter,
       };
@@ -118,6 +113,8 @@ export function UidbProvider({
     <UidbContext.Provider value={contextValue}>{children}</UidbContext.Provider>
   );
 }
+
+export const UidbProvider = UidbProviderComponent;
 
 export function useUidbData() {
   const context = useContext(UidbContext);

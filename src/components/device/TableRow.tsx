@@ -7,11 +7,8 @@ import type { TableRowProps } from "./DeviceTableTypes";
 export const TableRow = memo(({ index, style, data }: TableRowProps) => {
   const { devices, selectedDeviceId, onDeviceSelect, searchHits } = data;
   const device = devices[index];
-  
-  if (!device) return null;
-
-  const searchHit = searchHits.get(device.id);
-  const isSelected = device.id === selectedDeviceId;
+  const searchHit = searchHits.get(device?.id ?? "");
+  const isSelected = device?.id === selectedDeviceId;
   const highlightIndices = useHighlightIndices(searchHit, "displayName");
 
   const productLineName = useMemo(() => 
@@ -45,6 +42,8 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
     }`,
     [isSelected]
   );
+
+  if (!device) return null;
 
   return (
     <div style={style}>

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from "react";
-import { getProductLines } from "@utils/uidb";
+import { getProductLines } from "@utils/productLines";
 import { useUidbData } from "./UidbContext";
 
 interface ProductLine {

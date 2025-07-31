@@ -1,25 +1,17 @@
-import React from "react";
-import type { NormalizedDevice } from "types/uidb";
-import { useImageUrl } from "@hooks/useImageUrl";
+import React from 'react';
+import { useImageUrl } from '@hooks/useImageUrl';
+import type { NormalizedDevice } from 'types/uidb';
 
 interface TableDeviceImageProps {
   device: NormalizedDevice;
 }
 
-export function TableDeviceImage({ device }: TableDeviceImageProps) {
-  const { src } = useImageUrl({ device, size: 256 });
+export const TableDeviceImage: React.FC<TableDeviceImageProps> = ({ device }) => {
+  const { src } = useImageUrl({ device, size: 32 });
 
-  return (
-    <img
-      src={src}
-      alt={device.displayName || "Device"}
-      width={20}
-      height={20}
-      className="object-contain"
-      onError={(e) => {
-        const img = e.target as HTMLImageElement;
-        img.style.display = "none";
-      }}
-    />
-  );
-}
+  if (!src) {
+    return <div className="w-full h-full bg-ui-gray-200 rounded-sm" />;
+  }
+
+  return <img src={src} alt={device.product.name} className="w-full h-full object-contain" />;
+};

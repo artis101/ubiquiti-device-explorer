@@ -4,7 +4,7 @@ import { ErrorBoundary } from "@components/ui/ErrorBoundary";
 import { AppHeader } from "@components/layout/AppHeader";
 import { SearchAndFilters } from "@components/search/SearchAndFilters";
 import { DeviceList } from "@components/device/DeviceList";
-import { DeviceDetails } from "@components/device/DeviceDetails";
+// import { DeviceDetails } from "@components/device/DeviceDetails";
 import { useUidbData } from "./contexts/UidbContext";
 import { useUrlState } from "@hooks/useUrlState";
 
@@ -33,12 +33,12 @@ function App() {
           <DeviceList height={window.innerHeight - headerHeight} />
         </main>
 
-        {selectedDeviceId && (
+        {/* {selectedDeviceId && (
           <DeviceDetails
             deviceId={selectedDeviceId}
             onClose={handleCloseDetails}
           />
-        )}
+        )} */}
       </div>
     </ErrorBoundary>
   );

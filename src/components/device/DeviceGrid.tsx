@@ -1,7 +1,8 @@
 import React, { forwardRef } from "react";
 import { FixedSizeGrid as Grid } from "react-window";
 import type { NormalizedDevice, SearchHit } from "types/uidb";
-import { DeviceCard } from "@components/device/DeviceCard";
+import { DeviceGridCard } from "@components/device/DeviceGridCard";
+import { useImageUrl } from "@hooks/useImageUrl";
 
 interface DeviceGridProps {
   devices: NormalizedDevice[];
@@ -29,20 +30,17 @@ interface GridItemProps {
 function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   const {
     devices,
-    selectedDeviceId,
     onDeviceSelect,
     searchHits,
     columnCount,
     centerOffset,
   } = data;
 
-  const imageSize = 256; // Fixed image size
   const index = rowIndex * columnCount + columnIndex;
   const device = devices[index];
+  const { src: imageUrl } = useImageUrl({ device, size: 256 });
 
-  if (!device) return null;
-
-  const searchHit = searchHits.get(device.id);
+  if (!device || !imageUrl) return null;
 
   // Apply center offset to position
   const centeredStyle = {
@@ -51,14 +49,12 @@ function GridItem({ columnIndex, rowIndex, style, data }: GridItemProps) {
   };
 
   return (
-    <div style={centeredStyle} className="p-2 flex items-center justify-center">
-      <DeviceCard
-        device={device}
-        imageSize={imageSize}
-        onSelect={onDeviceSelect}
-        isSelected={device.id === selectedDeviceId}
-        searchHit={searchHit}
-        layout="grid"
+    <div style={centeredStyle} className="p-2 flex items-center justify-center" onClick={() => onDeviceSelect(device)}>
+      <DeviceGridCard
+        imageUrl={imageUrl}
+        modelName={device.line.name}
+        deviceName={device.product.name}
+        shortName={device.shortnames[0]}
       />
     </div>
   );
@@ -69,9 +65,8 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
     { devices, selectedDeviceId, onDeviceSelect, height, width, searchHits },
     ref,
   ) => {
-    const imageSize = 256; // Fixed image size
-    const columnWidth = imageSize + 64;
-    const rowHeight = imageSize + 180;
+    const columnWidth = 217 + 16;
+    const rowHeight = 172 + 16;
     const maxColumns = 6;
 
     // Calculate column count
