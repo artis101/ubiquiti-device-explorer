@@ -201,12 +201,3 @@ const imageUrl = `https://images.svc.ui.com/?u=${encodeURIComponent(
   `https://static.ui.com/fingerprint/ui/images/${deviceId}/${type}/${hash}.png`
 )}&w=${size}&q=75`;
 ```
-
-### Future Enhancements (Post-MVP)
-
-- **Fuzzy Search:** Replace string matching with Fuse.js
-- **Device Comparison:** Side-by-side SKU comparison tool
-- **Export Features:** CSV/JSON export of filtered results
-- **Favorites:** localStorage-based bookmarking
-- **Advanced Filtering:** Multi-select filters, date ranges
-- **Offline Mode:** Service worker for full offline capability

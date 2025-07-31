@@ -28,31 +28,36 @@ export default function UidbProvider({
 
   const { filteredDevices, searchHits, devicesForProductLineFilter } =
     useMemo(() => {
-      const filtered = filterByLine(devices, selectedLineId);
+      const devicesFilteredByLine = filterByLine(devices, selectedLineId);
+      const devicesForProductLineFilter = devicesFilteredByLine; // Keep this for the product line filter dropdown
 
-      const devicesForProductLineFilter = filtered;
-
-      const filteredWithProductLines = filterByProductLines(filtered, selectedProductLines);
+      const devicesFilteredByProductLines = filterByProductLines(
+        devicesFilteredByLine,
+        selectedProductLines,
+      );
 
       if (searchQuery) {
-        // Apply search to both sets
-        const searchResults = searchDevices(filteredWithProductLines, searchQuery);
+        const searchResults = searchDevices(
+          devicesFilteredByProductLines,
+          searchQuery,
+        );
         const resultDevices = searchResults.map(
-          (hit) => filteredWithProductLines.find((device) => device.id === hit.id)!
+          (hit) =>
+            devicesFilteredByProductLines.find((device) => device.id === hit.id)!,
         );
 
         const searchHitMap = new Map<string, SearchHit>(
-          searchResults.map((hit) => [hit.id, hit])
+          searchResults.map((hit) => [hit.id, hit]),
         );
 
-        // Apply search to devices for product line filter too
+        // Apply search to devices for product line filter if a search query exists
         const searchResultsForFilter = searchDevices(
           devicesForProductLineFilter,
-          searchQuery
+          searchQuery,
         );
         const devicesForFilterWithSearch = searchResultsForFilter.map(
           (hit) =>
-            devicesForProductLineFilter.find((device) => device.id === hit.id)!
+            devicesForProductLineFilter.find((device) => device.id === hit.id)!,
         );
 
         return {
@@ -63,7 +68,7 @@ export default function UidbProvider({
       }
 
       return {
-        filteredDevices: filteredWithProductLines,
+        filteredDevices: devicesFilteredByProductLines,
         searchHits: new Map<string, SearchHit>(),
         devicesForProductLineFilter,
       };
