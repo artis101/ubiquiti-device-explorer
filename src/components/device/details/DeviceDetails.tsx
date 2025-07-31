@@ -39,7 +39,7 @@ export function DeviceDetails({ deviceId }: DeviceDetailsProps) {
               {/* See All Details as JSON Button */}
               <button
                 onClick={() => setShowJson(true)}
-                className="inline-block text-blue-600 hover:text-blue-800 text-sm font-semibold"
+                className="inline-block text-blue-600 hover:text-blue-800 text-sm p-0.5 font-semibold focus-within:ring-1 focus-within:ring-blue-500 focus:outline-none focus:rounded"
               >
                 See All Details as JSON
               </button>
