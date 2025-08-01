@@ -38,7 +38,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'public.json': [path.resolve(__dirname, './src/data/public.json')],
+          "public.json": [path.resolve(__dirname, "./src/data/public.json")],
         },
       },
     },
