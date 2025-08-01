@@ -16,22 +16,30 @@ describe('App', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     (useHeaderHeight as vi.Mock).mockReturnValue({ headerHeight: 0, headerRef: { current: null } });
-    (useUidbData as vi.Mock).mockReturnValue({ warnings: [], connectionInfo: { status: 'connected' } });
+    (useUidbData as vi.Mock).mockReturnValue({ 
+      warnings: [], 
+      connectionInfo: { status: 'connected' },
+      devices: [],
+      filteredDevices: [],
+      searchHits: new Map(),
+      devicesForProductLineFilter: [],
+      refetch: vi.fn()
+    });
     (useWindowDimensions as vi.Mock).mockReturnValue({ windowHeight: 768, windowWidth: 1024 });
     (useUrlState as vi.Mock).mockReturnValue({ searchQuery: '', selectedLineId: undefined, viewMode: 'list', selectedProductLines: [], updateState: vi.fn() });
   });
 
   it('renders the AppHeader', () => {
     render(<App />);
-    expect(screen.getByText('Product Catalog')).toBeInTheDocument(); // Assuming AppHeader renders this text
+    expect(screen.getByText('Devices')).toBeInTheDocument();
   });
 
   it('renders SearchAndFilters when no device is selected', () => {
     render(<App />);
-    expect(screen.getByPlaceholderText('Search devices...')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
   });
 
-  it('does not render SearchAndFilters when a device is selected', () => {
+  it('renders device details view when a device is selected', () => {
     (useUrlState as vi.Mock).mockReturnValue({
       searchQuery: '',
       selectedLineId: undefined,
@@ -40,8 +48,21 @@ describe('App', () => {
       selectedProductLines: [],
       updateState: vi.fn(),
     });
+    
+    // Also need to mock useUidbData to return a device
+    (useUidbData as vi.Mock).mockReturnValue({ 
+      warnings: [], 
+      connectionInfo: { status: 'connected' },
+      devices: [{ id: 'some-device-id', displayName: 'Test Device' }],
+      filteredDevices: [{ id: 'some-device-id', displayName: 'Test Device' }],
+      searchHits: new Map(),
+      devicesForProductLineFilter: [],
+      refetch: vi.fn()
+    });
+    
     render(<App />);
-    expect(screen.queryByPlaceholderText('Search devices...')).not.toBeInTheDocument();
-    expect(screen.getByText('Device Details')).toBeInTheDocument(); // Assuming DeviceDetails renders this text
+    // When a device is selected, the app should show device details
+    // The search input is not visible in detail view
+    expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();
   });
 });

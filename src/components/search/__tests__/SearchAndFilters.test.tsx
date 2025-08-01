@@ -24,19 +24,25 @@ describe('SearchAndFilters', () => {
     });
     mockUseUidbData.mockReturnValue({
       devicesForProductLineFilter: [],
+      devices: [],
+      filteredDevices: [],
+      searchHits: new Map(),
+      warnings: [],
+      connectionInfo: { status: 'connected' },
+      refetch: vi.fn()
     });
   });
 
   it('renders search input and view mode switcher', () => {
     render(<SearchAndFilters />);
-    expect(screen.getByPlaceholderText('Search devices...')).toBeInTheDocument();
-    expect(screen.getByLabelText('List View')).toBeInTheDocument();
-    expect(screen.getByLabelText('Grid View')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+    expect(screen.getByLabelText('List view')).toBeInTheDocument();
+    expect(screen.getByLabelText('Grid view')).toBeInTheDocument();
   });
 
   it('updates search query after debounce', async () => {
     render(<SearchAndFilters />);
-    const searchInput = screen.getByPlaceholderText('Search devices...');
+    const searchInput = screen.getByPlaceholderText('Search');
     fireEvent.change(searchInput, { target: { value: 'test query' } });
 
     // Expect updateState not to be called immediately due to debounce
@@ -50,11 +56,11 @@ describe('SearchAndFilters', () => {
 
   it('changes view mode when switcher is clicked', () => {
     render(<SearchAndFilters />);
-    const gridViewButton = screen.getByLabelText('Grid View');
+    const gridViewButton = screen.getByLabelText('Grid view');
     fireEvent.click(gridViewButton);
     expect(mockUpdateState).toHaveBeenCalledWith({ view: 'grid' });
 
-    const listViewButton = screen.getByLabelText('List View');
+    const listViewButton = screen.getByLabelText('List view');
     fireEvent.click(listViewButton);
     expect(mockUpdateState).toHaveBeenCalledWith({ view: 'list' });
   });

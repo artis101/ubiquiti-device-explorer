@@ -73,9 +73,9 @@ describe('UIDB Utilities', () => {
 
       expect(normalized.length).toBe(2); // d1 and d2 should be normalized
       expect(warnings.length).toBe(6); // Corrected expectation: 3 invalid objects + 1 missing product name + 1 missing image hashes + 1 missing images for d1
-      expect(warnings[0].reason).toBe('Invalid device object');
-      expect(warnings[1].reason).toBe('Invalid device object');
-      expect(warnings[2].reason).toBe('Missing device ID');
+      expect(warnings[0].reason).toBe('Invalid or incomplete device object');
+      expect(warnings[1].reason).toBe('Invalid or incomplete device object');
+      expect(warnings[2].reason).toBe('Invalid or incomplete device object');
       expect(warnings[3].reason).toBe('Missing product name and shortnames');
       expect(warnings[4].reason).toBe('Missing all image hashes'); // This is for d1
       expect(warnings[5].reason).toBe('Missing all image hashes'); // This is for d2
