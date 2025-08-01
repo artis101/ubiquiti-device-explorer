@@ -1,9 +1,9 @@
-import { useEffect, RefObject } from "react";
+import { useEffect, type RefObject } from "react";
 
-export function useClickOutside<T extends HTMLElement>(
-  ref: RefObject<T>,
+export function useClickOutside<T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T | null>,
   handler: () => void,
-  enabled = true
+  enabled = true,
 ) {
   useEffect(() => {
     if (!enabled) return;

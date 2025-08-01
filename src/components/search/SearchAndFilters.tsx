@@ -1,8 +1,4 @@
-import {
-  SearchResultsCount,
-  ViewModeSwitcher,
-  FilterButton,
-} from "./controls";
+import { SearchResultsCount, ViewModeSwitcher, FilterButton } from "./controls";
 import { useUrlState } from "@hooks/useUrlState";
 import { useUidbData } from "@hooks/useUidbData";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -33,11 +29,24 @@ export function SearchAndFilters() {
     if (!localSearchQuery) {
       return [];
     }
-    return fuse.search(localSearchQuery).map((result) => ({
-      id: result.item.id,
-      name: result.item.product.name,
-      abbrev: result.item.product.abbrev,
-    })).slice(0, 5);
+    return fuse
+      .search(localSearchQuery)
+      .map((result) => {
+        const product = result.item.product;
+        if (!product?.name || !product?.abbrev) {
+          return null;
+        }
+        return {
+          id: result.item.id,
+          name: product.name,
+          abbrev: product.abbrev,
+        };
+      })
+      .filter(
+        (item): item is { id: string; name: string; abbrev: string } =>
+          item !== null,
+      )
+      .slice(0, 5);
   }, [localSearchQuery, fuse]);
 
   useEffect(() => {
@@ -54,9 +63,12 @@ export function SearchAndFilters() {
     setLocalSearchQuery(query);
   }, []);
 
-  const handleDeviceSelect = useCallback((deviceId: string) => {
-    updateState({ select: deviceId });
-  }, [updateState]);
+  const handleDeviceSelect = useCallback(
+    (deviceId: string) => {
+      updateState({ select: deviceId });
+    },
+    [updateState],
+  );
 
   const handleViewModeChange = useCallback(
     (mode: "list" | "grid") => {

@@ -5,7 +5,7 @@ import { vi } from "vitest";
 describe("SuggestionsList", () => {
   const mockOnSuggestionClick = vi.fn();
   const mockOnMouseEnter = vi.fn();
-  
+
   const suggestions = [
     { id: "1", name: "Dream Router", abbrev: "UDR" },
     { id: "2", name: "Dream Machine", abbrev: "UDM" },
@@ -22,9 +22,10 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     expect(screen.getByText("Dream Router")).toBeInTheDocument();
@@ -38,9 +39,10 @@ describe("SuggestionsList", () => {
         suggestions={[]}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     expect(container.firstChild).toBeNull();
@@ -52,13 +54,14 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     fireEvent.click(screen.getByText("Dream Machine"));
-    
+
     expect(mockOnSuggestionClick).toHaveBeenCalledWith(suggestions[1]);
   });
 
@@ -68,13 +71,14 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     fireEvent.mouseEnter(screen.getByText("Security Gateway").parentElement!);
-    
+
     expect(mockOnMouseEnter).toHaveBeenCalledWith(2);
   });
 
@@ -84,13 +88,14 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={1}
         isKeyboardNav={true}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const items = screen.getAllByRole("option");
-    
+
     expect(items[0]).toHaveAttribute("aria-selected", "false");
     expect(items[1]).toHaveAttribute("aria-selected", "true");
     expect(items[2]).toHaveAttribute("aria-selected", "false");
@@ -102,9 +107,10 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     expect(screen.getByRole("listbox")).toBeInTheDocument();
@@ -116,9 +122,10 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const list = screen.getByRole("listbox");
@@ -134,7 +141,7 @@ describe("SuggestionsList", () => {
       "shadow-lg",
       "max-h-60",
       "overflow-y-auto",
-      "scrollbar-thin"
+      "scrollbar-thin",
     );
   });
 
@@ -144,14 +151,15 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={-1}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const items = screen.getAllByRole("option");
     expect(items).toHaveLength(3);
-    
+
     // Each item should be rendered (React will warn if keys are not unique)
     suggestions.forEach((suggestion) => {
       expect(screen.getByText(suggestion.name)).toBeInTheDocument();
@@ -164,9 +172,10 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={0}
         isKeyboardNav={false}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     // Active item should have gray background when not keyboard nav
@@ -179,9 +188,10 @@ describe("SuggestionsList", () => {
         suggestions={suggestions}
         activeIndex={0}
         isKeyboardNav={true}
+        searchQuery=""
         onSuggestionClick={mockOnSuggestionClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     // Active item should have border when keyboard nav

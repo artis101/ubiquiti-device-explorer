@@ -8,7 +8,12 @@ interface SuggestionsListProps {
   }[];
   activeIndex: number;
   isKeyboardNav: boolean;
-  onSuggestionClick: (suggestion: { id: string; name: string; abbrev: string }) => void;
+  searchQuery: string;
+  onSuggestionClick: (suggestion: {
+    id: string;
+    name: string;
+    abbrev: string;
+  }) => void;
   onMouseEnter: (index: number) => void;
 }
 
@@ -16,13 +21,14 @@ export function SuggestionsList({
   suggestions,
   activeIndex,
   isKeyboardNav,
+  searchQuery,
   onSuggestionClick,
   onMouseEnter,
 }: SuggestionsListProps) {
   if (suggestions.length === 0) return null;
 
   return (
-    <ul 
+    <ul
       className="absolute z-10 w-full bg-ui-white border border-ui-gray-300 rounded-radius mt-1 shadow-lg max-h-60 overflow-y-auto scrollbar-thin"
       role="listbox"
     >
@@ -32,6 +38,7 @@ export function SuggestionsList({
           suggestion={suggestion}
           isActive={activeIndex === index}
           isKeyboardNav={isKeyboardNav}
+          searchQuery={searchQuery}
           onClick={() => onSuggestionClick(suggestion)}
           onMouseEnter={() => onMouseEnter(index)}
         />

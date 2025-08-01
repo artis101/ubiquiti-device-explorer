@@ -17,7 +17,7 @@ describe("useKeyboardNavigation", () => {
         isOpen,
         onSelect: mockOnSelect,
         onClose: mockOnClose,
-      })
+      }),
     );
   };
 
@@ -103,7 +103,10 @@ describe("useKeyboardNavigation", () => {
     it("should navigate backward with Shift+Tab", () => {
       const { result } = setup();
 
-      const event = new KeyboardEvent("keydown", { key: "Tab", shiftKey: true });
+      const event = new KeyboardEvent("keydown", {
+        key: "Tab",
+        shiftKey: true,
+      });
       act(() => {
         result.current.handleKeyDown(event as any);
       });

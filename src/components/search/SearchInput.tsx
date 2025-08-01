@@ -32,5 +32,5 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         />
       </div>
     );
-  }
+  },
 );

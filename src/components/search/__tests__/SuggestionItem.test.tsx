@@ -21,9 +21,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     expect(screen.getByText("Dream Router")).toBeInTheDocument();
@@ -36,9 +37,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     fireEvent.click(screen.getByRole("option"));
@@ -51,9 +53,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     fireEvent.mouseEnter(screen.getByRole("option"));
@@ -66,9 +69,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const item = screen.getByRole("option");
@@ -81,9 +85,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={true}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const item = screen.getByRole("option");
@@ -96,9 +101,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={true}
         isKeyboardNav={true}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const item = screen.getByRole("option");
@@ -111,21 +117,26 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
-    expect(screen.getByRole("option")).toHaveAttribute("aria-selected", "false");
+    expect(screen.getByRole("option")).toHaveAttribute(
+      "aria-selected",
+      "false",
+    );
 
     rerender(
       <SuggestionItem
         suggestion={defaultSuggestion}
         isActive={true}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     expect(screen.getByRole("option")).toHaveAttribute("aria-selected", "true");
@@ -137,9 +148,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const name = screen.getByText("Dream Router");
@@ -161,9 +173,10 @@ describe("SuggestionItem", () => {
         suggestion={longSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     const name = screen.getByText(longSuggestion.name);
@@ -176,9 +189,10 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     // Re-render with same props - React.memo should prevent re-render
@@ -187,12 +201,49 @@ describe("SuggestionItem", () => {
         suggestion={defaultSuggestion}
         isActive={false}
         isKeyboardNav={false}
+        searchQuery=""
         onClick={mockOnClick}
         onMouseEnter={mockOnMouseEnter}
-      />
+      />,
     );
 
     // Component should still be in the document
     expect(screen.getByText("Dream Router")).toBeInTheDocument();
+  });
+
+  it("highlights matching search query text", () => {
+    render(
+      <SuggestionItem
+        suggestion={defaultSuggestion}
+        isActive={false}
+        isKeyboardNav={false}
+        searchQuery="Dr"
+        onClick={mockOnClick}
+        onMouseEnter={mockOnMouseEnter}
+      />,
+    );
+
+    // Check that the highlighted portion exists
+    const highlightedElement = screen.getByText("Dr");
+    expect(highlightedElement).toHaveClass("font-bold");
+    expect(highlightedElement).toHaveClass("underline");
+  });
+
+  it("highlights matching text in abbreviation", () => {
+    render(
+      <SuggestionItem
+        suggestion={defaultSuggestion}
+        isActive={false}
+        isKeyboardNav={false}
+        searchQuery="UD"
+        onClick={mockOnClick}
+        onMouseEnter={mockOnMouseEnter}
+      />,
+    );
+
+    // Check that the highlighted portion exists in abbrev
+    const highlightedElement = screen.getByText("UD");
+    expect(highlightedElement).toHaveClass("font-bold");
+    expect(highlightedElement).toHaveClass("underline");
   });
 });

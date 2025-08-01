@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { highlightText } from "../../utils/highlightText";
 
 interface SuggestionItemProps {
   suggestion: {
@@ -8,6 +9,7 @@ interface SuggestionItemProps {
   };
   isActive: boolean;
   isKeyboardNav: boolean;
+  searchQuery: string;
   onClick: () => void;
   onMouseEnter: () => void;
 }
@@ -16,6 +18,7 @@ export const SuggestionItem = memo(function SuggestionItem({
   suggestion,
   isActive,
   isKeyboardNav,
+  searchQuery,
   onClick,
   onMouseEnter,
 }: SuggestionItemProps) {
@@ -33,9 +36,11 @@ export const SuggestionItem = memo(function SuggestionItem({
       role="option"
       aria-selected={isActive}
     >
-      <span className="text-sm leading-5 text-ui-gray-600 flex-1 truncate">{suggestion.name}</span>
+      <span className="text-sm leading-5 text-ui-gray-600 flex-1 truncate">
+        {highlightText(suggestion.name, searchQuery)}
+      </span>
       <span className="text-sm leading-5 text-ui-gray-500 ml-2">
-        {suggestion.abbrev}
+        {highlightText(suggestion.abbrev, searchQuery)}
       </span>
     </li>
   );

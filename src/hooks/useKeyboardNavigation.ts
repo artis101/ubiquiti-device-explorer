@@ -67,7 +67,7 @@ export function useKeyboardNavigation({
           break;
       }
     },
-    [isOpen, itemCount, activeIndex, onSelect, onClose]
+    [isOpen, itemCount, activeIndex, onSelect, onClose],
   );
 
   const handleMouseEnter = useCallback((index: number) => {

@@ -33,7 +33,7 @@ describe("useClickOutside", () => {
     // Click outside
     const outsideElement = document.createElement("div");
     container.appendChild(outsideElement);
-    
+
     const mouseEvent = new MouseEvent("mousedown", { bubbles: true });
     outsideElement.dispatchEvent(mouseEvent);
 
@@ -74,7 +74,7 @@ describe("useClickOutside", () => {
     // Click outside
     const outsideElement = document.createElement("div");
     container.appendChild(outsideElement);
-    
+
     const mouseEvent = new MouseEvent("mousedown", { bubbles: true });
     outsideElement.dispatchEvent(mouseEvent);
 
@@ -97,7 +97,7 @@ describe("useClickOutside", () => {
 
   it("should clean up event listener on unmount", () => {
     const removeEventListenerSpy = vi.spyOn(document, "removeEventListener");
-    
+
     const { unmount } = renderHook(() => {
       const ref = useRef<HTMLDivElement>(null);
       useClickOutside(ref, mockCallback, true);
@@ -106,7 +106,10 @@ describe("useClickOutside", () => {
 
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith("mousedown", expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      "mousedown",
+      expect.any(Function),
+    );
     removeEventListenerSpy.mockRestore();
   });
 });

@@ -18,7 +18,7 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     expect(screen.getByPlaceholderText("Search")).toBeInTheDocument();
@@ -32,10 +32,12 @@ describe("SearchInput", () => {
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
         placeholder="Custom placeholder"
-      />
+      />,
     );
 
-    expect(screen.getByPlaceholderText("Custom placeholder")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Custom placeholder"),
+    ).toBeInTheDocument();
   });
 
   it("displays the provided value", () => {
@@ -45,7 +47,7 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     expect(screen.getByDisplayValue("test query")).toBeInTheDocument();
@@ -58,11 +60,11 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     const input = screen.getByRole("combobox") as HTMLInputElement;
-    
+
     // Use userEvent for more realistic typing simulation
     fireEvent.change(input, { target: { value: "new text" } });
 
@@ -77,15 +79,17 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     const input = screen.getByRole("combobox");
     fireEvent.keyDown(input, { key: "Enter" });
 
-    expect(mockOnKeyDown).toHaveBeenCalledWith(expect.objectContaining({
-      key: "Enter"
-    }));
+    expect(mockOnKeyDown).toHaveBeenCalledWith(
+      expect.objectContaining({
+        key: "Enter",
+      }),
+    );
   });
 
   it("calls onFocus when focused", () => {
@@ -95,7 +99,7 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     const input = screen.getByRole("combobox");
@@ -111,12 +115,12 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
-    const searchIcon = document.querySelector('svg');
+    const searchIcon = document.querySelector("svg");
     expect(searchIcon).toBeInTheDocument();
-    expect(searchIcon).toHaveClass('lucide-search');
+    expect(searchIcon).toHaveClass("lucide-search");
   });
 
   it("sets correct ARIA attributes", () => {
@@ -129,7 +133,7 @@ describe("SearchInput", () => {
         aria-expanded={true}
         aria-controls="autocomplete-list"
         aria-autocomplete="list"
-      />
+      />,
     );
 
     const input = screen.getByRole("combobox");
@@ -145,7 +149,7 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     const input = screen.getByRole("combobox");
@@ -161,7 +165,7 @@ describe("SearchInput", () => {
         onChange={mockOnChange}
         onKeyDown={mockOnKeyDown}
         onFocus={mockOnFocus}
-      />
+      />,
     );
 
     expect(ref.current).toBeInstanceOf(HTMLInputElement);

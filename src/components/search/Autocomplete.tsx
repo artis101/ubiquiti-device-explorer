@@ -37,7 +37,7 @@ export function Autocomplete({
         handleClose();
       }
     },
-    [suggestions, onDeviceSelect, onSearchChange, handleClose]
+    [suggestions, onDeviceSelect, onSearchChange, handleClose],
   );
 
   const {
@@ -61,7 +61,7 @@ export function Autocomplete({
       setIsOpen(true);
       resetActiveIndex();
     },
-    [onSearchChange, resetActiveIndex]
+    [onSearchChange, resetActiveIndex],
   );
 
   const handleInputFocus = useCallback(() => {
@@ -79,7 +79,7 @@ export function Autocomplete({
       }
       handleClose();
     },
-    [onDeviceSelect, onSearchChange, handleClose]
+    [onDeviceSelect, onSearchChange, handleClose],
   );
 
   // Close dropdown when suggestions become empty
@@ -103,13 +103,14 @@ export function Autocomplete({
         aria-controls={dropdownId}
         aria-autocomplete="list"
       />
-      
+
       {isOpen && (
         <div id={dropdownId}>
           <SuggestionsList
             suggestions={suggestions}
             activeIndex={activeIndex}
             isKeyboardNav={isKeyboardNav}
+            searchQuery={searchQuery}
             onSuggestionClick={handleSuggestionClick}
             onMouseEnter={handleMouseEnter}
           />
