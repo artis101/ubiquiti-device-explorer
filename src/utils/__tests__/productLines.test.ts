@@ -41,6 +41,7 @@ describe("getProductLines", () => {
     ];
     expect(getProductLines(devices as NormalizedDevice[])).toEqual([
       { id: "line1", name: "Product Line 1" },
+      { id: "line3", name: "Product Line 3" },
     ]);
   });
 
