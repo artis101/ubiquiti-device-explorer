@@ -1,13 +1,14 @@
 import {
-  SearchInput,
   SearchResultsCount,
   ViewModeSwitcher,
   FilterButton,
 } from "./controls";
 import { useUrlState } from "@hooks/useUrlState";
 import { useUidbData } from "@hooks/useUidbData";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "@hooks/useDebounce";
+import Fuse from "fuse.js";
+import { Autocomplete } from "./Autocomplete";
 
 export function SearchAndFilters() {
   const {
@@ -17,9 +18,27 @@ export function SearchAndFilters() {
     selectedProductLines,
     updateState,
   } = useUrlState();
-  const { devicesForProductLineFilter } = useUidbData();
+  const { devices, devicesForProductLineFilter } = useUidbData();
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
   const debouncedSearchQuery = useDebounce(localSearchQuery, 300);
+
+  const fuse = useMemo(() => {
+    return new Fuse(devices, {
+      keys: ["product.name"],
+      threshold: 0.3,
+    });
+  }, [devices]);
+
+  const suggestions = useMemo(() => {
+    if (!localSearchQuery) {
+      return [];
+    }
+    return fuse.search(localSearchQuery).map((result) => ({
+      id: result.item.id,
+      name: result.item.product.name,
+      abbrev: result.item.product.abbrev,
+    })).slice(0, 5);
+  }, [localSearchQuery, fuse]);
 
   useEffect(() => {
     if (debouncedSearchQuery !== searchQuery) {
@@ -34,6 +53,10 @@ export function SearchAndFilters() {
   const handleSearchChange = useCallback((query: string) => {
     setLocalSearchQuery(query);
   }, []);
+
+  const handleDeviceSelect = useCallback((deviceId: string) => {
+    updateState({ select: deviceId });
+  }, [updateState]);
 
   const handleViewModeChange = useCallback(
     (mode: "list" | "grid") => {
@@ -55,9 +78,11 @@ export function SearchAndFilters() {
         <div className="flex items-center justify-between py-4 gap-4">
           {/* Left Side - Search and Device Count */}
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <SearchInput
+            <Autocomplete
               searchQuery={localSearchQuery}
               onSearchChange={handleSearchChange}
+              onDeviceSelect={handleDeviceSelect}
+              suggestions={suggestions}
             />
             <SearchResultsCount
               searchQuery={searchQuery}
