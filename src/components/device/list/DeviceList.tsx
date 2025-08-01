@@ -25,7 +25,7 @@ export function DeviceList({ height, isInteractive }: DeviceListProps) {
   useEffect(() => {
     if (selectedDeviceId && filteredDevices.length > 0) {
       const selectedIndex = filteredDevices.findIndex(
-        (device) => device.id === selectedDeviceId,
+        (device) => device.id === selectedDeviceId
       );
 
       if (selectedIndex !== -1) {
@@ -49,11 +49,20 @@ export function DeviceList({ height, isInteractive }: DeviceListProps) {
     }
   }, [selectedDeviceId, filteredDevices, viewMode, windowWidth]);
 
+  // Scroll to top when search query or filters change
+  useEffect(() => {
+    if (viewMode === "grid" && gridRef.current) {
+      gridRef.current.scrollTo({ scrollTop: 0 });
+    } else if (viewMode === "list" && listRef.current) {
+      listRef.current.scrollTo(0);
+    }
+  }, [filteredDevices, viewMode]); // Dependency on filteredDevices ensures this runs when search/filters change
+
   const handleDeviceSelect = useCallback(
     (device: NormalizedDevice) => {
       updateState({ select: device.id });
     },
-    [updateState],
+    [updateState]
   );
 
   if (filteredDevices.length === 0) {
