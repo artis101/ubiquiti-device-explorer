@@ -28,7 +28,7 @@ describe("useClickOutside", () => {
     // Create and attach element
     const element = document.createElement("div");
     container.appendChild(element);
-    (result.current as any).current = element;
+    result.current.current = element;
 
     // Click outside
     const outsideElement = document.createElement("div");
@@ -50,7 +50,7 @@ describe("useClickOutside", () => {
     // Create and attach element
     const element = document.createElement("div");
     container.appendChild(element);
-    (result.current as any).current = element;
+    result.current.current = element;
 
     // Click inside
     const mouseEvent = new MouseEvent("mousedown", { bubbles: true });
@@ -69,7 +69,7 @@ describe("useClickOutside", () => {
     // Create and attach element
     const element = document.createElement("div");
     container.appendChild(element);
-    (result.current as any).current = element;
+    result.current.current = element;
 
     // Click outside
     const outsideElement = document.createElement("div");

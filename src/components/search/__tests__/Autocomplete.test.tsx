@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Autocomplete } from "../Autocomplete";
-import { vi } from "vitest";
+import { vi, type Mock } from "vitest";
 
 // Mock the custom hooks
 vi.mock("@hooks/useClickOutside");
@@ -34,7 +34,7 @@ describe("Autocomplete", () => {
         searchQuery="test"
         onSearchChange={mockOnSearchChange}
         suggestions={[]}
-      />,
+      />
     );
 
     expect(screen.getByDisplayValue("test")).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("Autocomplete", () => {
         searchQuery=""
         onSearchChange={mockOnSearchChange}
         suggestions={[]}
-      />,
+      />
     );
 
     // Type in the input
@@ -61,15 +61,19 @@ describe("Autocomplete", () => {
         searchQuery="dream"
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     // Focus the input to open dropdown
     fireEvent.focus(input);
 
     // Suggestions should be visible - use text content matcher for highlighted text
-    expect(screen.getByRole("option", { name: /Dream Router/i })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: /Dream Machine/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: /Dream Router/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: /Dream Machine/i })
+    ).toBeInTheDocument();
   });
 
   it("opens dropdown on focus when query and suggestions exist", () => {
@@ -78,13 +82,15 @@ describe("Autocomplete", () => {
         searchQuery="dream"
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     const input = screen.getByRole("combobox");
     fireEvent.focus(input);
 
-    expect(screen.getByRole("option", { name: /Dream Router/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: /Dream Router/i })
+    ).toBeInTheDocument();
   });
 
   it("does not open dropdown on focus when query is empty", () => {
@@ -93,13 +99,15 @@ describe("Autocomplete", () => {
         searchQuery=""
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     const input = screen.getByRole("combobox");
     fireEvent.focus(input);
 
-    expect(screen.queryByRole("option", { name: /Dream Router/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("option", { name: /Dream Router/i })
+    ).not.toBeInTheDocument();
   });
 
   it("closes dropdown when suggestions become empty", () => {
@@ -108,14 +116,16 @@ describe("Autocomplete", () => {
         searchQuery="dream"
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     // Open dropdown
     const input = screen.getByRole("combobox");
     fireEvent.focus(input);
 
-    expect(screen.getByRole("option", { name: /Dream Router/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: /Dream Router/i })
+    ).toBeInTheDocument();
 
     // Re-render with no suggestions
     rerender(
@@ -123,10 +133,12 @@ describe("Autocomplete", () => {
         searchQuery="xyz"
         onSearchChange={mockOnSearchChange}
         suggestions={[]}
-      />,
+      />
     );
 
-    expect(screen.queryByRole("option", { name: /Dream Router/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("option", { name: /Dream Router/i })
+    ).not.toBeInTheDocument();
   });
 
   it("calls onDeviceSelect when suggestion is clicked", () => {
@@ -136,7 +148,7 @@ describe("Autocomplete", () => {
         onSearchChange={mockOnSearchChange}
         onDeviceSelect={mockOnDeviceSelect}
         suggestions={suggestions}
-      />,
+      />
     );
 
     // Open dropdown
@@ -156,7 +168,7 @@ describe("Autocomplete", () => {
         searchQuery="dream"
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     // Open dropdown
@@ -175,7 +187,7 @@ describe("Autocomplete", () => {
         searchQuery=""
         onSearchChange={mockOnSearchChange}
         suggestions={[]}
-      />,
+      />
     );
 
     const input = screen.getByRole("combobox");
@@ -191,7 +203,7 @@ describe("Autocomplete", () => {
         searchQuery="dream"
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     fireEvent.focus(input);
@@ -205,7 +217,7 @@ describe("Autocomplete", () => {
         searchQuery="dream"
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     const input = screen.getByRole("combobox");
@@ -221,7 +233,7 @@ describe("Autocomplete", () => {
     );
     const mockHandleKeyDown = vi.fn();
 
-    (useKeyboardNavigation as any).mockReturnValue({
+    (useKeyboardNavigation as Mock).mockReturnValue({
       activeIndex: 1,
       isKeyboardNav: true,
       handleKeyDown: mockHandleKeyDown,
@@ -235,7 +247,7 @@ describe("Autocomplete", () => {
         onSearchChange={mockOnSearchChange}
         onDeviceSelect={mockOnDeviceSelect}
         suggestions={suggestions}
-      />,
+      />
     );
 
     const input = screen.getByRole("combobox");
@@ -251,7 +263,7 @@ describe("Autocomplete", () => {
     );
     const mockResetActiveIndex = vi.fn();
 
-    (useKeyboardNavigation as any).mockReturnValue({
+    (useKeyboardNavigation as Mock).mockReturnValue({
       activeIndex: -1,
       isKeyboardNav: false,
       handleKeyDown: vi.fn(),
@@ -264,7 +276,7 @@ describe("Autocomplete", () => {
         searchQuery=""
         onSearchChange={mockOnSearchChange}
         suggestions={suggestions}
-      />,
+      />
     );
 
     const input = screen.getByRole("combobox");
@@ -278,7 +290,7 @@ describe("Autocomplete", () => {
       "@hooks/useKeyboardNavigation"
     );
 
-    (useKeyboardNavigation as any).mockImplementation(() => ({
+    (useKeyboardNavigation as Mock).mockImplementation(() => ({
       activeIndex: 1,
       isKeyboardNav: true,
       handleKeyDown: vi.fn(),
@@ -292,11 +304,11 @@ describe("Autocomplete", () => {
         onSearchChange={mockOnSearchChange}
         onDeviceSelect={mockOnDeviceSelect}
         suggestions={suggestions}
-      />,
+      />
     );
 
     // Get the onSelect callback that was passed to useKeyboardNavigation
-    const onSelectCallback = (useKeyboardNavigation as any).mock.calls[0][0]
+    const onSelectCallback = (useKeyboardNavigation as Mock).mock.calls[0][0]
       .onSelect;
 
     // Simulate selection
@@ -311,7 +323,7 @@ describe("Autocomplete", () => {
         searchQuery=""
         onSearchChange={mockOnSearchChange}
         suggestions={[]}
-      />,
+      />
     );
 
     const container = screen

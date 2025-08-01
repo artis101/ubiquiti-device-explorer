@@ -27,14 +27,14 @@ describe("useKeyboardNavigation", () => {
 
       const event = new KeyboardEvent("keydown", { key: "ArrowDown" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(0);
       expect(result.current.isKeyboardNav).toBe(true);
 
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(1);
@@ -45,13 +45,13 @@ describe("useKeyboardNavigation", () => {
 
       const event = new KeyboardEvent("keydown", { key: "ArrowUp" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(2); // Wraps to last item
 
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(1);
@@ -63,16 +63,16 @@ describe("useKeyboardNavigation", () => {
       // Navigate to last item
       const downEvent = new KeyboardEvent("keydown", { key: "ArrowDown" });
       act(() => {
-        result.current.handleKeyDown(downEvent as any); // -1 -> 0
-        result.current.handleKeyDown(downEvent as any); // 0 -> 1
-        result.current.handleKeyDown(downEvent as any); // 1 -> 2
+        result.current.handleKeyDown(downEvent as unknown as React.KeyboardEvent<HTMLInputElement>); // -1 -> 0
+        result.current.handleKeyDown(downEvent as unknown as React.KeyboardEvent<HTMLInputElement>); // 0 -> 1
+        result.current.handleKeyDown(downEvent as unknown as React.KeyboardEvent<HTMLInputElement>); // 1 -> 2
       });
 
       expect(result.current.activeIndex).toBe(2); // At last item
 
       // Navigate down once more to wrap to first
       act(() => {
-        result.current.handleKeyDown(downEvent as any); // 2 -> 0
+        result.current.handleKeyDown(downEvent as unknown as React.KeyboardEvent<HTMLInputElement>); // 2 -> 0
       });
 
       expect(result.current.activeIndex).toBe(0); // Wrapped to first
@@ -80,7 +80,7 @@ describe("useKeyboardNavigation", () => {
       // Navigate up from first to wrap to last
       const upEvent = new KeyboardEvent("keydown", { key: "ArrowUp" });
       act(() => {
-        result.current.handleKeyDown(upEvent as any); // 0 -> 2
+        result.current.handleKeyDown(upEvent as unknown as React.KeyboardEvent<HTMLInputElement>); // 0 -> 2
       });
 
       expect(result.current.activeIndex).toBe(2); // Wrapped to last
@@ -93,7 +93,7 @@ describe("useKeyboardNavigation", () => {
 
       const event = new KeyboardEvent("keydown", { key: "Tab" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(0);
@@ -108,7 +108,7 @@ describe("useKeyboardNavigation", () => {
         shiftKey: true,
       });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(2); // Wraps to last item
@@ -119,7 +119,7 @@ describe("useKeyboardNavigation", () => {
 
       const event = new KeyboardEvent("keydown", { key: "Tab" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -134,13 +134,13 @@ describe("useKeyboardNavigation", () => {
       // Navigate to first item
       const downEvent = new KeyboardEvent("keydown", { key: "ArrowDown" });
       act(() => {
-        result.current.handleKeyDown(downEvent as any);
+        result.current.handleKeyDown(downEvent as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       // Press Enter
       const enterEvent = new KeyboardEvent("keydown", { key: "Enter" });
       act(() => {
-        result.current.handleKeyDown(enterEvent as any);
+        result.current.handleKeyDown(enterEvent as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(mockOnSelect).toHaveBeenCalledWith(0);
@@ -151,7 +151,7 @@ describe("useKeyboardNavigation", () => {
 
       const event = new KeyboardEvent("keydown", { key: "Enter" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(mockOnSelect).not.toHaveBeenCalled();
@@ -165,7 +165,7 @@ describe("useKeyboardNavigation", () => {
       // Navigate to an item first
       const downEvent = new KeyboardEvent("keydown", { key: "ArrowDown" });
       act(() => {
-        result.current.handleKeyDown(downEvent as any);
+        result.current.handleKeyDown(downEvent as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(0);
@@ -173,7 +173,7 @@ describe("useKeyboardNavigation", () => {
       // Press Escape
       const escapeEvent = new KeyboardEvent("keydown", { key: "Escape" });
       act(() => {
-        result.current.handleKeyDown(escapeEvent as any);
+        result.current.handleKeyDown(escapeEvent as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -188,7 +188,7 @@ describe("useKeyboardNavigation", () => {
       // First enable keyboard nav
       const event = new KeyboardEvent("keydown", { key: "ArrowDown" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.isKeyboardNav).toBe(true);
@@ -210,7 +210,7 @@ describe("useKeyboardNavigation", () => {
       // Set some state
       const event = new KeyboardEvent("keydown", { key: "ArrowDown" });
       act(() => {
-        result.current.handleKeyDown(event as any);
+        result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
       });
 
       expect(result.current.activeIndex).toBe(0);
@@ -231,7 +231,7 @@ describe("useKeyboardNavigation", () => {
 
     const event = new KeyboardEvent("keydown", { key: "ArrowUp" });
     act(() => {
-      result.current.handleKeyDown(event as any);
+      result.current.handleKeyDown(event as unknown as React.KeyboardEvent<HTMLInputElement>);
     });
 
     expect(result.current.activeIndex).toBe(-1);
