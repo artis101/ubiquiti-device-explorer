@@ -67,9 +67,9 @@ describe("Autocomplete", () => {
     // Focus the input to open dropdown
     fireEvent.focus(input);
 
-    // Suggestions should be visible
-    expect(screen.getByText("Dream Router")).toBeInTheDocument();
-    expect(screen.getByText("Dream Machine")).toBeInTheDocument();
+    // Suggestions should be visible - use text content matcher for highlighted text
+    expect(screen.getByRole("option", { name: /Dream Router/i })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: /Dream Machine/i })).toBeInTheDocument();
   });
 
   it("opens dropdown on focus when query and suggestions exist", () => {
@@ -84,7 +84,7 @@ describe("Autocomplete", () => {
     const input = screen.getByRole("combobox");
     fireEvent.focus(input);
 
-    expect(screen.getByText("Dream Router")).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: /Dream Router/i })).toBeInTheDocument();
   });
 
   it("does not open dropdown on focus when query is empty", () => {
@@ -99,7 +99,7 @@ describe("Autocomplete", () => {
     const input = screen.getByRole("combobox");
     fireEvent.focus(input);
 
-    expect(screen.queryByText("Dream Router")).not.toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: /Dream Router/i })).not.toBeInTheDocument();
   });
 
   it("closes dropdown when suggestions become empty", () => {
@@ -115,7 +115,7 @@ describe("Autocomplete", () => {
     const input = screen.getByRole("combobox");
     fireEvent.focus(input);
 
-    expect(screen.getByText("Dream Router")).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: /Dream Router/i })).toBeInTheDocument();
 
     // Re-render with no suggestions
     rerender(
@@ -126,7 +126,7 @@ describe("Autocomplete", () => {
       />,
     );
 
-    expect(screen.queryByText("Dream Router")).not.toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: /Dream Router/i })).not.toBeInTheDocument();
   });
 
   it("calls onDeviceSelect when suggestion is clicked", () => {
@@ -144,7 +144,7 @@ describe("Autocomplete", () => {
     fireEvent.focus(input);
 
     // Click suggestion
-    fireEvent.click(screen.getByText("Dream Machine"));
+    fireEvent.click(screen.getByRole("option", { name: /Dream Machine/i }));
 
     expect(mockOnDeviceSelect).toHaveBeenCalledWith("2");
     expect(mockOnSearchChange).not.toHaveBeenCalled();
@@ -164,7 +164,7 @@ describe("Autocomplete", () => {
     fireEvent.focus(input);
 
     // Click suggestion
-    fireEvent.click(screen.getByText("Dream Machine"));
+    fireEvent.click(screen.getByRole("option", { name: /Dream Machine/i }));
 
     expect(mockOnSearchChange).toHaveBeenCalledWith("Dream Machine");
   });
