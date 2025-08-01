@@ -7,7 +7,7 @@ interface SearchInputProps {
 
 export function SearchInput({ searchQuery, onSearchChange }: SearchInputProps) {
   return (
-    <div className="w-80">
+    <div className="w-full sm:w-80">
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
           <Search className="h-4 w-4 text-[rgba(0,0,0,0.45)]" />

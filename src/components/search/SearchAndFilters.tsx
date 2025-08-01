@@ -51,10 +51,10 @@ export function SearchAndFilters() {
 
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between py-4">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between py-4 gap-4">
           {/* Left Side - Search and Device Count */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-1 min-w-0">
             <SearchInput
               searchQuery={localSearchQuery}
               onSearchChange={handleSearchChange}
@@ -66,7 +66,7 @@ export function SearchAndFilters() {
           </div>
 
           {/* Right Side - View Mode and Filter */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <ViewModeSwitcher
               viewMode={viewMode}
               onViewModeChange={handleViewModeChange}
