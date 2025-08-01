@@ -40,10 +40,10 @@ The test plan follows the Testing Pyramid model with:
   - Test `ViewModeSwitcher` correctly changes the view. ✅
   - Test `DeviceDetails` page aggregation. ✅
 
-- [ ] **Create End-to-End Tests with Playwright**
-  - Set up Playwright framework.
-  - Scenario 1: Search → View Device Details
-  - Scenario 2: Filter → Change View Mode
+- [x] **Create End-to-End Tests with Playwright** ✅
+  - Set up Playwright framework. ✅
+  - Basic functionality tests implemented (6 tests)
+  - Tests cover: header, search, filter, view modes, and search results
 
 ### Medium Priority (Quality Enhancements)
 - [ ] **Add Accessibility Testing with axe-core**
@@ -93,13 +93,19 @@ The test plan follows the Testing Pyramid model with:
    - `DeviceDetails.test.tsx` - 6 tests for device details display
 
 3. **Test Coverage Statistics**
-   - Total test files: 19 (up from 16)
-   - Total tests: 144 (up from 125)
+   - Total test files: 20 (includes 1 E2E test file)
+   - Total tests: 150 (144 unit/integration + 6 E2E)
    - All tests passing ✅
 
+4. **E2E Testing with Playwright**
+   - Installed and configured Playwright
+   - Created `playwright.config.ts` with Chrome, Firefox, and Safari support
+   - Implemented 6 basic functionality E2E tests in `e2e/basic-functionality.spec.ts`
+   - Tests verify: header display, search functionality, filter controls, view mode switching
+
 ## Next Session Actions
-1. Set up Playwright for E2E testing.
-2. Implement accessibility testing framework.
+1. Add more comprehensive E2E test scenarios (Search → View Device Details, Filter → Change View Mode).
+2. Implement accessibility testing framework with axe-core.
 3. Add coverage reporting and quality gates.
 4. Add performance testing for large datasets.
 
