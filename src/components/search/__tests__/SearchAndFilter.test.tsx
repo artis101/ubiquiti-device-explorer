@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { mockDevices } from "@mocks";
+import { mockDevices } from "@mocks/devices";
 import UidbProvider from "@contexts/UidbProvider";
 import { DeviceList } from "@components/device/list/DeviceList";
 import { SearchInput } from "../controls";
@@ -23,10 +23,7 @@ vi.mock("@hooks/useUidb", () => ({
 describe("Search and Filter Integration", () => {
   it("should filter the device list when a search query is entered", () => {
     const { rerender } = render(
-      <UidbProvider
-        searchQuery=""
-        selectedProductLines={[]}
-      >
+      <UidbProvider searchQuery="" selectedProductLines={[]}>
         <SearchInput searchQuery="" onSearchChange={vi.fn()} />
         <DeviceList height={500} isInteractive={true} />
       </UidbProvider>
@@ -39,10 +36,7 @@ describe("Search and Filter Integration", () => {
 
     // Rerender with search query
     rerender(
-      <UidbProvider
-        searchQuery="Router"
-        selectedProductLines={[]}
-      >
+      <UidbProvider searchQuery="Router" selectedProductLines={[]}>
         <SearchInput searchQuery="Router" onSearchChange={vi.fn()} />
         <DeviceList height={500} isInteractive={true} />
       </UidbProvider>
@@ -54,13 +48,17 @@ describe("Search and Filter Integration", () => {
       return element?.textContent === "Router X2000";
     });
     expect(routerElements.length).toBeGreaterThan(0);
-    
+
     // Other devices should not be visible
-    expect(screen.queryByText((content, element) => {
-      return element?.textContent === "Switch Pro 48";
-    })).toBeFalsy();
-    expect(screen.queryByText((content, element) => {
-      return element?.textContent === "Firewall Guardian";
-    })).toBeFalsy();
+    expect(
+      screen.queryByText((content, element) => {
+        return element?.textContent === "Switch Pro 48";
+      })
+    ).toBeFalsy();
+    expect(
+      screen.queryByText((content, element) => {
+        return element?.textContent === "Firewall Guardian";
+      })
+    ).toBeFalsy();
   });
 });
