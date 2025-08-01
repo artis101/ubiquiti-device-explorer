@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { normalizeDevices, parseUidbResponse, buildImageUrl, getProductLines } from '@utils/uidb';
-import type { Device, NormalizedDevice } from '@types/uidb';
+import type { Device, NormalizedDevice } from 'types/uidb';
 
 describe('UIDB Utilities', () => {
   describe('parseUidbResponse', () => {

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { SearchAndFilters } from '../SearchAndFilters';
 import { useUrlState } from '@hooks/useUrlState';
 import { useUidbData } from '@hooks/useUidbData';
@@ -10,8 +10,8 @@ vi.mock('@hooks/useUidbData');
 
 describe('SearchAndFilters', () => {
   const mockUpdateState = vi.fn();
-  const mockUseUrlState = useUrlState as vi.Mock;
-  const mockUseUidbData = useUidbData as vi.Mock;
+  const mockUseUrlState = useUrlState as Mock;
+  const mockUseUidbData = useUidbData as Mock;
 
   beforeEach(() => {
     vi.clearAllMocks();

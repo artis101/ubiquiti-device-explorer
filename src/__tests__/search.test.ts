@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { searchDevices, filterByLine, filterByProductLines } from '@utils/search';
-import type { NormalizedDevice } from '@types/uidb';
+import type { NormalizedDevice } from 'types/uidb';
 
 const mockDevices: NormalizedDevice[] = [
   {

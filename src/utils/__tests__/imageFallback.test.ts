@@ -32,35 +32,41 @@ describe('imageFallback', () => {
 
   describe('handleImageError', () => {
     it('should set the target src to a fallback SVG', () => {
+      const target = { src: 'original.png' } as HTMLImageElement;
       const event = {
-        target: { src: 'original.png' },
-      } as React.SyntheticEvent<HTMLImageElement>;
+        target,
+        currentTarget: target,
+      } as unknown as React.SyntheticEvent<HTMLImageElement>;
       const options = { deviceName: 'Test', size: 50 };
       const fallbackSrc = generateFallbackSvg(options);
 
       handleImageError(event, options);
 
-      expect(event.target.src).toBe(fallbackSrc);
+      expect(target.src).toBe(fallbackSrc);
     });
 
     it('should not change the src if it is already a fallback', () => {
       const fallbackSrc = 'data:image/svg+xml;base64,somefakesvg';
+      const target = { src: fallbackSrc } as HTMLImageElement;
       const event = {
-        target: { src: fallbackSrc },
-      } as React.SyntheticEvent<HTMLImageElement>;
+        target,
+        currentTarget: target,
+      } as unknown as React.SyntheticEvent<HTMLImageElement>;
       const options = { deviceName: 'Test', size: 50 };
 
       handleImageError(event, options);
 
-      expect(event.target.src).toBe(fallbackSrc);
+      expect(target.src).toBe(fallbackSrc);
     });
 
     it('should hide the image if SVG generation fails', () => {
+      const target = { src: 'original.png', style: { display: 'block' } } as HTMLImageElement;
       const event = {
-        target: { src: 'original.png', style: { display: 'block' } },
-      } as React.SyntheticEvent<HTMLImageElement>;
+        target,
+        currentTarget: target,
+      } as unknown as React.SyntheticEvent<HTMLImageElement>;
       // Trigger an internal error by passing invalid options
-      const invalidOptions = { deviceName: null, size: -1 } as { deviceName: string | null; size: number };
+      const invalidOptions = { deviceName: '', size: -1 };
       const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       // Mock btoa to throw an error
@@ -68,7 +74,7 @@ describe('imageFallback', () => {
 
       handleImageError(event, invalidOptions);
 
-      expect((event.target as HTMLImageElement).style.display).toBe('none');
+      expect(target.style.display).toBe('none');
       expect(consoleWarnSpy).toHaveBeenCalled();
 
       consoleWarnSpy.mockRestore();

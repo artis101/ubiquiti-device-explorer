@@ -7,6 +7,8 @@ import { describe, it, expect } from 'vitest';
 describe('useHighlightIndices', () => {
   const mockSearchHit: SearchHit = {
     id: '1',
+    displayName: 'Device A',
+    score: 0.9,
     matches: [
       { key: 'name', value: 'Device A', indices: [[0, 3]] },
       { key: 'line.name', value: 'Line 1', indices: [[0, 1]] },
@@ -21,7 +23,7 @@ describe('useHighlightIndices', () => {
   });
 
   it('should return undefined if there are no matches', () => {
-    const noMatchesHit: SearchHit = { id: '1', matches: [] };
+    const noMatchesHit: SearchHit = { id: '1', displayName: 'Device', score: 1.0, matches: [] };
     const { result } = renderHook(() => useHighlightIndices(noMatchesHit, 'name'));
     expect(result.current).toBeUndefined();
   });
@@ -59,7 +61,7 @@ describe('useHighlightIndices', () => {
     const { result, rerender } = renderHook(
       ({ searchHit, key, value }) => useHighlightIndices(searchHit, key, value),
       {
-        initialProps: { searchHit: mockSearchHit, key: 'name', value: undefined },
+        initialProps: { searchHit: mockSearchHit, key: 'name', value: undefined as string | undefined },
       }
     );
 
@@ -70,6 +72,8 @@ describe('useHighlightIndices', () => {
 
     const newSearchHit: SearchHit = {
       id: '2',
+      displayName: 'New Device',
+      score: 0.8,
       matches: [{ key: 'name', value: 'New Device', indices: [[5, 8]] }],
     };
     rerender({ searchHit: newSearchHit, key: 'name', value: undefined });

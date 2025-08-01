@@ -51,7 +51,7 @@ const mockDevice: NormalizedDevice = {
 const mockUidbContext = {
   devices: [mockDevice],
   warnings: [],
-  connectionInfo: { status: 'api' as const, lastUpdated: new Date() },
+  connectionInfo: { status: 'live' as const, lastFetch: new Date(), dataSource: 'api' as const, isOnline: true },
   refetch: vi.fn(),
   filteredDevices: [mockDevice],
   searchHits: new Map(),

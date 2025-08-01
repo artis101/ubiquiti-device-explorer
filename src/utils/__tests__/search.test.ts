@@ -109,7 +109,7 @@ describe("searchDevices", () => {
       product: { name: "Product A" },
       shortnames: ["DA"],
       sysid: "SYS001",
-      triplets: { k1: "T1", k2: "T2", k3: "T3" },
+      triplets: [{ k1: "T1", k2: "T2", k3: "T3" }],
     },
     {
       id: "2",
@@ -119,7 +119,7 @@ describe("searchDevices", () => {
       product: { name: "Product B" },
       shortnames: ["DB"],
       sysid: "SYS002",
-      triplets: { k1: "T4", k2: "T5", k3: "T6" },
+      triplets: [{ k1: "T4", k2: "T5", k3: "T6" }],
     },
     {
       id: "3",
@@ -129,7 +129,7 @@ describe("searchDevices", () => {
       product: { name: "Product C" },
       shortnames: ["AD"],
       sysid: "SYS003",
-      triplets: { k1: "T7", k2: "T8", k3: "T9" },
+      triplets: [{ k1: "T7", k2: "T8", k3: "T9" }],
     },
   ];
 

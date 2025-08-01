@@ -32,7 +32,8 @@
       "@utils/*": ["src/utils/*"],
       "@mocks/*": ["src/mocks/*"],
       "types/*": ["src/types/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   },
   "include": ["src"]
 }

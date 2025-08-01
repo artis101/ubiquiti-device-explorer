@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import App from '../App';
 import { useHeaderHeight } from '@hooks/useHeaderHeight';
 import { useUidbData } from '@hooks/useUidbData';
@@ -15,8 +15,8 @@ vi.mock('@hooks/useUrlState');
 describe('App', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (useHeaderHeight as vi.Mock).mockReturnValue({ headerHeight: 0, headerRef: { current: null } });
-    (useUidbData as vi.Mock).mockReturnValue({ 
+    (useHeaderHeight as Mock).mockReturnValue({ headerHeight: 0, headerRef: { current: null } });
+    (useUidbData as Mock).mockReturnValue({ 
       warnings: [], 
       connectionInfo: { status: 'connected' },
       devices: [],
@@ -25,8 +25,8 @@ describe('App', () => {
       devicesForProductLineFilter: [],
       refetch: vi.fn()
     });
-    (useWindowDimensions as vi.Mock).mockReturnValue({ windowHeight: 768, windowWidth: 1024 });
-    (useUrlState as vi.Mock).mockReturnValue({ searchQuery: '', selectedLineId: undefined, viewMode: 'list', selectedProductLines: [], updateState: vi.fn() });
+    (useWindowDimensions as Mock).mockReturnValue({ windowHeight: 768, windowWidth: 1024 });
+    (useUrlState as Mock).mockReturnValue({ searchQuery: '', selectedLineId: undefined, viewMode: 'list', selectedProductLines: [], updateState: vi.fn() });
   });
 
   it('renders the AppHeader', () => {
@@ -40,7 +40,7 @@ describe('App', () => {
   });
 
   it('renders device details view when a device is selected', () => {
-    (useUrlState as vi.Mock).mockReturnValue({
+    (useUrlState as Mock).mockReturnValue({
       searchQuery: '',
       selectedLineId: undefined,
       viewMode: 'list',
@@ -50,7 +50,7 @@ describe('App', () => {
     });
     
     // Also need to mock useUidbData to return a device
-    (useUidbData as vi.Mock).mockReturnValue({ 
+    (useUidbData as Mock).mockReturnValue({ 
       warnings: [], 
       connectionInfo: { status: 'connected' },
       devices: [{ id: 'some-device-id', displayName: 'Test Device' }],

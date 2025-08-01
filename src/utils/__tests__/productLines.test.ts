@@ -37,7 +37,7 @@ describe("getProductLines", () => {
     const devices: Partial<NormalizedDevice>[] = [
       { id: "1", line: { id: "line1", name: "Product Line 1" } },
       { id: "2", line: { id: "line2" } },
-      { id: "3", line: { name: "Product Line 3" } },
+      { id: "3", line: { id: "line3", name: "Product Line 3" } },
     ];
     expect(getProductLines(devices as NormalizedDevice[])).toEqual([
       { id: "line1", name: "Product Line 1" },

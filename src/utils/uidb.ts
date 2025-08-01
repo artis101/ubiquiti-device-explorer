@@ -123,7 +123,7 @@ export function parseUidbResponse(data: unknown): {
     const parsed = UidbResponseSchema.parse(data);
     return {
       devices: parsed.devices.filter(
-        (device) => device && typeof device === "object" && device.id,
+        (device): device is Device => device !== null && device !== undefined && typeof device === "object" && 'id' in device && typeof device.id === 'string',
       ),
       warnings: [],
     };

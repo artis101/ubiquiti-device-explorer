@@ -53,7 +53,7 @@ describe("getPlaceholderImage", () => {
     const device: Partial<NormalizedDevice> = {
       id: "1",
       displayName: "Test Device",
-      line: { abbrev: "TD" },
+      line: { id: "line1", abbrev: "TD" },
     };
     const result = getPlaceholderImage(device as NormalizedDevice);
 
@@ -246,7 +246,7 @@ describe("getProductLines (from uidb.ts)", () => {
 
   it("should handle devices with missing line.id", () => {
     const devices: Partial<NormalizedDevice>[] = [
-      { id: "1", line: { name: "Product Line A" } },
+      { id: "1", line: { id: "", name: "Product Line A" } },
       { id: "2", line: { id: "line2", name: "Product Line B" } },
     ];
     const result = getProductLines(devices as NormalizedDevice[]);

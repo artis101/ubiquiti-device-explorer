@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { vi } from 'vitest';
+import { vi, describe, it, expect, beforeEach, type Mock } from 'vitest';
 import { CopyButton } from '../CopyButton';
 import { useCopyToClipboard } from '@hooks/useCopyToClipboard';
 
@@ -10,7 +10,7 @@ describe('CopyButton', () => {
   const mockCopy = vi.fn();
 
   beforeEach(() => {
-    (useCopyToClipboard as jest.Mock).mockReturnValue({
+    (useCopyToClipboard as Mock).mockReturnValue({
       copied: false,
       copy: mockCopy,
     });
@@ -29,7 +29,7 @@ describe('CopyButton', () => {
   });
 
   it('should display "Copied!" when the copied state is true', () => {
-    (useCopyToClipboard as jest.Mock).mockReturnValue({
+    (useCopyToClipboard as Mock).mockReturnValue({
       copied: true,
       copy: mockCopy,
     });

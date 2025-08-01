@@ -44,19 +44,19 @@ describe("Search and Filter Integration", () => {
 
     // Only Router X2000 should be visible (search term will be highlighted)
     // Check that Router is in the results
-    const routerElements = screen.getAllByText((content, element) => {
+    const routerElements = screen.getAllByText((_, element) => {
       return element?.textContent === "Router X2000";
     });
     expect(routerElements.length).toBeGreaterThan(0);
 
     // Other devices should not be visible
     expect(
-      screen.queryByText((content, element) => {
+      screen.queryByText((_, element) => {
         return element?.textContent === "Switch Pro 48";
       })
     ).toBeFalsy();
     expect(
-      screen.queryByText((content, element) => {
+      screen.queryByText((_, element) => {
         return element?.textContent === "Firewall Guardian";
       })
     ).toBeFalsy();
