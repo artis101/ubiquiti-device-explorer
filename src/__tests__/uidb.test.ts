@@ -63,11 +63,11 @@ describe('UIDB Utilities', () => {
 
     it('should collect warnings for invalid device objects and missing critical fields', () => {
       const devices: Device[] = [
-        null as any, // Invalid type - will be filtered out by normalizeDevices
-        undefined as any, // Invalid type - will be filtered out by normalizeDevices
-        {}, // Missing ID - will be filtered out by normalizeDevices
-        { id: 'd1' }, // Missing product name/shortnames/sku - will generate warning
-        { id: 'd2', product: { name: 'Device 2' }, images: {} }, // Missing image hashes - will generate warning
+        null as unknown as Device, // Invalid type - will be filtered out by normalizeDevices
+        undefined as unknown as Device, // Invalid type - will be filtered out by normalizeDevices
+        {} as Device, // Missing ID - will be filtered out by normalizeDevices
+        { id: 'd1' } as Device, // Missing product name/shortnames/sku - will generate warning
+        { id: 'd2', product: { name: 'Device 2' }, images: {} } as Device, // Missing image hashes - will generate warning
       ];
       const { normalized, warnings } = normalizeDevices(devices);
 

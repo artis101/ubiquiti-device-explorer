@@ -1,42 +1,42 @@
 import { describe, it, expect } from 'vitest';
 import { buildImageUrl, getPlaceholderImage, normalizeDevices, parseUidbResponse, getProductLines } from '../uidb';
-import { DeviceSchema, UidbResponseSchema } from '../../types/uidb';
+import type { Device, NormalizedDevice } from '@/types/uidb';
 
 describe('buildImageUrl', () => {
   it('should return undefined if no images are present', () => {
-    const device = { id: '1', images: {} };
-    expect(buildImageUrl(device as any)).toBeUndefined();
+    const device: Partial<Device> = { id: '1', images: {} };
+    expect(buildImageUrl(device as Device)).toBeUndefined();
   });
 
   it('should return the correct URL for default image', () => {
-    const device = { id: '1', images: { default: 'hash1' } };
+    const device: Partial<Device> = { id: '1', images: { default: 'hash1' } };
     const expectedUrl = 'https://images.svc.ui.com/?u=https%3A%2F%2Fstatic.ui.com%2Ffingerprint%2Fui%2Fimages%2F1%2Fdefault%2Fhash1.png&w=640&q=75';
-    expect(buildImageUrl(device as any)).toBe(expectedUrl);
+    expect(buildImageUrl(device as Device)).toBe(expectedUrl);
   });
 
   it('should prioritize image types correctly', () => {
-    const device = { id: '1', images: { nopadding: 'hash2', default: 'hash1' } };
+    const device: Partial<Device> = { id: '1', images: { nopadding: 'hash2', default: 'hash1' } };
     const expectedUrl = 'https://images.svc.ui.com/?u=https%3A%2F%2Fstatic.ui.com%2Ffingerprint%2Fui%2Fimages%2F1%2Fdefault%2Fhash1.png&w=640&q=75';
-    expect(buildImageUrl(device as any)).toBe(expectedUrl);
+    expect(buildImageUrl(device as Device)).toBe(expectedUrl);
   });
 
   it('should handle size parameter correctly', () => {
-    const device = { id: '1', images: { default: 'hash1' } };
+    const device: Partial<Device> = { id: '1', images: { default: 'hash1' } };
     const expectedUrl = 'https://images.svc.ui.com/?u=https%3A%2F%2Fstatic.ui.com%2Ffingerprint%2Fui%2Fimages%2F1%2Fdefault%2Fhash1.png&w=100&q=75';
-    expect(buildImageUrl(device as any, 100)).toBe(expectedUrl);
+    expect(buildImageUrl(device as Device, 100)).toBe(expectedUrl);
   });
 });
 
 describe('getPlaceholderImage', () => {
   it('should return a base64 encoded SVG', () => {
-    const device = { id: '1', displayName: 'Test Device' };
-    const result = getPlaceholderImage(device as any);
+    const device: Partial<NormalizedDevice> = { id: '1', displayName: 'Test Device' };
+    const result = getPlaceholderImage(device as NormalizedDevice);
     expect(result).toMatch(/^data:image\/svg\+xml;base64,/);
   });
 
   it('should use device.line.abbrev if available', () => {
-    const device = { id: '1', displayName: 'Test Device', line: { abbrev: 'TD' } };
-    const result = getPlaceholderImage(device as any);
+    const device: Partial<NormalizedDevice> = { id: '1', displayName: 'Test Device', line: { abbrev: 'TD' } };
+    const result = getPlaceholderImage(device as NormalizedDevice);
     
     // Should be a base64 encoded SVG
     expect(result).toMatch(/^data:image\/svg\+xml;base64,/);
@@ -51,8 +51,8 @@ describe('getPlaceholderImage', () => {
   });
 
   it('should use "UI" as fallback if device.line.abbrev is not available', () => {
-    const device = { id: '1', displayName: 'Test Device' };
-    const result = getPlaceholderImage(device as any);
+    const device: Partial<NormalizedDevice> = { id: '1', displayName: 'Test Device' };
+    const result = getPlaceholderImage(device as NormalizedDevice);
     
     // Should be a base64 encoded SVG
     expect(result).toMatch(/^data:image\/svg\+xml;base64,/);
@@ -69,10 +69,10 @@ describe('getPlaceholderImage', () => {
 
 describe('normalizeDevices', () => {
   it('should normalize devices correctly', () => {
-    const devices = [
+    const devices: Partial<Device>[] = [
       { id: '1', product: { name: 'Product A' }, images: { default: 'hash1' } },
     ];
-    const { normalized, warnings } = normalizeDevices(devices as any);
+    const { normalized, warnings } = normalizeDevices(devices as Device[]);
     expect(normalized.length).toBe(1);
     expect(normalized[0].displayName).toBe('Product A');
     expect(normalized[0].imageUrl).toBeDefined();
@@ -80,12 +80,12 @@ describe('normalizeDevices', () => {
   });
 
   it('should generate displayName correctly with fallback', () => {
-    const devices = [
+    const devices: Partial<Device>[] = [
       { id: '1', shortnames: ['SN1'], images: {} },
       { id: '2', sku: 'SKU1', images: {} },
       { id: '3', images: {} },
     ];
-    const { normalized } = normalizeDevices(devices as any);
+    const { normalized } = normalizeDevices(devices as Device[]);
     expect(normalized[0].displayName).toBe('SN1');
     expect(normalized[1].displayName).toBe('SKU1');
     expect(normalized[2].displayName).toBe('3');
@@ -93,7 +93,7 @@ describe('normalizeDevices', () => {
 
   it('should collect warnings for invalid or incomplete device objects', () => {
     const devices = [null, undefined, { id: '1' }, { product: { name: 'Product A' } }];
-    const { warnings } = normalizeDevices(devices as any);
+    const { warnings } = normalizeDevices(devices as Device[]);
     
     // Should have warnings for: null, undefined, missing id, plus additional warnings for missing fields
     expect(warnings.length).toBeGreaterThanOrEqual(3);
@@ -104,11 +104,11 @@ describe('normalizeDevices', () => {
   });
 
   it('should collect warnings for duplicate device IDs', () => {
-    const devices = [
+    const devices: Partial<Device>[] = [
       { id: '1', product: { name: 'Product A' } },
       { id: '1', product: { name: 'Product B' } },
     ];
-    const { normalized, warnings } = normalizeDevices(devices as any);
+    const { normalized, warnings } = normalizeDevices(devices as Device[]);
     expect(normalized.length).toBe(1);
     
     // Should have at least the duplicate ID warning, plus missing images warnings
@@ -120,8 +120,8 @@ describe('normalizeDevices', () => {
   });
 
   it('should collect warnings for missing product name and shortnames', () => {
-    const devices = [{ id: '1', images: {} }];
-    const { warnings } = normalizeDevices(devices as any);
+    const devices: Partial<Device>[] = [{ id: '1', images: {} }];
+    const { warnings } = normalizeDevices(devices as Device[]);
     
     // Should have warnings for both missing product name/shortnames AND missing images
     expect(warnings.length).toBe(2);
@@ -136,8 +136,8 @@ describe('normalizeDevices', () => {
   });
 
   it('should collect warnings for missing images', () => {
-    const devices = [{ id: '1', product: { name: 'Product A' } }];
-    const { warnings } = normalizeDevices(devices as any);
+    const devices: Partial<Device>[] = [{ id: '1', product: { name: 'Product A' } }];
+    const { warnings } = normalizeDevices(devices as Device[]);
     expect(warnings.length).toBe(1);
     expect(warnings[0].reason).toBe('Missing all image hashes');
   });
@@ -171,12 +171,12 @@ describe('parseUidbResponse', () => {
 
 describe('getProductLines (from uidb.ts)', () => {
   it('should return unique product lines', () => {
-    const devices = [
+    const devices: Partial<NormalizedDevice>[] = [
       { id: '1', line: { id: 'line1', name: 'Product Line A' } },
       { id: '2', line: { id: 'line2', name: 'Product Line B' } },
       { id: '3', line: { id: 'line1', name: 'Product Line A' } },
     ];
-    const result = getProductLines(devices as any);
+    const result = getProductLines(devices as NormalizedDevice[]);
     expect(result).toEqual([
       { id: 'line1', name: 'Product Line A' },
       { id: 'line2', name: 'Product Line B' },
@@ -184,11 +184,11 @@ describe('getProductLines (from uidb.ts)', () => {
   });
 
   it('should sort product lines by name', () => {
-    const devices = [
+    const devices: Partial<NormalizedDevice>[] = [
       { id: '1', line: { id: 'lineB', name: 'Product Line B' } },
       { id: '2', line: { id: 'lineA', name: 'Product Line A' } },
     ];
-    const result = getProductLines(devices as any);
+    const result = getProductLines(devices as NormalizedDevice[]);
     expect(result).toEqual([
       { id: 'lineA', name: 'Product Line A' },
       { id: 'lineB', name: 'Product Line B' },
@@ -196,11 +196,11 @@ describe('getProductLines (from uidb.ts)', () => {
   });
 
   it('should handle devices with missing line.name', () => {
-    const devices = [
+    const devices: Partial<NormalizedDevice>[] = [
       { id: '1', line: { id: 'line1' } },
       { id: '2', line: { id: 'line2', name: 'Product Line B' } },
     ];
-    const result = getProductLines(devices as any);
+    const result = getProductLines(devices as NormalizedDevice[]);
     expect(result).toEqual([
       { id: 'line1', name: 'line1' },
       { id: 'line2', name: 'Product Line B' },
@@ -208,11 +208,11 @@ describe('getProductLines (from uidb.ts)', () => {
   });
 
   it('should handle devices with missing line.id', () => {
-    const devices = [
+    const devices: Partial<NormalizedDevice>[] = [
       { id: '1', line: { name: 'Product Line A' } },
       { id: '2', line: { id: 'line2', name: 'Product Line B' } },
     ];
-    const result = getProductLines(devices as any);
+    const result = getProductLines(devices as NormalizedDevice[]);
     expect(result).toEqual([
       { id: 'line2', name: 'Product Line B' },
     ]);

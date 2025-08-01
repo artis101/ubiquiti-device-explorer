@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { FilterButton } from '../controls/FilterButton';
-import { ProductLineContext } from '@contexts/ProductLineContext';
 import type { NormalizedDevice } from 'types/uidb';
 
 // Mock the useProductLineData hook

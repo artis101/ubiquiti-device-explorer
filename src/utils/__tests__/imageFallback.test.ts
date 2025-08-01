@@ -3,7 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import {
   generateFallbackSvg,
   handleImageError,
-  type ImageErrorHandlerOptions,
 } from '../imageFallback';
 
 // Mock btoa and atob for the Node.js environment
@@ -61,7 +60,7 @@ describe('imageFallback', () => {
         target: { src: 'original.png', style: { display: 'block' } },
       } as React.SyntheticEvent<HTMLImageElement>;
       // Trigger an internal error by passing invalid options
-      const invalidOptions = { deviceName: null, size: -1 } as any;
+      const invalidOptions = { deviceName: null, size: -1 } as { deviceName: string | null; size: number };
       const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       // Mock btoa to throw an error
