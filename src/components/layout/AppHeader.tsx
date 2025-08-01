@@ -22,7 +22,7 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                 className="group flex items-center justify-center p-1 rounded-radius transition-all hover:bg-ui-gray-200 focus:outline-none focus:ring-1 focus:ring-ui-blue-primary"
               >
                 <img
-                  src="/ui-logo.svg"
+                  src="ui-logo.svg"
                   alt="Ubiquiti Logo"
                   className="w-6 transition-all group-hover:[filter:invert(37%)_sepia(94%)_saturate(6351%)_hue-rotate(205deg)_brightness(100%)_contrast(110%)]"
                 />
@@ -43,8 +43,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                     connectionInfo.status === "live"
                       ? "bg-ui-green-primary"
                       : connectionInfo.status === "offline"
-                        ? "bg-ui-yellow-primary"
-                        : "bg-ui-amber-600"
+                      ? "bg-ui-yellow-primary"
+                      : "bg-ui-amber-600"
                   }`}
                   title="Data freshness information"
                 ></div>
@@ -62,8 +62,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                           {connectionInfo.status === "live"
                             ? "Live Data"
                             : connectionInfo.status === "offline"
-                              ? "Fresh Data (Offline)"
-                              : "Cached Data"}
+                            ? "Fresh Data (Offline)"
+                            : "Cached Data"}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -72,8 +72,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                           {connectionInfo.dataSource === "api"
                             ? "API"
                             : connectionInfo.dataSource === "cache"
-                              ? "Cache"
-                              : "Fallback"}
+                            ? "Cache"
+                            : "Fallback"}
                         </span>
                       </div>
                       {connectionInfo.lastFetch && (
@@ -108,5 +108,5 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         <WarningBanner warnings={warnings} />
       </div>
     );
-  },
+  }
 );
