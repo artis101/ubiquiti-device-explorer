@@ -12,9 +12,9 @@ React 19, Vite, Tailwind CSS, Zod for schema resilience, React Window for virtua
 
 What can be improved?
 
-- JSON modal is not really accessible
+- use of a proper UI system/shadcn
 - Service Worker to create an image cache, avoids HTTP requests while scrolling
-- a11y tests
+- automated a11y tests
 - zustand store for state management would be better, but this works fine
 
 ## Assignment

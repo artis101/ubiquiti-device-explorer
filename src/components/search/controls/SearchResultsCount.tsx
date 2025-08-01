@@ -14,7 +14,7 @@ export function SearchResultsCount({
     searchQuery || selectedLineId ? filteredDevices.length : devices.length;
 
   return (
-    <div className="hidden xs:block text-xs font-normal text-[#BDBDBD] whitespace-nowrap">
+    <div className="hidden xs:block text-xs font-normal text-ui-gray-300 whitespace-nowrap">
       {count} Device{count !== 1 ? "s" : ""}
     </div>
   );
