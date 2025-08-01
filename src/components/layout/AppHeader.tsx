@@ -16,10 +16,17 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         <header className="bg-ui-gray-100 border-b border-ui-gray-200">
           <div className="flex items-center justify-between py-2 px-4 mx-auto max-w-7xl">
             <div className="flex items-center gap-4">
-              {/* Logo from public/logo.png */}
-              <div className="flex items-center justify-center">
-                <img src="/logo.png" alt="Ubiquiti Logo" className="w-8 h-8" />
-              </div>
+              {/* Logo from public/ui-logo.svg */}
+              <a
+                href="/"
+                className="group flex items-center justify-center p-1 rounded-radius transition-all hover:bg-ui-gray-200 focus:outline-none focus:ring-1 focus:ring-ui-blue-primary"
+              >
+                <img
+                  src="/ui-logo.svg"
+                  alt="Ubiquiti Logo"
+                  className="w-6 transition-all group-hover:[filter:invert(37%)_sepia(94%)_saturate(6351%)_hue-rotate(205deg)_brightness(100%)_contrast(110%)]"
+                />
+              </a>
 
               {/* Devices Title */}
               <h1 className="text-sm font-normal text-ui-gray-500">Devices</h1>
@@ -36,8 +43,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                     connectionInfo.status === "live"
                       ? "bg-ui-green-primary"
                       : connectionInfo.status === "offline"
-                        ? "bg-ui-yellow-primary"
-                        : "bg-ui-amber-600"
+                      ? "bg-ui-yellow-primary"
+                      : "bg-ui-amber-600"
                   }`}
                   title="Data freshness information"
                 ></div>
@@ -55,8 +62,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                           {connectionInfo.status === "live"
                             ? "Live Data"
                             : connectionInfo.status === "offline"
-                              ? "Fresh Data (Offline)"
-                              : "Cached Data"}
+                            ? "Fresh Data (Offline)"
+                            : "Cached Data"}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -65,8 +72,8 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
                           {connectionInfo.dataSource === "api"
                             ? "API"
                             : connectionInfo.dataSource === "cache"
-                              ? "Cache"
-                              : "Fallback"}
+                            ? "Cache"
+                            : "Fallback"}
                         </span>
                       </div>
                       {connectionInfo.lastFetch && (
@@ -101,5 +108,5 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         <WarningBanner warnings={warnings} />
       </div>
     );
-  },
+  }
 );
