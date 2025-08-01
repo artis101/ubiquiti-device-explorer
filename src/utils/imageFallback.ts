@@ -6,11 +6,13 @@ export interface ImageErrorHandlerOptions {
 
 export const generateFallbackSvg = ({
   deviceName,
-  deviceLineAbbrev = "UI",
+  deviceLineAbbrev,
   size,
 }: ImageErrorHandlerOptions): string => {
   const abbrev =
-    deviceLineAbbrev || deviceName?.substring(0, 2).toUpperCase() || "UI";
+    deviceLineAbbrev ||
+    (deviceName?.substring(0, 2).toUpperCase()) ||
+    'UI';
 
   const svg = `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
     <rect width="${size}" height="${size}" fill="#f9fafb"/>

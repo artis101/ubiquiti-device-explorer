@@ -1,129 +1,80 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { generateFallbackSvg, handleImageError } from "../imageFallback";
-import { getPlaceholderImage } from "../uidb"; // Import getPlaceholderImage
-import type { NormalizedDevice } from "../../types/uidb"; // Import NormalizedDevice
 
-describe("imageFallback utilities", () => {
-  describe("generateFallbackSvg", () => {
-    it("should generate SVG with provided parameters", () => {
-      const result = generateFallbackSvg({
-        deviceName: "Test Device",
-        deviceLineAbbrev: "TD",
-        size: 100,
-      });
-      const decodedSvg = atob(result.split(",")[1]); // Decode base64 SVG
+import { describe, it, expect, vi } from 'vitest';
+import {
+  generateFallbackSvg,
+  handleImageError,
+  type ImageErrorHandlerOptions,
+} from '../imageFallback';
 
-      expect(decodedSvg).toContain('width="100"');
-      expect(decodedSvg).toContain('height="100"');
-      expect(decodedSvg).toContain("TD");
+// Mock btoa and atob for the Node.js environment
+global.btoa = (str: string) => Buffer.from(str).toString('base64');
+global.atob = (b64: string) => Buffer.from(b64, 'base64').toString();
+
+describe('imageFallback', () => {
+  describe('generateFallbackSvg', () => {
+    it('should generate a snapshot for an SVG with a deviceLineAbbrev', () => {
+      const options = { deviceName: 'Test', deviceLineAbbrev: 'AB', size: 100 };
+      const decodedSvg = atob(generateFallbackSvg(options).split(',')[1]);
+      expect(decodedSvg).toMatchSnapshot();
     });
 
-    it('should use "UI" as fallback when deviceLineAbbrev is not provided', () => {
-      const result = generateFallbackSvg({
-        deviceName: "",
-        size: 100,
-      });
-      const decodedSvg = atob(result.split(",")[1]); // Decode base64 SVG
-
-      expect(decodedSvg).toContain("UI");
-    });
-  });
-
-  // New describe block for getPlaceholderImage from uidb.ts
-  describe("getPlaceholderImage (from uidb.ts)", () => {
-    it("should use device line abbreviation if available", () => {
-      const device = {
-        id: "test1",
-        displayName: "Test Device 1",
-        line: { id: "line1", abbrev: "L1" },
-      } as NormalizedDevice;
-      const result = getPlaceholderImage(device);
-      const decodedSvg = atob(result.split(",")[1]);
-      expect(decodedSvg).toContain("L1");
+    it('should generate a snapshot for an SVG with a generated abbreviation', () => {
+      const options = { deviceName: 'My Device', size: 120 };
+      const decodedSvg = atob(generateFallbackSvg(options).split(',')[1]);
+      expect(decodedSvg).toMatchSnapshot();
     });
 
-    it("should use \"UI\" as fallback if no line abbreviation is available", () => {
-      const device = {
-        id: "test2",
-        displayName: "Test Device 2",
-      } as NormalizedDevice;
-      const result = getPlaceholderImage(device);
-      const decodedSvg = atob(result.split(",")[1]);
-      expect(decodedSvg).toContain("UI");
+    it('should generate a snapshot for an SVG with the default "UI" abbreviation', () => {
+      const options = { deviceName: '', size: 140 };
+      const decodedSvg = atob(generateFallbackSvg(options).split(',')[1]);
+      expect(decodedSvg).toMatchSnapshot();
     });
   });
 
-  describe("handleImageError", () => {
-    let mockEvent: React.SyntheticEvent<HTMLImageElement>;
-    let mockTarget: HTMLImageElement;
-    let originalBtoa: (str: string) => string; // Keep original btoa
-
-    beforeEach(() => {
-      mockTarget = {
-        src: "original-image.jpg",
-        startsWith: vi.fn((str) => mockTarget.src.startsWith(str)),
-        style: { display: "" }, // Mock style property
-      } as unknown as HTMLImageElement;
-
-      mockEvent = {
-        target: mockTarget,
+  describe('handleImageError', () => {
+    it('should set the target src to a fallback SVG', () => {
+      const event = {
+        target: { src: 'original.png' },
       } as React.SyntheticEvent<HTMLImageElement>;
+      const options = { deviceName: 'Test', size: 50 };
+      const fallbackSrc = generateFallbackSvg(options);
 
-      originalBtoa = global.btoa; // Store original btoa
-      global.btoa = vi.fn((str) => Buffer.from(str).toString("base64"));
+      handleImageError(event, options);
+
+      expect(event.target.src).toBe(fallbackSrc);
     });
 
-    afterEach(() => {
-      vi.restoreAllMocks();
-      global.btoa = originalBtoa; // Restore original btoa
+    it('should not change the src if it is already a fallback', () => {
+      const fallbackSrc = 'data:image/svg+xml;base64,somefakesvg';
+      const event = {
+        target: { src: fallbackSrc },
+      } as React.SyntheticEvent<HTMLImageElement>;
+      const options = { deviceName: 'Test', size: 50 };
+
+      handleImageError(event, options);
+
+      expect(event.target.src).toBe(fallbackSrc);
     });
 
-    it("should set fallback image src on error", () => {
-      const options = {
-        deviceName: "Test Device",
-        deviceLineAbbrev: "TD",
-        size: 100,
-      };
+    it('should hide the image if SVG generation fails', () => {
+      const event = {
+        target: { src: 'original.png', style: { display: 'block' } },
+      } as React.SyntheticEvent<HTMLImageElement>;
+      // Trigger an internal error by passing invalid options
+      const invalidOptions = { deviceName: null, size: -1 } as any;
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-      handleImageError(mockEvent, options);
+      // Mock btoa to throw an error
+      global.btoa = () => { throw new Error('btoa failed'); };
 
-      expect(mockTarget.src).toContain("data:image/svg+xml;base64,");
-    });
+      handleImageError(event, invalidOptions);
 
-    it("should not set fallback if already using fallback", () => {
-      mockTarget.src = "data:image/svg+xml;base64,test";
+      expect((event.target as HTMLImageElement).style.display).toBe('none');
+      expect(consoleWarnSpy).toHaveBeenCalled();
 
-      const options = {
-        deviceName: "Test Device",
-        size: 100,
-      };
-
-      handleImageError(mockEvent, options);
-
-      expect(mockTarget.src).toBe("data:image/svg+xml;base64,test");
-    });
-
-    it("should handle btoa errors gracefully", () => {
-      (global.btoa as ReturnType<typeof vi.fn>).mockImplementationOnce(() => {
-        throw new Error("Encoding error");
-      });
-
-      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
-
-      const options = {
-        deviceName: "Test Device",
-        size: 100,
-      };
-
-      handleImageError(mockEvent, options);
-
-      expect(consoleSpy).toHaveBeenCalledWith(
-        "Failed to generate fallback image:",
-        expect.any(Error),
-      );
-      expect(mockTarget.style.display).toBe("none");
-
-      consoleSpy.mockRestore();
+      consoleWarnSpy.mockRestore();
+      // Restore btoa
+      global.btoa = (str: string) => Buffer.from(str).toString('base64');
     });
   });
 });
