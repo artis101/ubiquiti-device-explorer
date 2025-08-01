@@ -1,64 +1,32 @@
-# UIDB Agent
+# UIDB Explorer
 
 Internal Product Knowledge Explorer for Ubiquiti devices.
 
-## Quick Start
+This is the Frontend Engineer homework submission from Artis Avotins.
 
-```bash
-# Install dependencies
-npm install
+[Try it!](https://example.com)
 
-# Start development server
-npm run dev
+## Assignment
 
-# Build for production
-npm run build
+You are tasked with kick-starting an internal tool, the "UIDB Explorer," for another team at Ubiquiti to take over. The goal is to create a robust foundation within one week.
 
-# Preview production build
-npm run preview
-```
+### Core Task
 
-## Deployment on Coolify
+Build a React and TypeScript application that allows internal teams (Developers, Designers, PMs) to explore, search, and visualize products from the internal UIDB (Ubiquiti Database).
 
-### Build Settings
-- **Build Command:** `npm run build`
-- **Start Command:** `npm run start` 
-- **Port:** `3000`
-- **Output Directory:** `dist`
+### Key Features & Requirements
 
-### Environment Variables
-- `VITE_UIDB_URL` (optional): Override default UIDB endpoint (see `src/config/constants.ts` for default)
+- **Product Discovery:** Display products from the UIDB, showing key information like `product.name`, `line`, `shortnames`, and images.
+- **Image Rendering:** Construct and display product images using the provided URL format: `https://images.svc.ui.com/?u=...&w=${size}&q=75`.
+- **Filtering & Searching:** Allow users to filter products by `line` and search across various fields.
+- **Schema Resilience:** The application must be robust and handle potential future changes to the UIDB JSON schema without crashing. It should fail gracefully.
 
-### Example Coolify Configuration
-1. Connect your Git repository
-2. Set build command: `npm install && npm run build`
-3. Set start command: `npm run start`
-4. Set port: `3000`
-5. Add environment variable `VITE_UIDB_URL` if needed
+### Technical Constraints
 
-## Features
+- **Stack:** React and TypeScript are mandatory. You have the freedom to choose other libraries and tools.
+- **Hand-off:** The project must be self-contained within a Git repository. All documentation and setup instructions must be clear, as there is no direct communication with the receiving team.
 
-- 🔍 **Multi-field Search** - Search across SKU, names, aliases, triplets
-- 🏷️ **Product Line Filtering** - Filter by UniFi, airMAX, etc.
-- 🖼️ **Image Display** - Full fallback chain with size controls
-- 📱 **Responsive Design** - Works on mobile and desktop
-- 🔗 **Shareable Links** - URL state persistence
-- ⚡ **Performance** - Virtualized list handles 10k+ devices
-- 🛡️ **Error Resilience** - Graceful handling of schema changes
-- ♿ **Accessibility** - WCAG 2.1 AA compliant
+### Deliverables
 
-## Architecture
-
-- **Frontend:** React 19 + TypeScript + Vite
-- **Styling:** Tailwind CSS
-- **Data:** Zod-based parsing with runtime adaptation
-- **Virtualization:** react-window for large lists
-- **State:** URL-based state management
-
-## Bundle Size
-
-- JavaScript: 264KB (80KB gzipped)
-- CSS: 7KB (2KB gzipped)
-- Total: < 82KB gzipped ✅
-
-See `docs/PRD.md` for complete technical documentation.
+1.  **A Git Repository:** Containing the complete, well-structured, and documented source code.
+2.  **A Live Deployment:** A publicly accessible URL where non-technical stakeholders can view and interact with the latest version of the application.
