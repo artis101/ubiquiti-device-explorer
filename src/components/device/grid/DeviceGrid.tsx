@@ -80,7 +80,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
       searchHits,
       isInteractive,
     },
-    ref
+    ref,
   ) => {
     const CARD_WIDTH = 263; // The target width for each device card
     const CARD_HORIZONTAL_GAP = 16; // The horizontal gap between device cards
@@ -123,7 +123,7 @@ export const DeviceGrid = forwardRef<Grid, DeviceGridProps>(
         </Grid>
       </div>
     );
-  }
+  },
 );
 
 DeviceGrid.displayName = "DeviceGrid";

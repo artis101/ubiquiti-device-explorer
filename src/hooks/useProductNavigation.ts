@@ -12,7 +12,7 @@ export function useProductNavigation() {
     }
 
     const currentIndex = filteredDevices.findIndex(
-      (device) => device.id === selectedDeviceId
+      (device) => device.id === selectedDeviceId,
     );
 
     if (currentIndex === -1) {

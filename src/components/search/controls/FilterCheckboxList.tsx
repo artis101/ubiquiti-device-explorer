@@ -16,7 +16,7 @@ export function FilterCheckboxList({
   const { productLines } = useProductLineData();
 
   const availableProductLineIds = new Set(
-    filteredDevices.map((device) => device.lineId)
+    filteredDevices.map((device) => device.lineId),
   );
 
   return (

@@ -19,7 +19,7 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
 
   const productLineName = useMemo(
     () => device.line?.name || device.line?.id || "UniFi",
-    [device.line?.name, device.line?.id]
+    [device.line?.name, device.line?.id],
   );
 
   const handleClick = useCallback(() => {
@@ -35,7 +35,7 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
         onDeviceSelect(device);
       }
     },
-    [device, onDeviceSelect, isInteractive]
+    [device, onDeviceSelect, isInteractive],
   );
 
   const rowClassName = useMemo(
@@ -45,7 +45,7 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
           ? "bg-ui-gray-100 border-y border-ui-blue-primary"
           : "border-b border-ui-gray-200 hover:bg-ui-gray-100 hover:border-b-ui-gray-200"
       }`,
-    [isSelected]
+    [isSelected],
   );
 
   const displayNameClassName = useMemo(
@@ -53,7 +53,7 @@ export const TableRow = memo(({ index, style, data }: TableRowProps) => {
       `font-sans text-sm font-normal truncate group-hover:text-ui-text-muted ${
         isSelected ? "text-ui-text-muted" : "text-ui-text-subtle"
       }`,
-    [isSelected]
+    [isSelected],
   );
 
   return (

@@ -12,4 +12,6 @@ interface UidbContextType {
   devicesForProductLineFilter: NormalizedDevice[];
 }
 
-export const UidbContext = createContext<UidbContextType | undefined>(undefined);
+export const UidbContext = createContext<UidbContextType | undefined>(
+  undefined,
+);

@@ -2,57 +2,61 @@
 
 @theme {
   /* UI Design System Colors - From Figma */
-  --color-ui-blue-primary: #006FFF;
-  --color-ui-blue-hover: #0059CC;
-  --color-ui-white: #FFFFFF;
-  
-  --color-ui-gray-50: #F9FAFA;
-  --color-ui-gray-100: #F4F5F6;
-  --color-ui-gray-150: #F6F6F8;
-  --color-ui-gray-200: #EDEDF0;
-  --color-ui-gray-300: #B6B9C4;
+  --color-ui-blue-primary: #006fff;
+  --color-ui-blue-hover: #0059cc;
+  --color-ui-white: #ffffff;
+
+  --color-ui-gray-50: #f9fafa;
+  --color-ui-gray-100: #f4f5f6;
+  --color-ui-gray-150: #f6f6f8;
+  --color-ui-gray-200: #ededf0;
+  --color-ui-gray-300: #b6b9c4;
   --color-ui-gray-500: #808893;
-  --color-ui-gray-600: #50565E;
+  --color-ui-gray-600: #50565e;
   --color-ui-gray-700: #212327;
   --color-ui-text-primary: rgba(0, 0, 0, 0.85);
   --color-ui-text-muted: rgba(0, 0, 0, 0.65);
   --color-ui-text-subtle: rgba(0, 0, 0, 0.45);
-  
-  --color-ui-red-primary: #F03A3E;
-  --color-ui-red-light: #F9B0B2;
+
+  --color-ui-red-primary: #f03a3e;
+  --color-ui-red-light: #f9b0b2;
 
   /* Component-specific aliases mapping to design system */
   --color-icon-default: #838691;
-  --color-icon-hover-bg: #F4F5F6;
-  --color-icon-active: #006FFF;
-  --color-icon-focus-ring: #006FFF;
-  --color-search-bg-default: #F6F6F8;
-  --color-search-bg-hover: #F4F5F6;
-  --color-search-bg-active: #EDEDF0;
-  
-  --color-reset-default: #F9B0B2;
-  --color-reset-active: #F03A3E;
-  --color-checkbox-active: #006FFF;
+  --color-icon-hover-bg: #f4f5f6;
+  --color-icon-active: #006fff;
+  --color-icon-focus-ring: #006fff;
+  --color-search-bg-default: #f6f6f8;
+  --color-search-bg-hover: #f4f5f6;
+  --color-search-bg-active: #ededf0;
+
+  --color-reset-default: #f9b0b2;
+  --color-reset-active: #f03a3e;
+  --color-checkbox-active: #006fff;
   --color-text-primary: #212327;
-  --color-text-disabled: #B6B9C4;
-  
+  --color-text-disabled: #b6b9c4;
+
   /* Status indicator colors (not in Figma but used for connection status) */
-  --color-ui-green-primary: #10B981;
+  --color-ui-green-primary: #10b981;
   --color-ui-green-600: #059669;
-  --color-ui-yellow-primary: #F59E0B;
-  --color-ui-amber-600: #D97706;
+  --color-ui-yellow-primary: #f59e0b;
+  --color-ui-amber-600: #d97706;
 
   --animation-shimmer: shimmer 1.5s infinite;
 
   --keyframes-shimmer: {
-    "0%": { transform: "translateX(-100%)" },
-    "100%": { transform: "translateX(100%)" },
-  };
+    "0%": {
+      transform: "translateX(-100%)";
+    }
+    ,
+    "100%": {
+      transform: "translateX(100%)";
+    }
+  }
 
   --radius: 4px;
   --radius-card: 8px;
 }
-
 
 /* Custom scrollbar styles for webkit browsers */
 .scrollbar-thin {
@@ -80,17 +84,8 @@
 /* Base styles for better typography - matching Figma UI Sans_v7 */
 body {
   margin: 0;
-  font-family:
-    "UI Sans_v7",
-    "UI Sans",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+  font-family: "UI Sans_v7", "UI Sans", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.4285714285714286; /* Figma line-height for body text */
   font-weight: 400;
   font-size: 14px; /* Figma body text size */

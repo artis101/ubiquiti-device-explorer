@@ -26,7 +26,7 @@ describe("Search and Filter Integration", () => {
       <UidbProvider searchQuery="" selectedProductLines={[]}>
         <SearchInput searchQuery="" onSearchChange={vi.fn()} />
         <DeviceList height={500} isInteractive={true} />
-      </UidbProvider>
+      </UidbProvider>,
     );
 
     // Initially, all devices should be visible
@@ -39,7 +39,7 @@ describe("Search and Filter Integration", () => {
       <UidbProvider searchQuery="Router" selectedProductLines={[]}>
         <SearchInput searchQuery="Router" onSearchChange={vi.fn()} />
         <DeviceList height={500} isInteractive={true} />
-      </UidbProvider>
+      </UidbProvider>,
     );
 
     // Only Router X2000 should be visible (search term will be highlighted)
@@ -53,12 +53,12 @@ describe("Search and Filter Integration", () => {
     expect(
       screen.queryByText((_, element) => {
         return element?.textContent === "Switch Pro 48";
-      })
+      }),
     ).toBeFalsy();
     expect(
       screen.queryByText((_, element) => {
         return element?.textContent === "Firewall Guardian";
-      })
+      }),
     ).toBeFalsy();
   });
 });

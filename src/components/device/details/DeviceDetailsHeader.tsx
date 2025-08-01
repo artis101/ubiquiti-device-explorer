@@ -5,7 +5,8 @@ import { useProductNavigation } from "@hooks/useProductNavigation";
 
 export function DeviceDetailsHeader() {
   const { updateState } = useUrlState();
-  const { previousProductId, nextProductId, hasPrevious, hasNext } = useProductNavigation();
+  const { previousProductId, nextProductId, hasPrevious, hasNext } =
+    useProductNavigation();
 
   const handleCloseDetail = () => {
     updateState({ select: undefined });

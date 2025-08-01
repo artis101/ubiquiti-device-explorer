@@ -43,7 +43,9 @@ export default function UidbProvider({
         );
         const resultDevices = searchResults.map(
           (hit) =>
-            devicesFilteredByProductLines.find((device) => device.id === hit.id)!,
+            devicesFilteredByProductLines.find(
+              (device) => device.id === hit.id,
+            )!,
         );
 
         const searchHitMap = new Map<string, SearchHit>(
@@ -92,7 +94,7 @@ export default function UidbProvider({
       filteredDevices,
       searchHits,
       devicesForProductLineFilter,
-    ]
+    ],
   );
 
   if (loading) {

@@ -147,7 +147,7 @@ describe("searchDevices", () => {
   it("should find devices by displayName", () => {
     const results = searchDevices(
       mockDevices as NormalizedDevice[],
-      "Device A"
+      "Device A",
     );
     expect(results.length).toBe(1);
     expect(results[0].id).toBe("1");
@@ -162,7 +162,7 @@ describe("searchDevices", () => {
   it("should find devices by product name", () => {
     const results = searchDevices(
       mockDevices as NormalizedDevice[],
-      "Product C"
+      "Product C",
     );
     expect(results.length).toBe(1);
     expect(results[0].id).toBe("3");
@@ -194,7 +194,7 @@ describe("searchDevices", () => {
   it("should return empty array if no matches", () => {
     const results = searchDevices(
       mockDevices as NormalizedDevice[],
-      "NonExistent"
+      "NonExistent",
     );
     expect(results.length).toBe(0);
   });
@@ -202,7 +202,7 @@ describe("searchDevices", () => {
   it("should include matches in the result", () => {
     const results = searchDevices(
       mockDevices as NormalizedDevice[],
-      "Device A"
+      "Device A",
     );
     expect(results[0].matches).toBeDefined();
     expect(results[0].matches?.[0].key).toBe("displayName");
@@ -218,7 +218,7 @@ describe("filterByLine", () => {
 
   it("should return all devices if lineId is undefined", () => {
     expect(filterByLine(mockDevices as NormalizedDevice[], undefined)).toEqual(
-      mockDevices
+      mockDevices,
     );
   });
 
@@ -244,13 +244,13 @@ describe("filterByProductLines", () => {
 
   it("should return all devices if productLines is empty or undefined", () => {
     expect(filterByProductLines(mockDevices as NormalizedDevice[], [])).toEqual(
-      mockDevices
+      mockDevices,
     );
     expect(
       filterByProductLines(
         mockDevices as NormalizedDevice[],
-        undefined as unknown as string[]
-      )
+        undefined as unknown as string[],
+      ),
     ).toEqual(mockDevices);
   });
 

@@ -30,7 +30,7 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
         onClick?.();
       }
     },
-    [onClick]
+    [onClick],
   );
 
   const cardClassName = useMemo(
@@ -40,7 +40,7 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
           ? "bg-ui-gray-50 border border-ui-blue-primary"
           : "border border-ui-gray-200 hover:bg-ui-gray-50 hover:border-ui-gray-200"
       }`,
-    [isSelected]
+    [isSelected],
   );
 
   const imageContainerClassName = useMemo(
@@ -48,7 +48,7 @@ export const DeviceGridCard: React.FC<DeviceGridCardProps> = ({
       `relative flex justify-center items-center bg-ui-gray-50 rounded-t-card transition-colors duration-200 ${
         isSelected ? "bg-ui-gray-100" : "group-hover:bg-ui-gray-100"
       }`,
-    [isSelected]
+    [isSelected],
   );
 
   return (

@@ -39,14 +39,14 @@ export function SearchAndFilters() {
     (mode: "list" | "grid") => {
       updateState({ view: mode });
     },
-    [updateState]
+    [updateState],
   );
 
   const handleFilterChange = useCallback(
     (selectedProductLines: string[]) => {
       updateState({ productLines: selectedProductLines });
     },
-    [updateState]
+    [updateState],
   );
 
   return (

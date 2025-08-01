@@ -5,7 +5,17 @@ import { TableRow } from "./TableRow";
 import type { DeviceTableProps } from "./DeviceTableTypes";
 
 export const DeviceTable = forwardRef<List, DeviceTableProps>(
-  ({ devices, selectedDeviceId, onDeviceSelect, height, searchHits, isInteractive }, ref) => {
+  (
+    {
+      devices,
+      selectedDeviceId,
+      onDeviceSelect,
+      height,
+      searchHits,
+      isInteractive,
+    },
+    ref,
+  ) => {
     const rowHeight = 32; // Fixed row height matching Figma spec (6px + 20px + 6px)
 
     const itemData = useMemo(
@@ -16,11 +26,15 @@ export const DeviceTable = forwardRef<List, DeviceTableProps>(
         searchHits,
         isInteractive,
       }),
-      [devices, selectedDeviceId, onDeviceSelect, searchHits, isInteractive]
+      [devices, selectedDeviceId, onDeviceSelect, searchHits, isInteractive],
     );
 
     return (
-      <div className="flex flex-col h-full bg-ui-white" role="table" aria-label="Device list">
+      <div
+        className="flex flex-col h-full bg-ui-white"
+        role="table"
+        aria-label="Device list"
+      >
         <TableHeader />
 
         {/* Table Body */}

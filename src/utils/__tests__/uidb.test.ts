@@ -127,7 +127,7 @@ describe("normalizeDevices", () => {
 
     // Check that we get the expected "Invalid or incomplete device object" warnings
     const invalidObjectWarnings = warnings.filter(
-      (w) => w.reason === "Invalid or incomplete device object"
+      (w) => w.reason === "Invalid or incomplete device object",
     );
     expect(invalidObjectWarnings.length).toBe(3); // null, undefined, { product: { name: 'Product A' } }
   });
@@ -145,7 +145,7 @@ describe("normalizeDevices", () => {
 
     // Check for the specific duplicate ID warning
     const duplicateWarnings = warnings.filter(
-      (w) => w.reason === "Duplicate device ID (first occurrence kept)"
+      (w) => w.reason === "Duplicate device ID (first occurrence kept)",
     );
     expect(duplicateWarnings.length).toBe(1);
   });
@@ -159,13 +159,13 @@ describe("normalizeDevices", () => {
 
     // Check for the specific missing product name warning
     const missingNameWarnings = warnings.filter(
-      (w) => w.reason === "Missing product name and shortnames"
+      (w) => w.reason === "Missing product name and shortnames",
     );
     expect(missingNameWarnings.length).toBe(1);
 
     // Check for the missing images warning
     const missingImagesWarnings = warnings.filter(
-      (w) => w.reason === "Missing all image hashes"
+      (w) => w.reason === "Missing all image hashes",
     );
     expect(missingImagesWarnings.length).toBe(1);
   });

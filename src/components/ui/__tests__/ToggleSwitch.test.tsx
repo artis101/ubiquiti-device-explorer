@@ -1,57 +1,65 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { vi } from 'vitest';
-import { ToggleSwitch } from '../ToggleSwitch';
+import { render, screen, fireEvent } from "@testing-library/react";
+import { vi } from "vitest";
+import { ToggleSwitch } from "../ToggleSwitch";
 
-describe('ToggleSwitch', () => {
+describe("ToggleSwitch", () => {
   const options = [
-    { value: 'list', label: 'List' },
-    { value: 'grid', label: 'Grid' },
+    { value: "list", label: "List" },
+    { value: "grid", label: "Grid" },
   ];
 
-  it('should render the options correctly', () => {
+  it("should render the options correctly", () => {
     render(
-      <ToggleSwitch options={options} selectedValue="list" onValueChange={() => {}} />
+      <ToggleSwitch
+        options={options}
+        selectedValue="list"
+        onValueChange={() => {}}
+      />,
     );
-    expect(screen.getByText('List')).toBeInTheDocument();
-    expect(screen.getByText('Grid')).toBeInTheDocument();
+    expect(screen.getByText("List")).toBeInTheDocument();
+    expect(screen.getByText("Grid")).toBeInTheDocument();
   });
 
-  it('should call onValueChange with the correct value when an option is clicked', () => {
+  it("should call onValueChange with the correct value when an option is clicked", () => {
     const onValueChange = vi.fn();
     render(
       <ToggleSwitch
         options={options}
         selectedValue="list"
         onValueChange={onValueChange}
-      />
+      />,
     );
-    fireEvent.click(screen.getByText('Grid'));
-    expect(onValueChange).toHaveBeenCalledWith('grid');
+    fireEvent.click(screen.getByText("Grid"));
+    expect(onValueChange).toHaveBeenCalledWith("grid");
   });
 
-  it('should have the correct aria-pressed attribute on the selected option', () => {
+  it("should have the correct aria-pressed attribute on the selected option", () => {
     render(
-      <ToggleSwitch options={options} selectedValue="list" onValueChange={() => {}} />
+      <ToggleSwitch
+        options={options}
+        selectedValue="list"
+        onValueChange={() => {}}
+      />,
     );
-    expect(screen.getByText('List').closest('button')).toHaveAttribute(
-      'aria-pressed',
-      'true'
+    expect(screen.getByText("List").closest("button")).toHaveAttribute(
+      "aria-pressed",
+      "true",
     );
-    expect(screen.getByText('Grid').closest('button')).toHaveAttribute(
-      'aria-pressed',
-      'false'
+    expect(screen.getByText("Grid").closest("button")).toHaveAttribute(
+      "aria-pressed",
+      "false",
     );
   });
 
-  it('should render the label when provided', () => {
+  it("should render the label when provided", () => {
     render(
       <ToggleSwitch
         options={options}
         selectedValue="list"
         onValueChange={() => {}}
         label="View Mode"
-      />
+      />,
     );
-    expect(screen.getByText('View Mode:')).toBeInTheDocument();
+    expect(screen.getByText("View Mode:")).toBeInTheDocument();
   });
 });

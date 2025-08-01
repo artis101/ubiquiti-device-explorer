@@ -1,4 +1,6 @@
 import { createContext } from "react";
 import type { ProductLineContextType } from "./ProductLineTypes";
 
-export const ProductLineContext = createContext<ProductLineContextType | undefined>(undefined);
+export const ProductLineContext = createContext<
+  ProductLineContextType | undefined
+>(undefined);

@@ -25,7 +25,7 @@ export function DeviceList({ height, isInteractive }: DeviceListProps) {
   useEffect(() => {
     if (selectedDeviceId && filteredDevices.length > 0) {
       const selectedIndex = filteredDevices.findIndex(
-        (device) => device.id === selectedDeviceId
+        (device) => device.id === selectedDeviceId,
       );
 
       if (selectedIndex !== -1) {
@@ -36,7 +36,7 @@ export function DeviceList({ height, isInteractive }: DeviceListProps) {
           const columnWidth = CARD_WIDTH + CARD_HORIZONTAL_GAP;
           const columnCount = Math.floor(windowWidth / columnWidth);
           const rowIndex = Math.floor(selectedIndex / columnCount);
-          
+
           gridRef.current.scrollToItem({
             rowIndex,
             columnIndex: 0,
@@ -53,7 +53,7 @@ export function DeviceList({ height, isInteractive }: DeviceListProps) {
     (device: NormalizedDevice) => {
       updateState({ select: device.id });
     },
-    [updateState]
+    [updateState],
   );
 
   if (filteredDevices.length === 0) {

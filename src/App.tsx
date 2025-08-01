@@ -32,7 +32,10 @@ function App() {
           style={{ height: `calc(100vh - ${headerHeight}px)` }}
           tabIndex={selectedDeviceId ? -1 : 0} // Allow focus for keyboard navigation
         >
-          <DeviceList height={windowHeight - headerHeight} isInteractive={!selectedDeviceId} />
+          <DeviceList
+            height={windowHeight - headerHeight}
+            isInteractive={!selectedDeviceId}
+          />
         </main>
       </div>
     </ErrorBoundary>
