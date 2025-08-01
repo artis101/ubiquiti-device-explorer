@@ -20,6 +20,7 @@ import { DeviceList } from "../DeviceList";
 import { useUrlState } from "@hooks/useUrlState";
 import { useUidbData } from "@hooks/useUidbData";
 import { useWindowDimensions } from "@hooks/useWindowDimensions";
+import type { NormalizedDevice } from "types/uidb";
 
 vi.mock("@hooks/useUrlState");
 vi.mock("@hooks/useUidbData");
@@ -33,7 +34,7 @@ const mockScrollToItem = vi.fn();
 const mockScrollTo = vi.fn();
 
 vi.mock("react-window", () => {
-  const FakeList = forwardRef((_props: any, ref) => {
+  const FakeList = forwardRef((_props, ref) => {
     useImperativeHandle(ref, () => ({
       scrollToItem: mockScrollToItem,
       scrollTo: mockScrollTo,
@@ -41,7 +42,7 @@ vi.mock("react-window", () => {
     return <ul data-testid="fake-list" />;
   });
 
-  const FakeGrid = forwardRef((_props: any, ref) => {
+  const FakeGrid = forwardRef((_props, ref) => {
     useImperativeHandle(ref, () => ({
       scrollToItem: mockScrollToItem,
       scrollTo: mockScrollTo,
@@ -61,7 +62,8 @@ const mockUseWindowDimensions = useWindowDimensions as Mock;
 const defaultDevices = Array.from({ length: 10 }, (_, i) => ({
   id: `dev-${i}`,
   name: `Device ${i}`,
-})) as any[];
+  displayName: `Device ${i}`,
+})) as NormalizedDevice[];
 
 beforeEach(() => {
   vi.clearAllMocks();
