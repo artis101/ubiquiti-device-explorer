@@ -62,6 +62,10 @@ describe('useDebounce', () => {
 
     rerender({ value: 'updated', delay: 0 });
 
+    act(() => {
+      vi.runAllTimers();
+    });
+
     expect(result.current).toBe('updated');
   });
 });
