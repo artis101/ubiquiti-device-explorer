@@ -1,5 +1,8 @@
-import { Search } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { useClickOutside } from "@hooks/useClickOutside";
+import { useKeyboardNavigation } from "@hooks/useKeyboardNavigation";
+import { SearchInput } from "./SearchInput";
+import { SuggestionsList } from "./SuggestionsList";
 
 interface AutocompleteProps {
   searchQuery: string;
@@ -15,127 +18,102 @@ export function Autocomplete({
   suggestions,
 }: AutocompleteProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const [isKeyboardNav, setIsKeyboardNav] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
   }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      e.preventDefault();
-      setIsKeyboardNav(true);
-      setActiveIndex((prevIndex) => {
-        let nextIndex = e.key === "ArrowDown" ? prevIndex + 1 : prevIndex - 1;
-        if (nextIndex >= suggestions.length) {
-          nextIndex = 0;
-        } else if (nextIndex < 0) {
-          nextIndex = suggestions.length - 1;
-        }
-        return nextIndex;
-      });
-    } else if (e.key === "Enter") {
-      if (activeIndex > -1 && suggestions[activeIndex]) {
+  const handleSuggestionSelect = useCallback(
+    (index: number) => {
+      const suggestion = suggestions[index];
+      if (suggestion) {
         if (onDeviceSelect) {
-          onDeviceSelect(suggestions[activeIndex].id);
+          onDeviceSelect(suggestion.id);
         } else {
-          onSearchChange(suggestions[activeIndex].name);
+          onSearchChange(suggestion.name);
         }
-        setIsOpen(false);
+        handleClose();
       }
-    } else if (e.key === "Escape") {
-      setIsOpen(false);
-    }
-  };
+    },
+    [suggestions, onDeviceSelect, onSearchChange, handleClose]
+  );
 
-  const handleSuggestionClick = (suggestion: {
-    id: string;
-    name: string;
-    abbrev: string;
-  }) => {
-    if (onDeviceSelect) {
-      onDeviceSelect(suggestion.id);
-    } else {
-      onSearchChange(suggestion.name);
-    }
-    setIsOpen(false);
-  };
+  const {
+    activeIndex,
+    isKeyboardNav,
+    handleKeyDown,
+    handleMouseEnter,
+    resetActiveIndex,
+  } = useKeyboardNavigation({
+    itemCount: suggestions.length,
+    isOpen,
+    onSelect: handleSuggestionSelect,
+    onClose: handleClose,
+  });
 
-  const handleFocus = () => {
-    if (searchQuery.length > 0) {
+  useClickOutside(containerRef, handleClose, isOpen);
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onSearchChange(e.target.value);
+      setIsOpen(true);
+      resetActiveIndex();
+    },
+    [onSearchChange, resetActiveIndex]
+  );
+
+  const handleInputFocus = useCallback(() => {
+    if (searchQuery.length > 0 && suggestions.length > 0) {
       setIsOpen(true);
     }
-  };
+  }, [searchQuery, suggestions.length]);
 
-  const handleMouseEnter = (index: number) => {
-    setIsKeyboardNav(false);
-    setActiveIndex(index);
-  };
+  const handleSuggestionClick = useCallback(
+    (suggestion: { id: string; name: string; abbrev: string }) => {
+      if (onDeviceSelect) {
+        onDeviceSelect(suggestion.id);
+      } else {
+        onSearchChange(suggestion.name);
+      }
+      handleClose();
+    },
+    [onDeviceSelect, onSearchChange, handleClose]
+  );
+
+  // Close dropdown when suggestions become empty
+  useEffect(() => {
+    if (suggestions.length === 0 && isOpen) {
+      handleClose();
+    }
+  }, [suggestions.length, isOpen, handleClose]);
+
+  const dropdownId = "autocomplete-suggestions";
 
   return (
     <div className="relative w-full max-w-md" ref={containerRef}>
-      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <Search className="h-5 w-5 text-icon-default" />
-      </div>
-      <input
-        type="text"
+      <SearchInput
+        ref={inputRef}
         value={searchQuery}
-        onChange={(e) => {
-          onSearchChange(e.target.value);
-          setIsOpen(true);
-          setIsKeyboardNav(false);
-        }}
-        onFocus={handleFocus}
+        onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        placeholder="Search all devices"
-        className="block w-full pl-10 pr-3 py-2 border border-ui-gray-300 rounded-radius leading-5 bg-ui-white placeholder-ui-text-subtle focus:outline-none focus:placeholder-ui-text-muted focus:ring-1 focus:ring-icon-focus-ring focus:border-icon-focus-ring text-sm"
-        aria-autocomplete="list"
+        onFocus={handleInputFocus}
         aria-expanded={isOpen && suggestions.length > 0}
+        aria-controls={dropdownId}
+        aria-autocomplete="list"
       />
-      {isOpen && suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full bg-ui-white border border-ui-gray-300 rounded-radius mt-1 shadow-lg p-1">
-          {suggestions.map((suggestion, index) => {
-            const isActive = activeIndex === index;
-            const activeStyle = isKeyboardNav
-              ? "ring-2 ring-ui-blue-primary/30"
-              : "bg-ui-gray-100";
-
-            return (
-              <li
-                key={suggestion.id}
-                className={`px-3 py-2 cursor-pointer flex justify-between rounded-radius ${
-                  isActive ? activeStyle : "hover:bg-ui-gray-100"
-                }`}
-                onClick={() => handleSuggestionClick(suggestion)}
-                onMouseEnter={() => handleMouseEnter(index)}
-              >
-                <span>{suggestion.name}</span>
-                <span
-                  className={
-                    isActive && isKeyboardNav
-                      ? "text-ui-blue-primary/60"
-                      : "text-ui-text-subtle"
-                  }
-                >
-                  {suggestion.abbrev}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+      
+      {isOpen && (
+        <div id={dropdownId}>
+          <SuggestionsList
+            suggestions={suggestions}
+            activeIndex={activeIndex}
+            isKeyboardNav={isKeyboardNav}
+            onSuggestionClick={handleSuggestionClick}
+            onMouseEnter={handleMouseEnter}
+          />
+        </div>
       )}
     </div>
   );
