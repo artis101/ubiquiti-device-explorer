@@ -18,11 +18,13 @@ const lightningTargets = browserslistToTargets(browserslist(resolvedQuery));
 
 export default defineConfig({
   plugins: [react(), tailwind()],
+  base:
+    process.env.NODE_ENV === "production" ? "/ubiquiti-device-explorer/" : "/",
 
   define: {
     // Inject build timestamp at build time
     "import.meta.env.VITE_BUILD_TIMESTAMP": JSON.stringify(
-      new Date().toISOString()
+      new Date().toISOString(),
     ),
   },
 
