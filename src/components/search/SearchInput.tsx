@@ -14,7 +14,7 @@ interface SearchInputProps {
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(props, ref) {
-    const { placeholder = "Search all devices", ...inputProps } = props;
+    const { placeholder = "Search", ...inputProps } = props;
 
     return (
       <div className="relative w-full">

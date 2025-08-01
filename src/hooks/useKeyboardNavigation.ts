@@ -48,8 +48,22 @@ export function useKeyboardNavigation({
           break;
 
         case "Tab":
-          onClose();
-          setActiveIndex(-1);
+          if (itemCount > 0) {
+            e.preventDefault();
+            setIsKeyboardNav(true);
+            if (e.shiftKey) {
+              setActiveIndex((prevIndex) => {
+                return prevIndex <= 0 ? itemCount - 1 : prevIndex - 1;
+              });
+            } else {
+              setActiveIndex((prevIndex) => {
+                return prevIndex >= itemCount - 1 ? 0 : prevIndex + 1;
+              });
+            }
+          } else {
+            onClose();
+            setActiveIndex(-1);
+          }
           break;
       }
     },

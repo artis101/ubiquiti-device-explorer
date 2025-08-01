@@ -25,7 +25,7 @@ export const SuggestionItem = memo(function SuggestionItem({
 
   return (
     <li
-      className={`px-2 py-1.5 cursor-pointer flex justify-between items-start gap-[82px] h-8 ${
+      className={`px-2 py-1.5 cursor-pointer flex justify-between items-start h-8 ${
         isActive ? activeStyle : "hover:bg-ui-gray-100"
       }`}
       onClick={onClick}
@@ -33,8 +33,8 @@ export const SuggestionItem = memo(function SuggestionItem({
       role="option"
       aria-selected={isActive}
     >
-      <span className="truncate text-sm leading-5 text-ui-gray-600">{suggestion.name}</span>
-      <span className="text-sm leading-5 text-ui-gray-500 shrink-0">
+      <span className="text-sm leading-5 text-ui-gray-600 flex-1 truncate">{suggestion.name}</span>
+      <span className="text-sm leading-5 text-ui-gray-500 ml-2">
         {suggestion.abbrev}
       </span>
     </li>
