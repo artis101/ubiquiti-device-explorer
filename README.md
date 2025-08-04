@@ -4,7 +4,7 @@ Internal Product Knowledge Explorer for Ubiquiti devices.
 
 This is the Frontend Engineer homework submission from Artis Avotins.
 
-[Try it!](https://example.com)
+[Try it!](https://artis101.github.io/ubiquiti-device-explorer/)
 
 ## Synopsis
 
